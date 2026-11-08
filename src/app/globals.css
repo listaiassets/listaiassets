@@ -150,3 +150,18 @@ body {
 :not(.dark) ::-webkit-scrollbar-thumb:hover {
   background: #a8a29e;
 }
+
+/* -------------------------------------------------------------------------- */
+/* Netlify Injected Widget & Badge Suppression                                 */
+/* Eliminates any automatic feedback drawers, badges, or review overlays      */
+/* -------------------------------------------------------------------------- */
+netlify-drawer,
+#netlify-drawer,
+iframe[src*="netlify.com"],
+.netlify-badge,
+[data-netlify-deploy-preview] {
+  display: none !important;
+  visibility: hidden !important;
+  opacity: 0 !important;
+  pointer-events: none !important;
+}

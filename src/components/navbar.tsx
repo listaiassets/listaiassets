@@ -50,6 +50,12 @@ export function Navbar() {
                 Compare
               </Link>
               <Link
+                href="/blog"
+                className="text-stone-600 hover:text-stone-950 dark:text-stone-400 dark:hover:text-stone-100 transition-colors duration-150"
+              >
+                Blog
+              </Link>
+              <Link
                 href="/tools?pricing=FREE"
                 className="text-stone-600 hover:text-stone-950 dark:text-stone-400 dark:hover:text-stone-100 transition-colors duration-150"
               >

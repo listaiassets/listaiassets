@@ -57,6 +57,11 @@ export function Footer() {
                 </Link>
               </li>
               <li>
+                <Link href="/blog" className="hover:text-stone-950 dark:hover:text-white transition-colors">
+                  Research &amp; Blog
+                </Link>
+              </li>
+              <li>
                 <Link href="/categories/coding" className="hover:text-stone-950 dark:hover:text-white transition-colors">
                   Coding Agents &amp; IDEs
                 </Link>
