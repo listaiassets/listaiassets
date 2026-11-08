@@ -55,12 +55,6 @@ export function Navbar() {
               >
                 Blog
               </Link>
-              <Link
-                href="/tools?pricing=FREE"
-                className="text-stone-600 hover:text-stone-950 dark:text-stone-400 dark:hover:text-stone-100 transition-colors duration-150"
-              >
-                Free &amp; Open Source
-              </Link>
             </nav>
           </div>
 
@@ -147,14 +141,6 @@ export function Navbar() {
               >
                 <span>Compare AI Models</span>
                 <span className="text-[11px] font-mono text-amber-700 dark:text-amber-400 bg-amber-500/10 px-1.5 py-0.5 rounded">Telemetry</span>
-              </Link>
-              <Link
-                href="/tools?pricing=FREE"
-                onClick={() => setMobileMenuOpen(false)}
-                className="flex items-center justify-between py-2.5 px-3 rounded-lg text-sm font-medium text-stone-800 dark:text-stone-200 hover:bg-stone-100 dark:hover:bg-stone-900 hover:text-amber-600 dark:hover:text-amber-400 transition-colors"
-              >
-                <span>Free &amp; Open Source</span>
-                <span className="text-[11px] font-mono text-stone-500">Zero Cost</span>
               </Link>
               <Link
                 href="/blog"
