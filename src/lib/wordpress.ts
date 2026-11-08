@@ -131,7 +131,10 @@ export async function getWordPressPosts(): Promise<WordPressPost[]> {
     for (const url of urlsToTry) {
       try {
         const res = await fetch(url, {
-          next: { revalidate: 60 }, // Revalidate cache every 60 seconds (Next.js ISR)
+          next: {
+            revalidate: 60, // ISR Safety net: Revalidate in background every 60s
+            tags: ["wordpress-posts"], // Instant invalidation via /api/revalidate
+          },
           headers: {
             Accept: "application/json",
           },
@@ -211,7 +214,10 @@ export async function getWordPressPostBySlug(slug: string): Promise<WordPressPos
     for (const url of urlsToTry) {
       try {
         const res = await fetch(url, {
-          next: { revalidate: 60 },
+          next: {
+            revalidate: 60,
+            tags: ["wordpress-posts", `wordpress-post-${slug}`],
+          },
           headers: { Accept: "application/json" },
         });
         if (res.ok) {
