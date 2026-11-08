@@ -127,7 +127,7 @@ export default async function BlogPostPage({ params }: PostPageProps) {
           {/* Article Header */}
           <header className="mb-10 pb-8 border-b border-stone-200 dark:border-stone-800">
             <div className="flex flex-wrap items-center gap-3 mb-4">
-              <Badge variant="outline" className="border-amber-500/40 text-amber-700 dark:text-amber-400 bg-amber-500/10 text-xs">
+              <Badge variant="amber" size="sm" className="border-amber-500/40 text-amber-700 dark:text-amber-400 bg-amber-500/10 text-xs">
                 {post.category}
               </Badge>
               <span className="flex items-center gap-1.5 text-xs text-stone-500 dark:text-stone-400 font-mono">
@@ -136,7 +136,7 @@ export default async function BlogPostPage({ params }: PostPageProps) {
               </span>
             </div>
 
-            <h1 className="text-3xl sm:text-5xl font-extrabold tracking-tight text-stone-950 dark:text-stone-50 leading-[1.15] mb-6">
+            <h1 className="text-2xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight text-stone-950 dark:text-stone-50 leading-[1.18] mb-6 break-words">
               {post.title}
             </h1>
 

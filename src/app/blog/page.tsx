@@ -60,15 +60,15 @@ export default async function BlogIndexPage() {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
 
-      <div className="min-h-screen bg-[#fafaf8] dark:bg-[#0c0a09] transition-colors duration-150 py-12 px-4 sm:px-6 lg:px-8">
+      <div className="min-h-screen bg-[#fafaf8] dark:bg-[#0c0a09] transition-colors duration-150 py-8 sm:py-12 px-4 sm:px-6 lg:px-8">
         <div className="mx-auto max-w-6xl">
           {/* Header Banner */}
-          <div className="mb-12 border-b border-stone-200 dark:border-stone-800 pb-10">
-            <div className="inline-flex items-center gap-2 rounded-full border border-amber-500/20 bg-amber-500/10 px-3 py-1 text-xs font-medium text-amber-700 dark:text-amber-400 mb-4">
+          <div className="mb-8 sm:mb-12 border-b border-stone-200 dark:border-stone-800 pb-8 sm:pb-10">
+            <div className="inline-flex items-center gap-2 rounded-full border border-amber-500/20 bg-amber-500/10 px-3 py-1 text-xs font-medium text-amber-700 dark:text-amber-400 mb-3 sm:mb-4">
               <Sparkles className="h-3.5 w-3.5" />
               <span>Headless CMS via WordPress API</span>
             </div>
-            <h1 className="text-3xl sm:text-5xl font-bold tracking-tight text-stone-900 dark:text-stone-100 font-sans">
+            <h1 className="text-2xl sm:text-4xl lg:text-5xl font-bold tracking-tight text-stone-900 dark:text-stone-100 font-sans break-words">
               ListAIAssets <span className="text-amber-600 dark:text-amber-400">Insights</span>
             </h1>
             <p className="mt-4 text-base sm:text-lg text-stone-600 dark:text-stone-400 max-w-3xl leading-relaxed">
@@ -86,7 +86,7 @@ export default async function BlogIndexPage() {
                 <div>
                   {/* Category and Read Time */}
                   <div className="flex items-center justify-between text-xs text-stone-500 dark:text-stone-400 mb-4">
-                    <Badge variant="outline" className="border-amber-500/30 text-amber-700 dark:text-amber-400 bg-amber-50/50 dark:bg-amber-950/20">
+                    <Badge variant="amber" size="sm" className="border-amber-500/30 text-amber-700 dark:text-amber-400 bg-amber-50/50 dark:bg-amber-950/20">
                       {post.category}
                     </Badge>
                     <span className="flex items-center gap-1.5 font-mono text-[11px]">

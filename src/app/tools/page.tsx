@@ -36,6 +36,32 @@ function ToolsContent() {
     searchParams.get("noWatermark") === "true"
   );
   const [sortBy, setSortBy] = useState(searchParams.get("sort") || "rating");
+  const [mobileFiltersOpen, setMobileFiltersOpen] = useState(false);
+
+  // Active filter count for mobile badge
+  const activeFilterCount = useMemo(() => {
+    let count = 0;
+    if (query) count++;
+    if (category !== "ALL") count++;
+    if (pricing !== "ALL") count++;
+    if (minRating > 0) count++;
+    if (minVisitors > 0) count++;
+    if (apiFilter) count++;
+    if (mobileFilter) count++;
+    if (webFilter) count++;
+    if (noWatermarkFilter) count++;
+    return count;
+  }, [
+    query,
+    category,
+    pricing,
+    minRating,
+    minVisitors,
+    apiFilter,
+    mobileFilter,
+    webFilter,
+    noWatermarkFilter,
+  ]);
 
   // Synchronize state with URL query parameters
   useEffect(() => {
@@ -178,9 +204,33 @@ function ToolsContent() {
         </div>
       </div>
 
-      <div className="mt-8 grid grid-cols-1 lg:grid-cols-4 gap-8">
-        {/* SIDEBAR: MULTI-ATTRIBUTE FILTERS */}
-        <aside className="lg:col-span-1 space-y-6 rounded-xl border border-stone-200 dark:border-stone-800 bg-white dark:bg-[#1c1917] p-5 h-fit shadow-xs">
+      {/* Mobile Filter Toggle Trigger */}
+      <div className="mt-4 lg:hidden flex items-center justify-between gap-3 rounded-xl border border-stone-200 dark:border-stone-800 bg-white dark:bg-[#1c1917] p-3 shadow-xs">
+        <button
+          onClick={() => setMobileFiltersOpen(!mobileFiltersOpen)}
+          className="flex items-center gap-2 text-xs font-semibold text-stone-900 dark:text-stone-100 bg-stone-100 dark:bg-stone-800 px-3.5 py-2 rounded-lg hover:bg-stone-200 dark:hover:bg-stone-700 transition-colors"
+        >
+          <SlidersHorizontal className="h-3.5 w-3.5 text-amber-600 dark:text-amber-400" />
+          <span>{mobileFiltersOpen ? "Hide Filters" : "Filter Catalog"}</span>
+          {activeFilterCount > 0 && (
+            <span className="rounded-full bg-amber-600 text-white px-2 py-0.5 text-[10px] font-mono font-bold">
+              {activeFilterCount}
+            </span>
+          )}
+        </button>
+
+        <span className="text-xs text-stone-500 font-mono">
+          {filteredTools.length} tools available
+        </span>
+      </div>
+
+      <div className="mt-6 lg:mt-8 grid grid-cols-1 lg:grid-cols-4 gap-8">
+        {/* SIDEBAR: MULTI-ATTRIBUTE FILTERS (Collapsible on mobile) */}
+        <aside
+          className={`${
+            mobileFiltersOpen ? "block" : "hidden"
+          } lg:block lg:col-span-1 space-y-6 rounded-xl border border-stone-200 dark:border-stone-800 bg-white dark:bg-[#1c1917] p-5 h-fit shadow-xs`}
+        >
           <div className="flex items-center justify-between border-b border-stone-200 dark:border-stone-800 pb-3">
             <div className="flex items-center gap-2 text-xs font-semibold text-stone-900 dark:text-white">
               <SlidersHorizontal className="h-3.5 w-3.5 text-amber-600 dark:text-amber-500" />
