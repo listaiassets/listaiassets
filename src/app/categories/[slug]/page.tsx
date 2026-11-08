@@ -25,6 +25,7 @@ import { BrandLogo } from "@/components/ui/BrandLogos";
 import { CategoryDeepDiveJsonLd } from "@/components/seo/JsonLd";
 import { InteractiveVectorGrid } from "@/components/ui/InteractiveVectorGrid";
 import { Badge } from "@/components/badge";
+import { SearchableSelect, SearchableOption } from "@/components/ui/SearchableSelect";
 
 export default function CategoryDetailPage() {
   const params = useParams();
@@ -270,16 +271,19 @@ export default function CategoryDetailPage() {
 
             {/* Sort Select */}
             <div className="flex items-center gap-2">
-              <span className="text-xs text-stone-500 dark:text-stone-400 font-medium">Sort:</span>
-              <select
+              <span className="text-xs text-stone-500 dark:text-stone-400 font-medium font-mono text-[10px] uppercase">Sort:</span>
+              <SearchableSelect
                 value={sortBy}
-                onChange={(e) => setSortBy(e.target.value as any)}
-                className="rounded-lg border border-stone-200 dark:border-stone-800 bg-white dark:bg-stone-900 px-3 py-1.5 text-xs text-stone-800 dark:text-stone-200 focus:outline-none cursor-pointer"
-              >
-                <option value="rating">Highest Rated</option>
-                <option value="latency">Lowest Latency</option>
-                <option value="traffic">Most Monthly Users</option>
-              </select>
+                onChange={(val) => setSortBy(val as any)}
+                options={[
+                  { value: "rating", label: "Highest Rated" },
+                  { value: "latency", label: "Lowest Latency" },
+                  { value: "traffic", label: "Most Monthly Users" },
+                ]}
+                searchPlaceholder="Search sort..."
+                buttonClassName="py-1 px-2.5"
+                dropdownWidth="w-48"
+              />
             </div>
           </div>
 

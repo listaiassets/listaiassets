@@ -21,6 +21,7 @@ import { DETAILED_TOOLS, DetailedTool } from "@/lib/data/tools";
 import { formatPrice } from "@/lib/utils";
 import { ComparisonJsonLd } from "@/components/seo/JsonLd";
 import { BrandLogo } from "@/components/ui/BrandLogos";
+import { SearchableSelect, SearchableOption } from "@/components/ui/SearchableSelect";
 
 export default function ComparePage() {
   const params = useParams();
@@ -118,6 +119,21 @@ export default function ComparePage() {
     }
   };
 
+  // Build searchable dropdown options with rich branding and badges
+  const toolOptions: SearchableOption[] = useMemo(() => {
+    return DETAILED_TOOLS.map((t) => ({
+      value: t.slug,
+      label: t.name,
+      badge: t.pricingType,
+      subtitle: t.tagline,
+      icon: (
+        <div className="h-4 w-4 rounded overflow-hidden shrink-0 flex items-center justify-center bg-stone-100 dark:bg-stone-800">
+          <BrandLogo slug={t.slug || t.name} size={16} />
+        </div>
+      ),
+    }));
+  }, []);
+
   return (
     <div className="relative min-h-screen pb-24 transition-colors duration-150">
       {/* Structural Schema Markup for Rich Snippets */}
@@ -199,39 +215,25 @@ export default function ComparePage() {
             Direct benchmark analysis, telemetry metrics, credit calculators, and verified feature checklist.
           </p>
 
-          {/* Candidate Selectors */}
-          <div className="mt-5 flex flex-wrap items-center justify-center gap-2.5 text-xs">
-            <div className="flex items-center gap-2 rounded-lg border border-stone-200 dark:border-stone-800 bg-white dark:bg-[#1c1917] px-3 py-1.5 text-stone-700 dark:text-stone-300 shadow-xs">
-              <span className="text-stone-500 dark:text-stone-400 text-[11px]">Tool A:</span>
-              <select
-                value={toolA.slug}
-                onChange={(e) => handleSwapToolA(e.target.value)}
-                className="bg-transparent text-stone-900 dark:text-white focus:outline-none cursor-pointer font-medium"
-              >
-                {DETAILED_TOOLS.map((t) => (
-                  <option key={t.id} value={t.slug} className="bg-white text-stone-900 dark:bg-[#1c1917] dark:text-white">
-                    {t.name} ({t.pricingType})
-                  </option>
-                ))}
-              </select>
-            </div>
+          {/* Candidate Selectors with Instant Search & Custom Amber Styling */}
+          <div className="mt-5 flex flex-wrap items-center justify-center gap-3 text-xs">
+            <SearchableSelect
+              labelPrefix="Tool A:"
+              value={toolA.slug}
+              onChange={handleSwapToolA}
+              options={toolOptions}
+              searchPlaceholder="Search 50+ AI tools..."
+            />
 
-            <GitCompare className="h-3.5 w-3.5 text-stone-400 dark:text-stone-600" />
+            <GitCompare className="h-3.5 w-3.5 text-stone-400 dark:text-stone-600 shrink-0" />
 
-            <div className="flex items-center gap-2 rounded-lg border border-stone-200 dark:border-stone-800 bg-white dark:bg-[#1c1917] px-3 py-1.5 text-stone-700 dark:text-stone-300 shadow-xs">
-              <span className="text-stone-500 dark:text-stone-400 text-[11px]">Tool B:</span>
-              <select
-                value={toolB.slug}
-                onChange={(e) => handleSwapToolB(e.target.value)}
-                className="bg-transparent text-stone-900 dark:text-white focus:outline-none cursor-pointer font-medium"
-              >
-                {DETAILED_TOOLS.map((t) => (
-                  <option key={t.id} value={t.slug} className="bg-white text-stone-900 dark:bg-[#1c1917] dark:text-white">
-                    {t.name} ({t.pricingType})
-                  </option>
-                ))}
-              </select>
-            </div>
+            <SearchableSelect
+              labelPrefix="Tool B:"
+              value={toolB.slug}
+              onChange={handleSwapToolB}
+              options={toolOptions}
+              searchPlaceholder="Search 50+ AI tools..."
+            />
           </div>
         </div>
 

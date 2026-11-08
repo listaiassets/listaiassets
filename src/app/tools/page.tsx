@@ -11,6 +11,7 @@ import {
 import { Badge } from "@/components/badge";
 import { DETAILED_TOOLS, DetailedTool } from "@/lib/data/tools";
 import { ToolCard } from "@/components/tool-card";
+import { SearchableSelect, SearchableOption } from "@/components/ui/SearchableSelect";
 
 function ToolsContent() {
   const router = useRouter();
@@ -107,6 +108,24 @@ function ToolsContent() {
     setNoWatermarkFilter(false);
     setSortBy("rating");
   };
+
+  const categoryOptions: SearchableOption[] = [
+    { value: "ALL", label: "All Categories" },
+    { value: "coding", label: "Coding Agents & IDEs" },
+    { value: "llms", label: "LLMs & Reasoning" },
+    { value: "video", label: "Video & Animation" },
+    { value: "art", label: "Generative Art & Design" },
+    { value: "search", label: "Research & Search" },
+    { value: "audio", label: "Voice & Audio" },
+  ];
+
+  const sortOptions: SearchableOption[] = [
+    { value: "rating", label: "Highest Rating" },
+    { value: "traffic", label: "Most Traffic" },
+    { value: "latency", label: "Fastest Latency" },
+    { value: "priceAsc", label: "Price: Low to High" },
+    { value: "priceDesc", label: "Price: High to Low" },
+  ];
 
   // Filtered and sorted tools
   const filteredTools = useMemo(() => {
@@ -267,19 +286,14 @@ function ToolsContent() {
             <label className="text-[11px] font-medium uppercase tracking-wider text-stone-600 dark:text-stone-400 block mb-2">
               Category
             </label>
-            <select
+            <SearchableSelect
               value={category}
-              onChange={(e) => setCategory(e.target.value)}
-              className="w-full rounded-lg border border-stone-200 dark:border-stone-800 bg-stone-50 dark:bg-stone-900 px-3 py-2 text-xs text-stone-800 dark:text-stone-200 focus:border-amber-500/50 focus:outline-none cursor-pointer"
-            >
-              <option value="ALL">All Categories</option>
-              <option value="coding">Coding Agents</option>
-              <option value="llms">LLMs &amp; Reasoning</option>
-              <option value="video">Video &amp; Animation</option>
-              <option value="art">Generative Art &amp; Design</option>
-              <option value="search">Research &amp; Search</option>
-              <option value="audio">Voice &amp; Audio</option>
-            </select>
+              onChange={setCategory}
+              options={categoryOptions}
+              searchPlaceholder="Filter categories..."
+              buttonClassName="w-full justify-between py-2"
+              dropdownWidth="w-full"
+            />
           </div>
 
           {/* Price Model */}
@@ -422,17 +436,14 @@ function ToolsContent() {
 
             <div className="flex items-center gap-2 text-xs">
               <span className="text-stone-500 font-mono uppercase text-[10px]">Sort:</span>
-              <select
+              <SearchableSelect
                 value={sortBy}
-                onChange={(e) => setSortBy(e.target.value)}
-                className="rounded-md border border-stone-200 dark:border-stone-800 bg-stone-50 dark:bg-stone-900 px-2.5 py-1 text-xs text-stone-800 dark:text-stone-200 focus:border-amber-500/50 focus:outline-none cursor-pointer"
-              >
-                <option value="rating">Highest Rating</option>
-                <option value="traffic">Most Traffic</option>
-                <option value="latency">Fastest Latency</option>
-                <option value="priceAsc">Price: Low to High</option>
-                <option value="priceDesc">Price: High to Low</option>
-              </select>
+                onChange={setSortBy}
+                options={sortOptions}
+                searchPlaceholder="Search sort..."
+                buttonClassName="py-1 px-2.5"
+                dropdownWidth="w-48"
+              />
             </div>
           </div>
 

@@ -13,6 +13,7 @@ import {
   Sparkles,
 } from "lucide-react";
 import { Badge } from "@/components/badge";
+import { SearchableSelect, SearchableOption } from "@/components/ui/SearchableSelect";
 
 export default function SubmitPage() {
   const [selectedPlan, setSelectedPlan] = useState<string>("fast_track");
@@ -30,6 +31,22 @@ export default function SubmitPage() {
     contactEmail: "",
     isClaiming: true,
   });
+
+  const categoryOptions: SearchableOption[] = [
+    { value: "coding", label: "Coding Agents & IDEs" },
+    { value: "llms", label: "Reasoning LLMs & Base Models" },
+    { value: "video", label: "Generative Video & 3D" },
+    { value: "audio", label: "Voice & Realtime Speech" },
+    { value: "search", label: "AI Search & Enterprise RAG" },
+    { value: "productivity", label: "Automation & Agents" },
+  ];
+
+  const pricingOptions: SearchableOption[] = [
+    { value: "FREEMIUM", label: "Freemium", subtitle: "Free tier available" },
+    { value: "FREE", label: "100% Free / Open Source", subtitle: "Zero cost" },
+    { value: "PAID", label: "Paid Only", subtitle: "Subscription or upfront" },
+    { value: "TRIAL", label: "Free Trial Available", subtitle: "Time-limited trial" },
+  ];
 
   const handleInputChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>
@@ -326,36 +343,28 @@ export default function SubmitPage() {
               <label className="block text-xs font-medium text-stone-700 dark:text-stone-300 mb-1.5">
                 Primary Category
               </label>
-              <select
-                name="category"
+              <SearchableSelect
                 value={formData.category}
-                onChange={handleInputChange}
-                className="w-full rounded-lg border border-stone-200 dark:border-stone-800 bg-stone-50 dark:bg-stone-900 px-3.5 py-2 text-xs text-stone-950 dark:text-white focus:border-amber-500/50 focus:outline-none"
-              >
-                <option value="coding">Coding Agents &amp; IDEs</option>
-                <option value="llms">Reasoning LLMs &amp; Base Models</option>
-                <option value="video">Generative Video &amp; 3D</option>
-                <option value="audio">Voice &amp; Realtime Speech</option>
-                <option value="search">AI Search &amp; Enterprise RAG</option>
-                <option value="productivity">Automation &amp; Agents</option>
-              </select>
+                onChange={(val) => setFormData((prev) => ({ ...prev, category: val }))}
+                options={categoryOptions}
+                searchPlaceholder="Search category..."
+                buttonClassName="w-full justify-between py-2 text-stone-950 dark:text-white"
+                dropdownWidth="w-full"
+              />
             </div>
 
             <div>
               <label className="block text-xs font-medium text-stone-700 dark:text-stone-300 mb-1.5">
                 Pricing Model
               </label>
-              <select
-                name="pricingType"
+              <SearchableSelect
                 value={formData.pricingType}
-                onChange={handleInputChange}
-                className="w-full rounded-lg border border-stone-200 dark:border-stone-800 bg-stone-50 dark:bg-stone-900 px-3.5 py-2 text-xs text-stone-950 dark:text-white focus:border-amber-500/50 focus:outline-none"
-              >
-                <option value="FREEMIUM">Freemium (Free tier available)</option>
-                <option value="FREE">100% Free / Open Source</option>
-                <option value="PAID">Paid Only</option>
-                <option value="TRIAL">Free Trial Available</option>
-              </select>
+                onChange={(val) => setFormData((prev) => ({ ...prev, pricingType: val }))}
+                options={pricingOptions}
+                searchPlaceholder="Search pricing..."
+                buttonClassName="w-full justify-between py-2 text-stone-950 dark:text-white"
+                dropdownWidth="w-full"
+              />
             </div>
 
             <div className="sm:col-span-2">
