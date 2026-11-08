@@ -68,7 +68,7 @@ export async function POST(req: Request) {
 
 async function handleIngestion(req: Request) {
   try {
-    const origin = req.headers.get("origin") || process.env.NEXT_PUBLIC_SITE_URL || "https://nexusai.dev";
+    const origin = req.headers.get("origin") || process.env.NEXT_PUBLIC_SITE_URL || "https://listaiassets.com";
     const ingestedList = [];
     const notificationQueue = [];
 
@@ -123,8 +123,8 @@ async function handleIngestion(req: Request) {
 
       const emailTemplate = {
         recipient: source.contactEmail,
-        subject: `[NexusAI] We have indexed ${source.name} on the Frontier AI Directory`,
-        body: `Hello ${source.name} team,\n\nYour tool has been indexed on NexusAI directory after trending across developer communities.\n\nTo customize your listing, embed custom promo banners, or activate our Lead Capture widget, please claim your official profile:\n👉 ${claimUrl}\n\nNexusAI Developer Network`,
+        subject: `[ListAIAssets] We have indexed ${source.name} on the Frontier AI Directory`,
+        body: `Hello ${source.name} team,\n\nYour tool has been indexed on ListAIAssets directory (listaiassets.com) after trending across developer communities.\n\nTo customize your listing, embed custom promo banners, or activate our Lead Capture widget, please claim your official profile:\n👉 ${claimUrl}\n\nListAIAssets Developer Network`,
         claimUrl,
       };
 

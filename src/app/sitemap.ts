@@ -3,7 +3,7 @@ import { DETAILED_TOOLS } from "@/lib/data/tools";
 import { CATEGORIES_DATA } from "@/lib/data/categories";
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://nexusai.dev";
+  const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://listaiassets.com";
   const now = new Date();
 
   // 1. Core Static Pages
@@ -33,10 +33,16 @@ export default function sitemap(): MetadataRoute.Sitemap {
       priority: 0.8,
     },
     {
-      url: `${baseUrl}/dashboard`,
+      url: `${baseUrl}/privacy`,
       lastModified: now,
-      changeFrequency: "weekly",
-      priority: 0.7,
+      changeFrequency: "monthly",
+      priority: 0.5,
+    },
+    {
+      url: `${baseUrl}/terms`,
+      lastModified: now,
+      changeFrequency: "monthly",
+      priority: 0.5,
     },
   ];
 

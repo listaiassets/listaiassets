@@ -2,7 +2,7 @@ import React from "react";
 import { DetailedTool } from "@/lib/data/tools";
 import { CategoryInfo } from "@/lib/data/categories";
 
-const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://nexusai.dev";
+const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://listaiassets.com";
 
 /**
  * 1. Global WebSite & Organization Schema with Google SearchAction
@@ -14,7 +14,7 @@ export function OrganizationAndWebsiteJsonLd() {
       {
         "@type": "Organization",
         "@id": `${SITE_URL}/#organization`,
-        name: "NexusAI",
+        name: "ListAIAssets",
         url: SITE_URL,
         logo: {
           "@type": "ImageObject",
@@ -23,19 +23,19 @@ export function OrganizationAndWebsiteJsonLd() {
           height: 512,
         },
         sameAs: [
-          "https://twitter.com/nexusai_dev",
-          "https://github.com/nexusai-dev",
+          "https://x.com/ListAIAssets",
+          "https://github.com/listaiassets",
         ],
         description:
-          "The verified software intelligence directory and benchmark engine indexing frontier AI models, developer agents, and generative workflows.",
+          "The verified AI directory and benchmark engine indexing frontier AI assets, models, developer agents, and generative workflows on listaiassets.com.",
       },
       {
         "@type": "WebSite",
         "@id": `${SITE_URL}/#website`,
         url: SITE_URL,
-        name: "NexusAI Directory",
+        name: "ListAIAssets Directory",
         description:
-          "Authoritative directory of 4,200+ verified AI tools with empirical latency benchmarks, ratings, and pricing tiers.",
+          "Authoritative directory of 10,000+ verified AI tools, models, and assets with empirical latency benchmarks, ratings, and pricing tiers.",
         publisher: {
           "@id": `${SITE_URL}/#organization`,
         },

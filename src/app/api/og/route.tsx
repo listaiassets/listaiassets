@@ -6,7 +6,7 @@ export const runtime = "nodejs";
 export async function GET(req: NextRequest) {
   try {
     const { searchParams } = new URL(req.url);
-    const title = searchParams.get("title") || "NexusAI — Verified AI Directory";
+    const title = searchParams.get("title") || "ListAIAssets — Verified AI Directory";
     const tagline =
       searchParams.get("tagline") ||
       "Discover, benchmark, and deploy frontier AI models and autonomous software tools.";
@@ -29,26 +29,21 @@ export async function GET(req: NextRequest) {
         >
           {/* Top Brand & Badge */}
           <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-            <div style={{ display: "flex", alignItems: "center", gap: "16px" }}>
-              <div
-                style={{
-                  width: "44px",
-                  height: "44px",
-                  borderRadius: "10px",
-                  backgroundColor: "#ffffff",
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  fontSize: "22px",
-                  fontWeight: "bold",
-                  color: "#0a0a0b",
-                }}
-              >
-                ✦
+            <div style={{ display: "flex", alignItems: "center", gap: "14px" }}>
+              <svg width="48" height="48" viewBox="0 0 100 100">
+                <rect x="2" y="2" width="96" height="96" rx="23" fill="#14151b" stroke="#292524" strokeWidth="2.5" />
+                <path d="M 50 76 L 76 63 L 76 69 L 50 82 L 24 69 L 24 63 Z" fill="#44403c" />
+                <path d="M 50 63 L 76 50 L 50 37 L 24 50 Z" fill="#292524" stroke="#44403c" strokeWidth="1.5" />
+                <path d="M 50 62 L 76 49 L 76 55 L 50 68 L 24 55 L 24 49 Z" fill="#a8a29e" />
+                <path d="M 50 49 L 76 36 L 50 23 L 24 36 Z" fill="#ffffff" />
+                <path d="M 50 47 L 76 34 L 76 39 L 50 52 L 24 39 L 24 34 Z" fill="#c2410c" />
+                <path d="M 50 34 L 76 21 L 50 8 L 24 21 Z" fill="#f59e0b" />
+                <path d="M 80 12 C 80 16 83.5 19.5 87.5 19.5 C 83.5 19.5 80 23 80 27 C 80 23 76.5 19.5 72.5 19.5 C 76.5 19.5 80 16 80 12 Z" fill="#fbbf24" />
+              </svg>
+              <div style={{ display: "flex", alignItems: "baseline", fontSize: "28px", fontWeight: "800", letterSpacing: "-0.5px" }}>
+                <span style={{ color: "#ffffff" }}>listaiassets</span>
+                <span style={{ color: "#f59e0b" }}>.com</span>
               </div>
-              <span style={{ fontSize: "26px", fontWeight: "bold", color: "#ffffff", letterSpacing: "-0.5px" }}>
-                NexusAI
-              </span>
             </div>
 
             <div
@@ -115,9 +110,10 @@ export async function GET(req: NextRequest) {
               </span>
             </div>
 
-            <span style={{ fontSize: "15px", color: "#ffffff", fontWeight: "600" }}>
-              nexusai.dev
-            </span>
+            <div style={{ display: "flex", alignItems: "baseline", fontSize: "15px", fontWeight: "700" }}>
+              <span style={{ color: "#ffffff" }}>listaiassets</span>
+              <span style={{ color: "#ff6600" }}>.com</span>
+            </div>
           </div>
         </div>
       ),

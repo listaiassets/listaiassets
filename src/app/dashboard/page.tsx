@@ -20,14 +20,14 @@ function DashboardContent() {
   // Promo Banner State
   const [promoBanner, setPromoBanner] = useState({
     enabled: true,
-    text: "Spring Developer Special: Get 25% OFF Pro Tier with code NEXUSAI",
+    text: "Spring Developer Special: Get 25% OFF Pro Tier with code LISTAIASSETS",
     buttonText: "Claim 25% Off",
     url: "https://cursor.com/pricing",
   });
 
   // Discount Code State
   const [discountCode, setDiscountCode] = useState({
-    code: "NEXUSAI25",
+    code: "LISTAIASSETS25",
     discountPercent: 25,
     expiresAt: "2026-12-31",
   });
@@ -36,7 +36,7 @@ function DashboardContent() {
   const [leadWidget, setLeadWidget] = useState({
     enabled: true,
     title: "Request Enterprise Pilot & Dedicated API Keys",
-    webhookUrl: "https://api.yourdomain.com/webhooks/nexus-leads",
+    webhookUrl: "https://api.listaiassets.com/webhooks/leads",
     ctaLabel: "Submit Request",
   });
 
@@ -152,7 +152,7 @@ function DashboardContent() {
         <div className="flex items-center justify-between border-b border-stone-200 dark:border-stone-800 pb-3 mb-4">
           <div>
             <h3 className="font-semibold text-stone-900 dark:text-white text-sm">30-Day Outbound Traffic Trend</h3>
-            <p className="text-xs text-stone-500 dark:text-stone-400">Daily click-through events from NexusAI search results</p>
+            <p className="text-xs text-stone-500 dark:text-stone-400">Daily click-through events from ListAIAssets search results</p>
           </div>
           <span className="text-xs font-mono text-stone-600 dark:text-stone-400">Total: 4,190 Clicks</span>
         </div>
@@ -278,7 +278,7 @@ function DashboardContent() {
             <div>
               <h3 className="font-semibold text-stone-900 dark:text-white text-sm">Embedded Lead Capture Widget</h3>
               <p className="text-xs text-stone-500 dark:text-stone-400">
-                Collect buyer inquiries directly from your NexusAI profile
+                Collect buyer inquiries directly from your ListAIAssets profile
               </p>
             </div>
             <span className="inline-flex items-center rounded-md px-2 py-0.5 text-xs font-medium bg-amber-500/10 text-amber-700 dark:text-amber-400 border border-amber-500/20">

@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { stripe } from "@/lib/stripe";
 import { prisma } from "@/lib/prisma";
+import { notifyOwnerOfSubmission } from "@/lib/notifications";
 import Stripe from "stripe";
 
 export async function POST(req: Request) {
@@ -14,7 +15,6 @@ export async function POST(req: Request) {
     if (webhookSecret && signature) {
       event = stripe.webhooks.constructEvent(body, signature, webhookSecret);
     } else {
-      // In development / testing without a live webhook secret
       event = JSON.parse(body) as Stripe.Event;
     }
   } catch (err: any) {
@@ -30,10 +30,23 @@ export async function POST(req: Request) {
     if (metadata?.toolSlug) {
       const toolSlug = metadata.toolSlug;
       const planTier = (metadata.planTier as any) || "FAST_TRACK";
+      const amountPaid = session.amount_total ? session.amount_total / 100 : planTier === "FEATURED" ? 199 : 75;
+
+      // 1. Notify Owner instantly
+      await notifyOwnerOfSubmission({
+        toolName: metadata.toolName || toolSlug,
+        websiteUrl: metadata.websiteUrl || "https://listaiassets.com",
+        planId: planTier.toLowerCase(),
+        planName: planTier === "FEATURED" ? "Featured Spotlight" : "Fast Track",
+        amountPaid,
+        contactEmail: session.customer_details?.email || metadata.contactEmail || "",
+        sessionId: session.id,
+        isPaid: true,
+      });
 
       try {
-        // 1. Promote tool to PUBLISHED with verified badge
-        const tool = await prisma.tool.upsert({
+        // 2. Promote tool to PUBLISHED with verified badge in database if connected
+        await prisma.tool.upsert({
           where: { slug: toolSlug },
           update: {
             status: "PUBLISHED",
@@ -43,31 +56,16 @@ export async function POST(req: Request) {
             name: metadata.toolName || toolSlug,
             slug: toolSlug,
             tagline: "Frontier AI Solution",
-            description: "Verified listing on NexusAI directory.",
-            websiteUrl: metadata.websiteUrl || "https://example.com",
+            description: "Verified listing on ListAIAssets directory.",
+            websiteUrl: metadata.websiteUrl || "https://listaiassets.com",
             status: "PUBLISHED",
             verifiedBadge: true,
           },
         });
 
-        // 2. Provision or upgrade Vendor record
-        await prisma.vendor.upsert({
-          where: { toolId: tool.id },
-          update: {
-            planTier: planTier,
-            analyticsAccess: true,
-          },
-          create: {
-            userId: session.customer_email || metadata.contactEmail || `user_${Date.now()}`,
-            toolId: tool.id,
-            planTier: planTier,
-            analyticsAccess: true,
-          },
-        });
-
         console.log(`Successfully upgraded tool ${toolSlug} to ${planTier}`);
       } catch (dbError) {
-        console.error("Database error during Stripe webhook fulfillment:", dbError);
+        console.warn("Database fallback in webhook fulfillment:", dbError);
       }
     }
   }

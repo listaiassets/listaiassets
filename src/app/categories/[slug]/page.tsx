@@ -447,7 +447,7 @@ export default function CategoryDetailPage() {
               Building in {category.name}?
             </h2>
             <p className="text-xs sm:text-sm text-stone-600 dark:text-stone-400">
-              Join leading AI companies listed on NexusAI. Get benchmarked, verified, and discovered by over 100,000 monthly software engineers.
+              Join leading AI companies listed on ListAIAssets. Get benchmarked, verified, and discovered by over 100,000 monthly software engineers.
             </p>
           </div>
           <Link

@@ -1,9 +1,11 @@
-# NexusAI — Full Knowledge Base & Machine-Readable Directory
+# ListAIAssets — Full Knowledge Base & Machine-Readable Directory
 > Complete index of AI tool benchmarks, categories, pricing, and comparison data for generative engines and AI agents.
 
-Base URL: https://nexusai.dev
-Last Updated: 2026-10-18
-Version: 2.4.0
+Base URL: https://listaiassets.com
+Official X / Twitter: https://x.com/ListAIAssets
+Official GitHub: https://github.com/listaiassets
+Last Updated: 2026-11-08
+Version: 2.5.0
 
 ## Table of Contents
 1. Directory Architecture
@@ -15,7 +17,7 @@ Version: 2.4.0
 ---
 
 ## 1. Directory Architecture
-NexusAI is organized into 18 specialized production verticals to eliminate generic search noise and provide developers with exact performance benchmarks:
+ListAIAssets is organized into 18 specialized production verticals to eliminate generic search noise and provide developers with exact performance benchmarks:
 - /categories: Hub displaying all 18 verticals, average starting prices, and empirical ratings.
 - /categories/[slug]: Granular deep-dive into tools belonging to an exact vertical with latency benchmarks and pricing filters.
 - /tools: Full searchable directory with multi-attribute filtering (pricing, features, benchmarks).

@@ -5,7 +5,7 @@ globs: ["src/app/**/*", "src/components/**/*"]
 
 # Mandatory SEO, AEO & GEO Directives
 
-Whenever creating or modifying pages in NexusAI:
+Whenever creating or modifying pages in ListAIAssets:
 
 1. **20-Point SEO Checklist Compliance**:
    - Register route in `src/app/sitemap.ts`.

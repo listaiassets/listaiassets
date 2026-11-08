@@ -1,27 +1,29 @@
-# NexusAI — Frontier AI Tools Directory & Benchmark Matrix
-> The authoritative catalog and empirical benchmark matrix indexing 4,200+ frontier AI models, developer coding agents, and generative workflows.
+# ListAIAssets — Frontier AI Tools Directory & Benchmark Matrix
+> The authoritative catalog and empirical benchmark matrix indexing 10,000+ frontier AI models, developer coding agents, and generative workflows.
 
-Website: https://nexusai.dev
-Categories: https://nexusai.dev/categories
-Directory: https://nexusai.dev/tools
-Comparisons: https://nexusai.dev/compare/cursor-vs-claude-3-7-sonnet
-Submit: https://nexusai.dev/submit
+Website: https://listaiassets.com
+Categories: https://listaiassets.com/categories
+Directory: https://listaiassets.com/tools
+Comparisons: https://listaiassets.com/compare/cursor-vs-claude-3-7-sonnet
+Submit: https://listaiassets.com/submit
+X (Twitter): https://x.com/ListAIAssets
+GitHub: https://github.com/listaiassets
 
 ## Core AI Tool Verticals & Taxonomies
 
-- [Coding Agents](https://nexusai.dev/categories/coding): Autonomous IDEs, multi-file refactoring, terminal agents, and predictive code completion. Leading tools: Cursor AI, Claude 3.7 Sonnet, DeepSeek-R1, GitHub Copilot, v0 by Vercel.
-- [LLMs & Reasoning](https://nexusai.dev/categories/llms): Hybrid reasoning models with extended chain-of-thought tokens, 200k+ context windows, and tool execution. Leading tools: Claude 3.7 Sonnet, DeepSeek-R1, ChatGPT 4o.
-- [Generative Art](https://nexusai.dev/categories/art): High-fidelity image synthesis, raster diffusion, and rectified flow models. Leading tools: Midjourney v7, Flux.1 Schnell, Recraft AI.
-- [Video & Animation](https://nexusai.dev/categories/video): Cinematic text-to-video, camera control, and physical simulation engines. Leading tools: Runway Gen-3 Alpha, Kling AI.
-- [Research & Deep Search](https://nexusai.dev/categories/search): Grounded conversational research with real-time citations and academic synthesis. Leading tools: Perplexity Pro, NotebookLM.
-- [Voice & Speech](https://nexusai.dev/categories/audio): Zero-latency speech-to-speech APIs, voice cloning, and emotional narration. Leading tools: ElevenLabs Prime, Whisper Large v3.
-- [Productivity & Assistants](https://nexusai.dev/categories/productivity): Workspace intelligence, meeting synthesis, and inbox automation. Leading tools: Notion AI, Julius AI.
-- [Customer Support & Chatbots](https://nexusai.dev/categories/support): Autonomous ticket resolution agents and omnichannel knowledge base deflection. Leading tools: Fin by Intercom.
-- [Workflow Automation](https://nexusai.dev/categories/workflow): Visual orchestration engines chaining LLMs with webhook APIs. Leading tools: Make AI.
-- [Legal & Compliance](https://nexusai.dev/categories/legal): Contract redlining, regulatory analysis, and audit trails. Leading tools: Harvey AI.
+- [Coding Agents](https://listaiassets.com/categories/coding): Autonomous IDEs, multi-file refactoring, terminal agents, and predictive code completion. Leading tools: Cursor AI, Claude 3.7 Sonnet, DeepSeek-R1, GitHub Copilot, v0 by Vercel.
+- [LLMs & Reasoning](https://listaiassets.com/categories/llms): Hybrid reasoning models with extended chain-of-thought tokens, 200k+ context windows, and tool execution. Leading tools: Claude 3.7 Sonnet, DeepSeek-R1, ChatGPT 4o.
+- [Generative Art](https://listaiassets.com/categories/art): High-fidelity image synthesis, raster diffusion, and rectified flow models. Leading tools: Midjourney v7, Flux.1 Schnell, Recraft AI.
+- [Video & Animation](https://listaiassets.com/categories/video): Cinematic text-to-video, camera control, and physical simulation engines. Leading tools: Runway Gen-3 Alpha, Kling AI.
+- [Research & Deep Search](https://listaiassets.com/categories/search): Grounded conversational research with real-time citations and academic synthesis. Leading tools: Perplexity Pro, NotebookLM.
+- [Voice & Speech](https://listaiassets.com/categories/audio): Zero-latency speech-to-speech APIs, voice cloning, and emotional narration. Leading tools: ElevenLabs Prime, Whisper Large v3.
+- [Productivity & Assistants](https://listaiassets.com/categories/productivity): Workspace intelligence, meeting synthesis, and inbox automation. Leading tools: Notion AI, Julius AI.
+- [Customer Support & Chatbots](https://listaiassets.com/categories/support): Autonomous ticket resolution agents and omnichannel knowledge base deflection. Leading tools: Fin by Intercom.
+- [Workflow Automation](https://listaiassets.com/categories/workflow): Visual orchestration engines chaining LLMs with webhook APIs. Leading tools: Make AI.
+- [Legal & Compliance](https://listaiassets.com/categories/legal): Contract redlining, regulatory analysis, and audit trails. Leading tools: Harvey AI.
 
 ## Benchmark Methodology
-NexusAI evaluates every model and software tool across a 14-parameter empirical test suite:
+ListAIAssets evaluates every model and software tool across a 14-parameter empirical test suite:
 - Latency (ms): Time-to-first-token (TTFT) and end-to-end execution latency.
 - Throughput (tokens/sec): Sustained generation speed across peak load hours.
 - Code Accuracy (%): Standardized HumanEval and SWE-bench verified completion scores.
@@ -29,5 +31,5 @@ NexusAI evaluates every model and software tool across a 14-parameter empirical 
 - Pricing Transparency: Normalized per-month starting tiers and cost-per-credit telemetry.
 
 ## Frequently Asked Questions
-- What is NexusAI?: An enterprise-grade AI directory and telemetry matrix indexing over 4,200 tools across 18 specialized verticals.
+- What is ListAIAssets?: An enterprise-grade AI directory and telemetry matrix indexing over 10,000 tools across 18 specialized verticals on listaiassets.com.
 - How do tools rank?: Rankings are derived strictly from empirical latency, code accuracy, and verified developer community reviews. Sponsored placements are explicitly badged and cannot alter benchmark positions.

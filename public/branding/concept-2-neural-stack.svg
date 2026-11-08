@@ -1,0 +1,41 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 64" width="320" height="64" fill="none">
+  <defs>
+    <linearGradient id="c2-bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#181a20" />
+      <stop offset="100%" stop-color="#0c0d11" />
+    </linearGradient>
+    <linearGradient id="c2-amber" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#fbbf24" />
+      <stop offset="100%" stop-color="#ea580c" />
+    </linearGradient>
+    <filter id="c2-glow" x="-30%" y="-30%" width="160%" height="160%">
+      <feDropShadow dx="0" dy="2" stdDeviation="3" flood-color="#f59e0b" flood-opacity="0.4" />
+    </filter>
+  </defs>
+
+  <!-- Left Icon Badge: Modular Neural Directory -->
+  <g transform="translate(6, 6) scale(0.52)">
+    <rect x="2" y="2" width="96" height="96" rx="24" fill="url(#c2-bg)" stroke="#27272a" stroke-width="2.5" />
+
+    <!-- Three Categorized Listing Bars -->
+    <!-- Bottom Bar (Foundation Base) -->
+    <rect x="22" y="66" width="34" height="9" rx="4.5" fill="#57534e" />
+
+    <!-- Middle Bar (Expanded Intelligence) -->
+    <rect x="22" y="48" width="50" height="9" rx="4.5" fill="#ffffff" />
+
+    <!-- Top Primary Node with Ascending Accent -->
+    <rect x="22" y="30" width="30" height="9" rx="4.5" fill="url(#c2-amber)" />
+
+    <!-- Integrated AI Spark Core (Floating Apex) -->
+    <path d="M 72 20 C 72 26 77 31 83 31 C 77 31 72 36 72 42 C 72 36 67 31 61 31 C 67 31 72 26 72 20 Z" fill="url(#c2-amber)" filter="url(#c2-glow)" />
+    <circle cx="72" cy="31" r="2" fill="#ffffff" />
+  </g>
+
+  <!-- Wordmark -->
+  <text x="68" y="42" font-family="system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="28" font-weight="900" letter-spacing="-0.035em">
+    <tspan fill="#ffffff">listaiassets</tspan>
+    <tspan fill="url(#c2-amber)">.com</tspan>
+  </text>
+</svg>
+

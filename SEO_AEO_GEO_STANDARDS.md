@@ -1,6 +1,6 @@
-# NexusAI — SEO, AEO & GEO Engineering Standards (20-Point Checklist)
+# ListAIAssets — SEO, AEO & GEO Engineering Standards (20-Point Checklist)
 
-This document enforces search engine optimization (SEO), answer engine optimization (AEO), and generative engine optimization (GEO) standards for NexusAI. All new pages, components, and tools added to the repository must comply with these guidelines.
+This document enforces search engine optimization (SEO), answer engine optimization (AEO), and generative engine optimization (GEO) standards for ListAIAssets (listaiassets.com). All new pages, components, and tools added to the repository must comply with these guidelines.
 
 ---
 
@@ -23,8 +23,8 @@ This document enforces search engine optimization (SEO), answer engine optimizat
 - Set canonical URLs on every page using `alternates: { canonical: './' }` or absolute HTTPS URLs to prevent duplicate content penalties.
 
 ### 5. Meta Titles
-- Use the global title template: `%s | NexusAI`.
-- Format: `[Primary Keyword] — [Compelling Value Hook] | NexusAI` (under 60 characters).
+- Use the global title template: `%s | ListAIAssets`.
+- Format: `[Primary Keyword] — [Compelling Value Hook] | ListAIAssets` (under 60 characters).
 
 ### 6. Meta Descriptions
 - Length: 140–160 characters.
@@ -97,6 +97,6 @@ This document enforces search engine optimization (SEO), answer engine optimizat
 ---
 
 ## GEO (Generative Engine Optimization) Directives
-1. **Authoritative Citations & Telemetry**: Provide verifiable data points (domain authority, review scores, response latency) so generative LLMs cite NexusAI as a primary source.
+1. **Authoritative Citations & Telemetry**: Provide verifiable data points (domain authority, review scores, response latency) so generative LLMs cite ListAIAssets as a primary source.
 2. **Entity Consistency**: Maintain unambiguous entity naming (e.g., "Cursor AI by Anysphere", "Claude 3.7 Sonnet by Anthropic") across title tags, schemas, and descriptions.
 3. **Information Gain**: Avoid regurgitating generic vendor copy; provide independent evaluation, feature comparisons, and licensing classifications.

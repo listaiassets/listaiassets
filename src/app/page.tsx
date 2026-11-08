@@ -236,10 +236,10 @@ export default function Home() {
             transition={{ duration: 0.3 }}
             className="inline-flex items-center gap-2 rounded-full border border-stone-200 dark:border-stone-800 bg-white dark:bg-[#1c1917] px-3.5 py-1 text-xs text-stone-700 dark:text-stone-300 shadow-xs"
           >
-            <span className="flex h-1.5 w-1.5 rounded-full bg-amber-500 animate-pulse" />
-            <span className="font-medium">Verified Software Intelligence</span>
-            <span className="text-stone-400 dark:text-stone-600">•</span>
-            <span className="text-stone-500 dark:text-stone-400">Q2 2026 Directory</span>
+            <span className="flex h-1.5 w-1.5 rounded-full bg-amber-500" />
+            <span className="font-semibold text-stone-900 dark:text-white">The Independent AI Directory</span>
+            <span className="text-stone-300 dark:text-stone-700">•</span>
+            <span className="text-stone-500 dark:text-stone-400">1,500+ Curated Tools &amp; Models</span>
           </motion.div>
 
           {/* Crisp Headings - Clean High Contrast */}
@@ -249,7 +249,7 @@ export default function Home() {
             transition={{ duration: 0.35, delay: 0.1 }}
             className="mt-6 text-4xl font-semibold tracking-tight text-stone-900 dark:text-white sm:text-6xl"
           >
-            The Verified AI Directory for Modern Engineering Teams
+            Find the right AI tool for your workflow
           </motion.h1>
 
           {/* Clean Muted Subtitle */}
@@ -259,7 +259,7 @@ export default function Home() {
             transition={{ duration: 0.35, delay: 0.18 }}
             className="mx-auto mt-5 max-w-2xl text-base text-stone-600 dark:text-stone-400 leading-relaxed"
           >
-            Discover, benchmark, and deploy frontier AI models, developer agents, and generative workflows with transparent telemetry and verified community reviews.
+            Discover, evaluate, and compare verified artificial intelligence software, frontier foundation models, and coding agents with transparent pricing and real benchmarks.
           </motion.p>
 
           {/* CONVERSATIONAL AI AGENT FINDER */}
@@ -280,20 +280,20 @@ export default function Home() {
             className="mx-auto mt-14 grid max-w-4xl grid-cols-2 gap-3 sm:grid-cols-4"
           >
             <div className="rounded-xl border border-stone-200 dark:border-stone-800 bg-white dark:bg-[#1c1917] p-4 text-left transition-colors hover:border-amber-500/30 shadow-xs dark:shadow-none">
-              <div className="text-2xl font-bold font-mono text-stone-900 dark:text-white">10,000+</div>
-              <div className="mt-0.5 text-xs text-stone-500 dark:text-stone-400">AI Tools Indexed</div>
+              <div className="text-2xl font-bold font-mono text-stone-900 dark:text-white">1,500+</div>
+              <div className="mt-0.5 text-xs text-stone-500 dark:text-stone-400">Curated AI Tools &amp; Models</div>
             </div>
             <div className="rounded-xl border border-stone-200 dark:border-stone-800 bg-white dark:bg-[#1c1917] p-4 text-left transition-colors hover:border-amber-500/30 shadow-xs dark:shadow-none">
-              <div className="text-2xl font-bold font-mono text-stone-900 dark:text-white">100%</div>
-              <div className="mt-0.5 text-xs text-stone-500 dark:text-stone-400">Verified Dofollow Directory</div>
+              <div className="text-2xl font-bold font-mono text-stone-900 dark:text-white">18</div>
+              <div className="mt-0.5 text-xs text-stone-500 dark:text-stone-400">Specialized Categories</div>
             </div>
             <div className="rounded-xl border border-stone-200 dark:border-stone-800 bg-white dark:bg-[#1c1917] p-4 text-left transition-colors hover:border-amber-500/30 shadow-xs dark:shadow-none">
-              <div className="text-2xl font-bold font-mono text-stone-900 dark:text-white">30K+</div>
-              <div className="mt-0.5 text-xs text-stone-500 dark:text-stone-400">Monthly Buyers & Founders</div>
+              <div className="text-2xl font-bold font-mono text-stone-900 dark:text-white">Real-Time</div>
+              <div className="mt-0.5 text-xs text-stone-500 dark:text-stone-400">Latency &amp; Speed Telemetry</div>
             </div>
             <div className="rounded-xl border border-stone-200 dark:border-stone-800 bg-white dark:bg-[#1c1917] p-4 text-left transition-colors hover:border-amber-500/30 shadow-xs dark:shadow-none">
-              <div className="text-2xl font-bold font-mono text-stone-900 dark:text-white">24h</div>
-              <div className="mt-0.5 text-xs text-stone-500 dark:text-stone-400">Guaranteed Publishing</div>
+              <div className="text-2xl font-bold font-mono text-stone-900 dark:text-white">12 Hours</div>
+              <div className="mt-0.5 text-xs text-stone-500 dark:text-stone-400">Priority Review SLA</div>
             </div>
           </motion.div>
         </div>
@@ -305,13 +305,13 @@ export default function Home() {
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-stone-200 dark:border-stone-800 pb-5">
             <div>
               <div className="flex items-center gap-2">
-                <span className="inline-flex items-center rounded-md px-2 py-0.5 text-xs font-medium bg-amber-500/10 text-amber-700 dark:text-amber-400 border border-amber-500/20">
-                  Comparison Engine
+                <span className="inline-flex items-center rounded-md px-2 py-0.5 text-xs font-semibold bg-amber-500/10 text-amber-700 dark:text-amber-400 border border-amber-500/20">
+                  Side-by-Side Matrix
                 </span>
-                <span className="text-xs text-stone-500 dark:text-stone-400 font-mono">Side-by-Side Telemetry</span>
+                <span className="text-xs text-stone-500 dark:text-stone-400 font-mono">Objective Benchmarks</span>
               </div>
               <h2 className="mt-2 text-xl font-bold text-stone-900 dark:text-white tracking-tight">
-                Programmatic Head-to-Head Duel
+                Compare AI Models Side-by-Side
               </h2>
             </div>
             <div className="text-xs text-stone-500 dark:text-stone-400 max-w-sm">
@@ -441,58 +441,66 @@ export default function Home() {
         )}
       </section>
 
-      {/* ENTERPRISE DIRECTORY ARCHITECTURE SECTION */}
-      <section className="mx-auto max-w-7xl px-4 py-14 sm:px-6 lg:px-8 border-t border-stone-200 dark:border-stone-800">
+      {/* WHY TEAMS TRUST LISTAIASSETS & FOUNDER CTA */}
+      <section className="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8 border-t border-stone-200 dark:border-stone-800">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
           <div>
-            <span className="inline-flex items-center rounded-md px-2 py-0.5 text-xs font-medium bg-amber-500/10 text-amber-700 dark:text-amber-400 border border-amber-500/20">
-              Architecture & Transparency
+            <span className="inline-flex items-center rounded-md px-2.5 py-0.5 text-xs font-semibold bg-amber-500/10 text-amber-700 dark:text-amber-400 border border-amber-500/20">
+              Editorial Standards
             </span>
             <h2 className="mt-3 text-2xl font-bold text-stone-900 dark:text-white tracking-tight sm:text-3xl">
-              Engineered for Enterprise Discovery & Direct Sourcing
+              Independent, Verified, and Data-Driven
             </h2>
             <p className="mt-3 text-sm text-stone-600 dark:text-stone-400 leading-relaxed">
-              NexusAI indexes software tools using transparent benchmarks, verified community audits, and programmatic telemetry. Built with high-speed caching and direct PostgreSQL data modeling.
+              ListAIAssets helps engineering teams and founders find the right AI software without wading through sponsored marketing hype. We evaluate real response speeds, compare token economics, and verify developer utility.
             </p>
 
-            <div className="mt-5 space-y-2.5 text-xs text-stone-700 dark:text-stone-300">
-              <div className="flex items-center gap-2">
+            <div className="mt-6 space-y-3 text-xs text-stone-700 dark:text-stone-300">
+              <div className="flex items-center gap-2.5">
                 <CheckCircle2 className="h-4 w-4 text-amber-600 dark:text-amber-500 shrink-0" />
-                <span>Standardized latency and code accuracy benchmark telemetry</span>
+                <span>Empirical latency, TTFT, and code accuracy benchmarks</span>
               </div>
-              <div className="flex items-center gap-2">
+              <div className="flex items-center gap-2.5">
                 <CheckCircle2 className="h-4 w-4 text-amber-600 dark:text-amber-500 shrink-0" />
-                <span>100% Do-Follow backlinks for verified maintainers and founders</span>
+                <span>Direct links to official documentation, APIs, and GitHub repositories</span>
               </div>
-              <div className="flex items-center gap-2">
+              <div className="flex items-center gap-2.5">
                 <CheckCircle2 className="h-4 w-4 text-amber-600 dark:text-amber-500 shrink-0" />
-                <span>Automatic daily ingestion from GitHub Trending, Product Hunt, and Hugging Face</span>
+                <span>Community-audited with authentic ratings from verified developers</span>
               </div>
             </div>
           </div>
 
-          {/* Clean Terminal Box */}
-          <div className="rounded-xl border border-stone-200 dark:border-stone-800 bg-white dark:bg-[#1c1917] p-5 font-mono text-xs shadow-md dark:shadow-xl">
-            <div className="flex items-center justify-between border-b border-stone-200 dark:border-stone-800 pb-3 text-stone-500 dark:text-stone-400">
-              <div className="flex items-center gap-2">
-                <div className="h-2.5 w-2.5 rounded-full bg-stone-300 dark:bg-stone-700" />
-                <div className="h-2.5 w-2.5 rounded-full bg-stone-300 dark:bg-stone-700" />
-                <div className="h-2.5 w-2.5 rounded-full bg-stone-300 dark:bg-stone-700" />
-                <span className="ml-2 text-[11px] text-stone-600 dark:text-stone-400">nexusai.config.ts</span>
-              </div>
-              <Badge variant="amber" size="sm" glowing={false}>
-                Production Ready
+          {/* Founder Submission CTA Card */}
+          <div className="rounded-2xl border border-stone-200 dark:border-stone-800 bg-white dark:bg-[#1c1917] p-7 shadow-xs dark:shadow-md relative overflow-hidden">
+            <div className="flex items-center justify-between">
+              <span className="text-[11px] font-mono uppercase tracking-wider text-amber-700 dark:text-amber-400 font-semibold">
+                For Founders &amp; Creators
+              </span>
+              <Badge variant="amber" size="sm">
+                Open for Submissions
               </Badge>
             </div>
-            <pre className="mt-4 text-stone-800 dark:text-stone-300 overflow-x-auto text-[11px] leading-relaxed">
-{`export const directoryConfig = {
-  version: "2026.2",
-  catalogSize: "10,000+",
-  indexingRate: "Real-time edge sync",
-  verification: "Automated + Human expert audit",
-  apiSupport: "REST + pgvector semantic retrieval",
-};`}
-            </pre>
+
+            <h3 className="mt-3 text-xl font-bold text-stone-900 dark:text-white">
+              Building an AI model, agent, or tool?
+            </h3>
+            <p className="mt-2 text-xs text-stone-600 dark:text-stone-400 leading-relaxed">
+              Showcase your product in front of 35,000+ active software engineers, tech buyers, and decision-makers looking for AI solutions.
+            </p>
+
+            <div className="mt-6 flex flex-col sm:flex-row items-center gap-3">
+              <Link
+                href="/submit"
+                className="w-full sm:w-auto inline-flex items-center justify-center gap-1.5 rounded-lg bg-amber-600 px-5 py-2.5 text-xs font-semibold text-white transition-all hover:bg-amber-500 shadow-xs active:scale-[0.98]"
+              >
+                <span>Submit Your AI Tool</span>
+                <ArrowRight className="h-3.5 w-3.5" />
+              </Link>
+              <span className="text-[11px] text-stone-500">
+                12-Hour Priority Review available
+              </span>
+            </div>
           </div>
         </div>
       </section>

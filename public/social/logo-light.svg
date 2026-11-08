@@ -1,0 +1,37 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 300" width="2400" height="600" fill="none">
+  <rect width="1200" height="300" fill="#ffffff" />
+  <defs>
+    <linearGradient id="ld-bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#181a20" />
+      <stop offset="100%" stop-color="#0c0d11" />
+    </linearGradient>
+    <linearGradient id="ld-amber" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#fbbf24" />
+      <stop offset="50%" stop-color="#f59e0b" />
+      <stop offset="100%" stop-color="#ea580c" />
+    </linearGradient>
+    <linearGradient id="ld-plate" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#ffffff" stop-opacity="0.95" />
+      <stop offset="100%" stop-color="#d6d3d1" stop-opacity="0.8" />
+    </linearGradient>
+    <filter id="ld-glow" x="-30%" y="-30%" width="160%" height="160%">
+      <feDropShadow dx="0" dy="6" stdDeviation="8" flood-color="#f59e0b" flood-opacity="0.4" />
+    </filter>
+  </defs>
+
+  <g transform="translate(60, 50) scale(2.0)">
+    <rect x="2" y="2" width="96" height="96" rx="23" fill="url(#ld-bg)" stroke="#27272a" stroke-width="2.5" />
+    <path d="M 50 76 L 76 63 L 76 69 L 50 82 L 24 69 L 24 63 Z" fill="#44403c" />
+    <path d="M 50 63 L 76 50 L 50 37 L 24 50 Z" fill="#292524" stroke="#44403c" stroke-width="1.5" />
+    <path d="M 50 62 L 76 49 L 76 55 L 50 68 L 24 55 L 24 49 Z" fill="#a8a29e" />
+    <path d="M 50 49 L 76 36 L 50 23 L 24 36 Z" fill="url(#ld-plate)" />
+    <path d="M 50 47 L 76 34 L 76 39 L 50 52 L 24 39 L 24 34 Z" fill="#c2410c" />
+    <path d="M 50 34 L 76 21 L 50 8 L 24 21 Z" fill="url(#ld-amber)" filter="url(#ld-glow)" />
+    <path d="M 80 12 C 80 16 83.5 19.5 87.5 19.5 C 83.5 19.5 80 23 80 27 C 80 23 76.5 19.5 72.5 19.5 C 76.5 19.5 80 16 80 12 Z" fill="#fbbf24" filter="url(#ld-glow)" />
+  </g>
+
+  <text x="300" y="185" font-family="system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="115" font-weight="900" letter-spacing="-0.035em">
+    <tspan fill="#1c1917">listaiassets</tspan>
+    <tspan fill="url(#ld-amber)">.com</tspan>
+  </text>
+</svg>

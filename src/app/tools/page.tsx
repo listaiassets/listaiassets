@@ -150,30 +150,31 @@ function ToolsContent() {
   return (
     <div className="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
       {/* Header Bar */}
-      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-stone-200 dark:border-stone-800 pb-6">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-stone-200 dark:border-stone-800 pb-6">
         <div>
           <div className="flex items-center gap-2">
-            <span className="inline-flex items-center rounded-md px-2 py-0.5 text-xs font-medium bg-amber-500/10 text-amber-700 dark:text-amber-400 border border-amber-500/20">
-              Directory Registry
+            <span className="inline-flex items-center rounded-md px-2 py-0.5 text-xs font-semibold bg-amber-500/10 text-amber-700 dark:text-amber-400 border border-amber-500/20">
+              AI Software Catalog
             </span>
-            <span className="text-xs text-stone-500 dark:text-stone-400 font-mono">
-              Live Edge Index
+            <span className="text-xs text-stone-500 dark:text-stone-400">
+              Independent Directory
             </span>
           </div>
           <h1 className="mt-2 text-2xl font-bold tracking-tight text-stone-900 dark:text-white sm:text-3xl">
-            Software &amp; Model Directory
+            Explore AI Tools &amp; Models
           </h1>
           <p className="mt-1 text-xs text-stone-600 dark:text-stone-400">
-            Multi-attribute filtered registry with benchmark telemetry and feature checklists.
+            Filter through verified models, developer agents, and productivity apps by capability, pricing, and license.
           </p>
         </div>
 
-        {/* Live URL Pill Indicator */}
-        <div className="flex items-center gap-2 rounded-lg border border-stone-200 dark:border-stone-800 bg-white dark:bg-[#1c1917] px-3 py-1.5 text-xs font-mono text-stone-600 dark:text-stone-400 shadow-xs">
-          <span className="text-amber-700 dark:text-amber-400 font-semibold">URL</span>
-          <span className="max-w-[240px] truncate text-stone-800 dark:text-stone-200">
-            /tools?{searchParams.toString() || "all"}
+        {/* Counter Badge */}
+        <div className="flex items-center gap-2 rounded-lg border border-stone-200 dark:border-stone-800 bg-white dark:bg-[#1c1917] px-3.5 py-1.5 text-xs text-stone-600 dark:text-stone-400 shadow-xs">
+          <span>Showing</span>
+          <span className="font-mono font-bold text-stone-900 dark:text-white">
+            {filteredTools.length}
           </span>
+          <span>verified tools</span>
         </div>
       </div>
 
@@ -183,7 +184,7 @@ function ToolsContent() {
           <div className="flex items-center justify-between border-b border-stone-200 dark:border-stone-800 pb-3">
             <div className="flex items-center gap-2 text-xs font-semibold text-stone-900 dark:text-white">
               <SlidersHorizontal className="h-3.5 w-3.5 text-amber-600 dark:text-amber-500" />
-              <span>Filter Engine</span>
+              <span>Filter Catalog</span>
             </div>
             <button
               onClick={resetFilters}

@@ -1,0 +1,51 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1500 500" width="1500" height="500" fill="none">
+  <rect width="1500" height="500" fill="#0c0a09" />
+  <defs>
+    <radialGradient id="t-glow" cx="80%" cy="40%" r="60%">
+      <stop offset="0%" stop-color="#ea580c" stop-opacity="0.18" />
+      <stop offset="100%" stop-color="#0c0a09" stop-opacity="0" />
+    </radialGradient>
+    <linearGradient id="t-amber" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#fbbf24" />
+      <stop offset="50%" stop-color="#f59e0b" />
+      <stop offset="100%" stop-color="#ea580c" />
+    </linearGradient>
+    <linearGradient id="t-plate" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#ffffff" stop-opacity="0.95" />
+      <stop offset="100%" stop-color="#d6d3d1" stop-opacity="0.8" />
+    </linearGradient>
+    <linearGradient id="t-bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#181a20" />
+      <stop offset="100%" stop-color="#0c0d11" />
+    </linearGradient>
+    <filter id="t-shadow" x="-30%" y="-30%" width="160%" height="160%">
+      <feDropShadow dx="0" dy="8" stdDeviation="12" flood-color="#f59e0b" flood-opacity="0.5" />
+    </filter>
+  </defs>
+
+  <rect width="1500" height="500" fill="url(#t-glow)" />
+
+  <!-- Left/Center Lockup -->
+  <g transform="translate(120, 160) scale(1.8)">
+    <rect x="2" y="2" width="96" height="96" rx="23" fill="url(#t-bg)" stroke="#27272a" stroke-width="2.5" />
+    <path d="M 50 76 L 76 63 L 76 69 L 50 82 L 24 69 L 24 63 Z" fill="#44403c" />
+    <path d="M 50 63 L 76 50 L 50 37 L 24 50 Z" fill="#292524" stroke="#44403c" stroke-width="1.5" />
+    <path d="M 50 62 L 76 49 L 76 55 L 50 68 L 24 55 L 24 49 Z" fill="#a8a29e" />
+    <path d="M 50 49 L 76 36 L 50 23 L 24 36 Z" fill="url(#t-plate)" />
+    <path d="M 50 47 L 76 34 L 76 39 L 50 52 L 24 39 L 24 34 Z" fill="#c2410c" />
+    <path d="M 50 34 L 76 21 L 50 8 L 24 21 Z" fill="url(#t-amber)" filter="url(#t-shadow)" />
+    <path d="M 80 12 C 80 16 83.5 19.5 87.5 19.5 C 83.5 19.5 80 23 80 27 C 80 23 76.5 19.5 72.5 19.5 C 76.5 19.5 80 16 80 12 Z" fill="#fbbf24" filter="url(#t-shadow)" />
+  </g>
+
+  <!-- Title & Tagline -->
+  <text x="340" y="260" font-family="system-ui, -apple-system, sans-serif" font-size="92" font-weight="900" letter-spacing="-0.035em">
+    <tspan fill="#ffffff">listaiassets</tspan>
+    <tspan fill="url(#t-amber)">.com</tspan>
+  </text>
+  <text x="345" y="325" font-family="system-ui, -apple-system, sans-serif" font-size="28" font-weight="500" fill="#a8a29e" letter-spacing="0.01em">
+    The Independent Directory for Frontier AI Software &amp; Foundation Models
+  </text>
+  <text x="345" y="375" font-family="ui-monospace, monospace" font-size="20" font-weight="600" fill="#f59e0b" letter-spacing="0.05em">
+    1,500+ VERIFIED TOOLS • LIVE TELEMETRY • HEAD-TO-HEAD BENCHMARKS
+  </text>
+</svg>

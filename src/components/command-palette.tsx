@@ -190,11 +190,11 @@ export function CommandPalette({ isOpen, onClose }: CommandPaletteProps) {
                       <span>Submit New Tool</span>
                     </div>
                     <div
-                      onClick={() => handleNavigate("/dashboard")}
+                      onClick={() => handleNavigate("/compare/cursor-vs-claude-3-7-sonnet")}
                       className="flex cursor-pointer items-center gap-2 rounded-lg p-2 text-xs text-stone-700 dark:text-stone-300 hover:bg-stone-100 dark:hover:bg-stone-900 hover:text-stone-950 dark:hover:text-white transition-colors"
                     >
                       <BarChart3 className="h-4 w-4 text-stone-400" />
-                      <span>Vendor Analytics</span>
+                      <span>Model Comparison Matrix</span>
                     </div>
                   </div>
                 </div>

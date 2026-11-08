@@ -1,14 +1,14 @@
 import { MetadataRoute } from "next";
 
 export default function robots(): MetadataRoute.Robots {
-  const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://nexusai.dev";
+  const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://listaiassets.com";
 
   return {
     rules: [
       {
         userAgent: "*",
         allow: "/",
-        disallow: ["/api/"],
+        disallow: ["/api/", "/admin/", "/submit/success", "/dashboard"],
       },
       // Explicitly welcome AI Answer Engines and Generative Research Crawlers
       {

@@ -28,17 +28,21 @@ export const viewport: Viewport = {
   maximumScale: 5,
 };
 
-const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://nexusai.dev";
+const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://listaiassets.com";
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
   title: {
-    default: "NexusAI — Frontier AI Tools Directory & Benchmark Matrix",
-    template: "%s | NexusAI",
+    default: "ListAIAssets — Frontier AI Tools, Models & Assets Directory",
+    template: "%s | ListAIAssets",
   },
   description:
-    "Authoritative AI tools directory and telemetry engine. Discover, compare, and benchmark 4,200+ verified foundation models, autonomous coding agents, and generative workflows.",
+    "Authoritative AI assets directory and telemetry engine. Discover, compare, and benchmark verified foundation models, autonomous coding agents, and generative workflows on ListAIAssets.",
   keywords: [
+    "ListAIAssets",
+    "List AI Assets",
+    "listaiassets.com",
+    "AI Assets Directory",
     "AI Tools Directory",
     "Best AI Tools 2026",
     "Coding Agents",
@@ -46,15 +50,24 @@ export const metadata: Metadata = {
     "Generative Art",
     "AI Video Generators",
     "AI Benchmarks",
-    "NexusAI",
     "LLM Latency Telemetry",
   ],
-  authors: [{ name: "NexusAI Editorial & Engineering Team", url: SITE_URL }],
-  creator: "NexusAI",
-  publisher: "NexusAI",
-  applicationName: "NexusAI Directory",
+  authors: [{ name: "ListAIAssets Editorial & Engineering Team", url: SITE_URL }],
+  creator: "ListAIAssets",
+  publisher: "ListAIAssets",
+  applicationName: "ListAIAssets Directory",
   alternates: {
     canonical: "./",
+  },
+  icons: {
+    icon: [
+      { url: "/favicon.svg", type: "image/svg+xml" },
+      { url: "/icon.svg", type: "image/svg+xml" },
+      { url: "/icon.png", sizes: "512x512", type: "image/png" },
+    ],
+    apple: [
+      { url: "/apple-icon.png", sizes: "512x512", type: "image/png" },
+    ],
   },
   robots: {
     index: true,
@@ -68,32 +81,33 @@ export const metadata: Metadata = {
     },
   },
   openGraph: {
-    title: "NexusAI — Frontier AI Tools Directory & Benchmark Matrix",
+    title: "ListAIAssets — Frontier AI Tools, Models & Assets Directory",
     description:
-      "Explore 4,200+ hand-vetted AI tools with empirical latency benchmarks, token economics, and authentic community ratings.",
+      "Explore 10,000+ hand-vetted AI tools and assets with empirical latency benchmarks, token economics, and authentic community ratings on ListAIAssets.",
     url: SITE_URL,
-    siteName: "NexusAI Directory",
+    siteName: "ListAIAssets",
     type: "website",
     locale: "en_US",
     images: [
       {
-        url: "/api/og?title=NexusAI%20Directory&badge=FRONTIER%20AI%20INDEX",
+        url: "/api/og?title=ListAIAssets%20Directory&badge=AI%20ASSETS%20INDEX",
         width: 1200,
         height: 630,
-        alt: "NexusAI Social Preview & Benchmark Index",
+        alt: "ListAIAssets Social Preview & Directory Index",
       },
     ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "NexusAI — Frontier AI Tools Directory",
+    title: "ListAIAssets — Frontier AI Tools & Assets Directory",
     description:
-      "Verified latency benchmarks, autonomous coding agents, and live head-to-head comparison matrix.",
-    images: ["/api/og?title=NexusAI%20Directory&badge=FRONTIER%20AI%20INDEX"],
-    creator: "@nexusai_dev",
+      "Verified latency benchmarks, autonomous coding agents, and live head-to-head comparison matrix on ListAIAssets.",
+    images: ["/api/og?title=ListAIAssets%20Directory&badge=AI%20ASSETS%20INDEX"],
+    site: "@ListAIAssets",
+    creator: "@ListAIAssets",
   },
   verification: {
-    google: "google-site-verification-nexusai-token",
+    google: "google-site-verification-listaiassets",
     yandex: "yandex-verification-token",
     other: {
       "msvalidate.01": "bing-site-verification-token",

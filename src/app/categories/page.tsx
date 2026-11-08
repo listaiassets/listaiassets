@@ -276,7 +276,7 @@ export default function CategoriesPage() {
           )}
         </section>
 
-        {/* METRICS STRIP - Clean NexusAI Bento Grid Style */}
+        {/* METRICS STRIP - Clean ListAIAssets Bento Grid Style */}
         <section className="grid grid-cols-2 sm:grid-cols-4 gap-3.5">
           <div className="rounded-xl border border-stone-200 dark:border-stone-800 bg-white dark:bg-[#1c1917] p-4 text-left transition-colors hover:border-amber-500/30 shadow-xs">
             <div className="text-2xl font-bold font-mono text-stone-900 dark:text-white">4,200+</div>
@@ -306,10 +306,10 @@ export default function CategoriesPage() {
               <span className="text-xs text-stone-500 dark:text-stone-400 font-mono">14-Parameter Matrix</span>
             </div>
             <h2 className="text-xl font-bold tracking-tight text-stone-900 dark:text-white sm:text-2xl">
-              How NexusAI Curates and Evaluates Tool Categories
+              How ListAIAssets Curates and Evaluates Tool Categories
             </h2>
             <p className="text-xs sm:text-sm text-stone-600 dark:text-stone-400 leading-relaxed">
-              Every vertical on NexusAI is governed by empirical benchmarking rather than vendor marketing claims. We monitor real-time inference latency (TTFT), tokens-per-second throughput, context-window retrieval fidelity, and licensing terms (open-weights Apache 2.0 vs proprietary API locks). Whether you need autonomous IDE pair programming, generative video rendering, or enterprise legal compliance, our categorized directory provides normalized comparisons.
+              Every vertical on ListAIAssets is governed by empirical benchmarking rather than vendor marketing claims. We monitor real-time inference latency (TTFT), tokens-per-second throughput, context-window retrieval fidelity, and licensing terms (open-weights Apache 2.0 vs proprietary API locks). Whether you need autonomous IDE pair programming, generative video rendering, or enterprise legal compliance, our categorized directory provides normalized comparisons.
             </p>
           </div>
         </section>
@@ -398,7 +398,7 @@ export default function CategoriesPage() {
           </div>
         </section>
 
-        {/* BOTTOM CTA - Pure NexusAI SaaS Style */}
+        {/* BOTTOM CTA - Pure ListAIAssets SaaS Style */}
         <section className="rounded-2xl border border-stone-200 dark:border-stone-800 bg-white dark:bg-[#1c1917] p-6 sm:p-10 shadow-xs flex flex-col sm:flex-row sm:items-center justify-between gap-6">
           <div className="space-y-1 max-w-xl">
             <h2 className="text-lg sm:text-xl font-bold tracking-tight text-stone-900 dark:text-white">

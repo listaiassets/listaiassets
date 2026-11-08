@@ -507,8 +507,8 @@ export const CATEGORIES_PAGE_FAQS = [
     answer: "In 2025 and 2026, autonomous Coding Agents (like Cursor, Claude Code, and Devin) and Multimodal Reasoning LLMs (like Claude 3.7 Sonnet and DeepSeek-R1) represent the highest growth vertical, followed closely by generative video platforms (Runway, Kling) and autonomous customer support bots.",
   },
   {
-    question: "How does NexusAI rank and verify tools within each category?",
-    answer: "Every listing on NexusAI undergoes an objective evaluation across 14 parameters: independent token latency benchmarks, output quality scores, pricing transparency, verified company domain authority, commercial rights clarity, and authentic community ratings. Listings cannot buy their score or benchmark positions.",
+    question: "How does ListAIAssets rank and verify tools within each category?",
+    answer: "Every listing on ListAIAssets undergoes an objective evaluation across 14 parameters: independent token latency benchmarks, output quality scores, pricing transparency, verified company domain authority, commercial rights clarity, and authentic community ratings. Listings cannot buy their score or benchmark positions.",
   },
   {
     question: "Are free and open-source AI tools viable for enterprise and professional use?",
@@ -516,7 +516,7 @@ export const CATEGORIES_PAGE_FAQS = [
   },
   {
     question: "How often are category pricing, benchmarks, and feature flags updated?",
-    answer: "NexusAI runs automated telemetry routines every 6 hours to monitor uptime, latency, pricing tier changes, and feature releases. Detailed editorial reviews are refreshed weekly by our AI engineering team.",
+    answer: "ListAIAssets runs automated telemetry routines every 6 hours to monitor uptime, latency, pricing tier changes, and feature releases. Detailed editorial reviews are refreshed weekly by our AI engineering team.",
   },
   {
     question: "How do I choose between an all-in-one suite and specialized point solutions?",

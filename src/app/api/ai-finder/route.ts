@@ -137,7 +137,7 @@ export async function POST(req: Request) {
       appliedConstraints.length > 0
         ? `Applied constraints: ${appliedConstraints.join(", ")}`
         : "Queried general directory vector index",
-      `Primary recommendation: ${topMatches[0]?.name || "NexusAI Catalog"} (${topMatches[0]?.pricingType || "FREEMIUM"})`,
+      `Primary recommendation: ${topMatches[0]?.name || "ListAIAssets Catalog"} (${topMatches[0]?.pricingType || "FREEMIUM"})`,
       `Verified latency: ${topMatches[0]?.benchmarks.latencyMs || 150}ms with ${topMatches[0]?.benchmarks.codeAccuracyPercent || 95}% benchmark score.`,
     ];
 

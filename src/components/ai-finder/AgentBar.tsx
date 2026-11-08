@@ -122,7 +122,7 @@ export function AgentBar() {
               ) : (
                 <>
                   <Send className="h-3.5 w-3.5" />
-                  <span className="hidden sm:inline">Ask Agent</span>
+                  <span className="hidden sm:inline">Find Tools</span>
                 </>
               )}
             </button>
