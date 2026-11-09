@@ -1,8 +1,8 @@
 import React from "react";
 import Link from "next/link";
 import { Metadata } from "next";
-import { ArrowRight, BookOpen, ChevronLeft, ChevronRight } from "lucide-react";
-import { getWordPressPosts } from "@/lib/wordpress";
+import { ArrowRight, BookOpen, ChevronLeft, ChevronRight, Layers } from "lucide-react";
+import { getWordPressPosts, getWordPressCategories } from "@/lib/wordpress";
 
 export const metadata: Metadata = {
   title: "Blog & Guides | ListAIAssets",
@@ -25,6 +25,7 @@ export const revalidate = 60; // Next.js ISR: Revalidate cache every 60 seconds
 
 interface BlogIndexPageProps {
   searchParams?: Promise<{
+    category?: string;
     page?: string;
   }>;
 }
@@ -49,18 +50,57 @@ function getPaginationItems(current: number, total: number) {
 
 export default async function BlogIndexPage({ searchParams }: BlogIndexPageProps) {
   const resolvedParams = searchParams ? await searchParams : {};
+  const activeCategorySlug = (resolvedParams?.category || "ALL").trim();
   const rawPage = resolvedParams?.page;
   const parsedPage = typeof rawPage === "string" ? parseInt(rawPage, 10) : 1;
   const requestedPage = isNaN(parsedPage) || parsedPage < 1 ? 1 : parsedPage;
 
-  const allPosts = await getWordPressPosts();
-  const totalPosts = allPosts.length;
-  const totalPages = Math.max(1, Math.ceil(totalPosts / POSTS_PER_PAGE));
+  // Fetch posts and categories in parallel from WordPress
+  const [allPosts, categories] = await Promise.all([
+    getWordPressPosts(),
+    getWordPressCategories(),
+  ]);
+
+  // Filter posts by active category if not "ALL"
+  const filteredPosts =
+    activeCategorySlug === "ALL"
+      ? allPosts
+      : allPosts.filter(
+          (post) =>
+            post.categorySlug.toLowerCase() === activeCategorySlug.toLowerCase() ||
+            post.category.toLowerCase() === activeCategorySlug.toLowerCase()
+        );
+
+  const totalFilteredPosts = filteredPosts.length;
+  const totalPages = Math.max(1, Math.ceil(totalFilteredPosts / POSTS_PER_PAGE));
   const currentPage = Math.min(requestedPage, totalPages);
   const startIndex = (currentPage - 1) * POSTS_PER_PAGE;
-  const paginatedPosts = allPosts.slice(startIndex, startIndex + POSTS_PER_PAGE);
+  const paginatedPosts = filteredPosts.slice(startIndex, startIndex + POSTS_PER_PAGE);
 
   const paginationItems = getPaginationItems(currentPage, totalPages);
+
+  // Helper to construct paginated category URLs
+  const buildPageUrl = (pageNum: number) => {
+    const params = new URLSearchParams();
+    if (activeCategorySlug !== "ALL") {
+      params.set("category", activeCategorySlug);
+    }
+    if (pageNum > 1) {
+      params.set("page", pageNum.toString());
+    }
+    const query = params.toString();
+    return query ? `/blog?${query}` : "/blog";
+  };
+
+  // Find active category object if selected
+  const activeCategory =
+    activeCategorySlug !== "ALL"
+      ? categories.find(
+          (c) =>
+            c.slug.toLowerCase() === activeCategorySlug.toLowerCase() ||
+            c.name.toLowerCase() === activeCategorySlug.toLowerCase()
+        )
+      : null;
 
   // JSON-LD Schema for Clean SEO
   const jsonLd = {
@@ -105,33 +145,93 @@ export default async function BlogIndexPage({ searchParams }: BlogIndexPageProps
                   Blog
                 </span>
                 <span className="text-xs text-stone-500 dark:text-stone-400">
-                  Guides &amp; Articles
+                  {activeCategory ? activeCategory.name : "Guides & Articles"}
                 </span>
               </div>
               <h1 className="mt-2 text-2xl font-bold tracking-tight text-stone-900 dark:text-white sm:text-3xl">
-                Articles &amp; Guides
+                {activeCategory ? activeCategory.name : "Articles & Guides"}
               </h1>
               <p className="mt-1 text-xs text-stone-600 dark:text-stone-400">
-                Practical guides, comparisons, and analysis on AI tools and workflows.
+                {activeCategory?.description ||
+                  "Practical guides, comparisons, and analysis on AI tools and workflows."}
               </p>
             </div>
 
             <div className="flex items-center gap-2 rounded-lg border border-stone-200 dark:border-stone-800 bg-white dark:bg-[#1c1917] px-3.5 py-1.5 text-xs text-stone-600 dark:text-stone-400 shadow-xs">
               <span>Showing</span>
               <span className="font-mono font-bold text-stone-900 dark:text-white">
-                {totalPosts <= POSTS_PER_PAGE
-                  ? totalPosts
-                  : `${startIndex + 1}–${Math.min(startIndex + POSTS_PER_PAGE, totalPosts)}`}
+                {totalFilteredPosts <= POSTS_PER_PAGE
+                  ? totalFilteredPosts
+                  : `${startIndex + 1}–${Math.min(startIndex + POSTS_PER_PAGE, totalFilteredPosts)}`}
               </span>
               <span>
-                {totalPosts <= POSTS_PER_PAGE
-                  ? totalPosts === 1
+                {totalFilteredPosts <= POSTS_PER_PAGE
+                  ? totalFilteredPosts === 1
                     ? "article"
                     : "articles"
-                  : `of ${totalPosts} articles`}
+                  : `of ${totalFilteredPosts} articles`}
               </span>
             </div>
           </div>
+
+          {/* WordPress Categories Navigation Tabs */}
+          {categories.length > 0 && (
+            <div className="mb-8 flex items-center gap-2 overflow-x-auto pb-2 scrollbar-none">
+              {/* All Articles Tab */}
+              <Link
+                href="/blog"
+                className={`inline-flex items-center gap-1.5 rounded-lg px-3.5 py-1.5 text-xs font-medium transition-all shrink-0 ${
+                  activeCategorySlug === "ALL"
+                    ? "bg-amber-600 text-white shadow-xs font-semibold"
+                    : "border border-stone-200 dark:border-stone-800 bg-white dark:bg-[#1c1917] text-stone-600 dark:text-stone-400 hover:border-amber-500/40 hover:text-stone-900 dark:hover:text-white"
+                }`}
+              >
+                <span>All Articles</span>
+                <span
+                  className={`text-[10px] font-mono px-1.5 py-0.2 rounded-full ${
+                    activeCategorySlug === "ALL"
+                      ? "bg-white/20 text-white font-bold"
+                      : "bg-stone-100 dark:bg-stone-800 text-stone-500"
+                  }`}
+                >
+                  {allPosts.length}
+                </span>
+              </Link>
+
+              {/* Dynamic WordPress Categories */}
+              {categories.map((cat) => {
+                const isActive = activeCategorySlug.toLowerCase() === cat.slug.toLowerCase();
+                const matchCount = allPosts.filter(
+                  (p) =>
+                    p.categorySlug.toLowerCase() === cat.slug.toLowerCase() ||
+                    p.category.toLowerCase() === cat.name.toLowerCase()
+                ).length;
+
+                return (
+                  <Link
+                    key={cat.id}
+                    href={`/blog?category=${encodeURIComponent(cat.slug)}`}
+                    className={`inline-flex items-center gap-1.5 rounded-lg px-3.5 py-1.5 text-xs font-medium transition-all shrink-0 ${
+                      isActive
+                        ? "bg-amber-600 text-white shadow-xs font-semibold"
+                        : "border border-stone-200 dark:border-stone-800 bg-white dark:bg-[#1c1917] text-stone-600 dark:text-stone-400 hover:border-amber-500/40 hover:text-stone-900 dark:hover:text-white"
+                    }`}
+                  >
+                    <span>{cat.name}</span>
+                    <span
+                      className={`text-[10px] font-mono px-1.5 py-0.2 rounded-full ${
+                        isActive
+                          ? "bg-white/20 text-white font-bold"
+                          : "bg-stone-100 dark:bg-stone-800 text-stone-500"
+                      }`}
+                    >
+                      {matchCount}
+                    </span>
+                  </Link>
+                );
+              })}
+            </div>
+          )}
 
           {/* Posts Grid or Clean Empty State */}
           {paginatedPosts.length > 0 ? (
@@ -144,9 +244,12 @@ export default async function BlogIndexPage({ searchParams }: BlogIndexPageProps
                   <div>
                     {/* Category and Reading Time */}
                     <div className="flex items-center justify-between text-xs text-stone-500 dark:text-stone-400 mb-3">
-                      <span className="inline-flex items-center gap-1.5 rounded-md border border-stone-200 dark:border-stone-800 bg-stone-100 dark:bg-stone-900 px-2 py-0.5 text-[10px] font-medium text-stone-700 dark:text-stone-300">
+                      <Link
+                        href={`/blog?category=${encodeURIComponent(post.categorySlug)}`}
+                        className="inline-flex items-center gap-1.5 rounded-md border border-stone-200 dark:border-stone-800 bg-stone-100 dark:bg-stone-900 px-2 py-0.5 text-[10px] font-medium text-stone-700 dark:text-stone-300 hover:border-amber-500/40 hover:text-amber-600 dark:hover:text-amber-400 transition-colors"
+                      >
                         {post.category}
-                      </span>
+                      </Link>
                       <span className="text-[11px] font-mono text-stone-400 dark:text-stone-500">
                         {post.readingTime}
                       </span>
@@ -188,12 +291,25 @@ export default async function BlogIndexPage({ searchParams }: BlogIndexPageProps
             </div>
           ) : (
             <div className="rounded-xl border border-stone-200 dark:border-stone-800 bg-white dark:bg-[#1c1917] p-12 text-center">
+              <Layers className="h-8 w-8 mx-auto text-stone-400 dark:text-stone-600 mb-3" />
               <h3 className="text-base font-semibold text-stone-900 dark:text-stone-100">
-                No articles published yet
+                {activeCategory ? `No articles in "${activeCategory.name}" yet` : "No articles published yet"}
               </h3>
               <p className="mt-1 text-xs text-stone-500 dark:text-stone-400 max-w-sm mx-auto">
-                Articles published in your WordPress CMS will appear here automatically.
+                {activeCategory
+                  ? "Articles assigned to this category in WordPress will show up here."
+                  : "Articles published in your WordPress CMS will appear here automatically."}
               </p>
+              {activeCategorySlug !== "ALL" && (
+                <div className="mt-5">
+                  <Link
+                    href="/blog"
+                    className="inline-flex items-center gap-1.5 rounded-lg border border-stone-300 dark:border-stone-700 bg-white dark:bg-stone-800 px-4 py-2 text-xs font-semibold text-stone-700 dark:text-stone-300 hover:bg-stone-50 dark:hover:bg-stone-700 transition-colors"
+                  >
+                    View All Articles
+                  </Link>
+                </div>
+              )}
             </div>
           )}
 
@@ -201,13 +317,13 @@ export default async function BlogIndexPage({ searchParams }: BlogIndexPageProps
           {totalPages > 1 && (
             <div className="mt-12 flex flex-col sm:flex-row items-center justify-between gap-4 pt-8 border-t border-stone-200 dark:border-stone-800">
               <div className="text-xs text-stone-500 dark:text-stone-400 font-mono">
-                Page {currentPage} of {totalPages} ({totalPosts} total articles)
+                Page {currentPage} of {totalPages} ({totalFilteredPosts} total articles)
               </div>
 
               <nav aria-label="Blog pagination" className="flex items-center gap-1.5">
                 {/* Previous Page Button */}
                 <Link
-                  href={currentPage > 1 ? (currentPage - 1 === 1 ? "/blog" : `/blog?page=${currentPage - 1}`) : "#"}
+                  href={currentPage > 1 ? buildPageUrl(currentPage - 1) : "#"}
                   aria-disabled={currentPage <= 1}
                   tabIndex={currentPage <= 1 ? -1 : undefined}
                   className={`inline-flex h-9 items-center gap-1 rounded-lg border border-stone-200 dark:border-stone-800 bg-white dark:bg-[#1c1917] px-3 text-xs font-medium text-stone-700 dark:text-stone-300 transition-colors ${
@@ -236,7 +352,7 @@ export default async function BlogIndexPage({ searchParams }: BlogIndexPageProps
 
                     const pageNum = item as number;
                     const isActive = pageNum === currentPage;
-                    const pageUrl = pageNum === 1 ? "/blog" : `/blog?page=${pageNum}`;
+                    const pageUrl = buildPageUrl(pageNum);
 
                     return (
                       <Link
@@ -257,7 +373,7 @@ export default async function BlogIndexPage({ searchParams }: BlogIndexPageProps
 
                 {/* Next Page Button */}
                 <Link
-                  href={currentPage < totalPages ? `/blog?page=${currentPage + 1}` : "#"}
+                  href={currentPage < totalPages ? buildPageUrl(currentPage + 1) : "#"}
                   aria-disabled={currentPage >= totalPages}
                   tabIndex={currentPage >= totalPages ? -1 : undefined}
                   className={`inline-flex h-9 items-center gap-1 rounded-lg border border-stone-200 dark:border-stone-800 bg-white dark:bg-[#1c1917] px-3 text-xs font-medium text-stone-700 dark:text-stone-300 transition-colors ${

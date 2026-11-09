@@ -4,6 +4,14 @@
  * Fetches articles, categories, and media directly from WordPress REST API.
  */
 
+export interface WordPressCategory {
+  id: number;
+  name: string;
+  slug: string;
+  count: number;
+  description?: string;
+}
+
 export interface WordPressPost {
   id: number;
   slug: string;
@@ -14,6 +22,8 @@ export interface WordPressPost {
   author: string;
   featuredImage?: string;
   category: string;
+  categorySlug: string;
+  categoryId?: number;
   tags: string[];
   readingTime: string;
 }
@@ -28,7 +38,63 @@ function cleanExcerpt(raw: string): string {
   return raw
     .replace(/<[^>]*>/g, "")
     .replace(/\[&hellip;\]/g, "...")
+    .replace(/&amp;/g, "&")
+    .replace(/&quot;/g, '"')
+    .replace(/&#039;/g, "'")
     .trim();
+}
+
+function decodeHtml(raw: string): string {
+  return raw
+    .replace(/&amp;/g, "&")
+    .replace(/&lt;/g, "<")
+    .replace(/&gt;/g, ">")
+    .replace(/&quot;/g, '"')
+    .replace(/&#039;/g, "'")
+    .replace(/&rsquo;/g, "’")
+    .trim();
+}
+
+/**
+ * Fetch all categories directly from WordPress CMS
+ */
+export async function getWordPressCategories(): Promise<WordPressCategory[]> {
+  const cmsBase = process.env.NEXT_PUBLIC_WORDPRESS_URL || "https://cms.listaiassets.com";
+
+  try {
+    const urlsToTry = [
+      `${cmsBase}/wp-json/wp/v2/categories?per_page=100`,
+      `${cmsBase}/index.php?rest_route=/wp/v2/categories&per_page=100`,
+    ];
+
+    for (const url of urlsToTry) {
+      try {
+        const res = await fetch(url, {
+          next: {
+            revalidate: 60,
+            tags: ["wordpress-posts", "wordpress-categories"],
+          },
+          headers: { Accept: "application/json" },
+        });
+        if (res.ok) {
+          const json = await res.json();
+          if (Array.isArray(json)) {
+            return json.map((cat: any) => ({
+              id: cat.id,
+              name: decodeHtml(cat.name || "Category"),
+              slug: cat.slug || "uncategorized",
+              count: cat.count || 0,
+              description: cat.description || "",
+            }));
+          }
+        }
+      } catch {}
+    }
+  } catch (err) {
+    console.error("WordPress Categories fetch error:", err);
+  }
+
+  return [];
 }
 
 /**
@@ -85,25 +151,33 @@ export async function getWordPressPosts(): Promise<WordPressPost[]> {
           if (authorObj?.name) author = authorObj.name;
         } catch {}
 
-        // Extract categories
+        // Extract categories and slug
         let category = "General";
+        let categorySlug = "general";
+        let categoryId: number | undefined = undefined;
         try {
           const terms = item._embedded?.["wp:term"]?.[0];
           if (Array.isArray(terms) && terms.length > 0) {
-            category = terms[0].name;
+            category = decodeHtml(terms[0].name);
+            categorySlug = terms[0].slug;
+            categoryId = terms[0].id;
+          } else if (Array.isArray(item.categories) && item.categories.length > 0) {
+            categoryId = item.categories[0];
           }
         } catch {}
 
         return {
           id: item.id,
           slug: item.slug,
-          title: item.title?.rendered || "Untitled Post",
+          title: decodeHtml(item.title?.rendered || "Untitled Post"),
           content: item.content?.rendered || "",
           excerpt: cleanExcerpt(item.excerpt?.rendered || item.content?.rendered || ""),
           date: item.date_gmt ? `${item.date_gmt}Z` : item.date,
           author,
           featuredImage,
           category,
+          categorySlug,
+          categoryId,
           tags: [],
           readingTime: calculateReadingTime(item.content?.rendered || ""),
         };
@@ -165,21 +239,31 @@ export async function getWordPressPostBySlug(slug: string): Promise<WordPressPos
       } catch {}
 
       let category = "General";
+      let categorySlug = "general";
+      let categoryId: number | undefined = undefined;
       try {
         const terms = postData._embedded?.["wp:term"]?.[0];
-        if (Array.isArray(terms) && terms.length > 0) category = terms[0].name;
+        if (Array.isArray(terms) && terms.length > 0) {
+          category = decodeHtml(terms[0].name);
+          categorySlug = terms[0].slug;
+          categoryId = terms[0].id;
+        } else if (Array.isArray(postData.categories) && postData.categories.length > 0) {
+          categoryId = postData.categories[0];
+        }
       } catch {}
 
       return {
         id: postData.id,
         slug: postData.slug,
-        title: postData.title?.rendered || "Untitled Post",
+        title: decodeHtml(postData.title?.rendered || "Untitled Post"),
         content: postData.content?.rendered || "",
         excerpt: cleanExcerpt(postData.excerpt?.rendered || postData.content?.rendered || ""),
         date: postData.date_gmt ? `${postData.date_gmt}Z` : postData.date,
         author,
         featuredImage,
         category,
+        categorySlug,
+        categoryId,
         tags: [],
         readingTime: calculateReadingTime(postData.content?.rendered || ""),
       };

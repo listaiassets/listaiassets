@@ -55,6 +55,7 @@ async function handleRevalidate(request: NextRequest) {
 
     // 1. Invalidate WordPress Cache Tags (Next.js 16 requires cache profile or expire config)
     revalidateTag("wordpress-posts", { expire: 0 });
+    revalidateTag("wordpress-categories", { expire: 0 });
     if (slug) {
       revalidateTag(`wordpress-post-${slug}`, { expire: 0 });
     }
