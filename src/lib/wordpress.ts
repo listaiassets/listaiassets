@@ -40,8 +40,8 @@ export async function getWordPressPosts(): Promise<WordPressPost[]> {
   try {
     // Support both pretty permalinks (/wp-json/) and plain permalinks (?rest_route=)
     const urlsToTry = [
-      `${cmsBase}/wp-json/wp/v2/posts?_embed=true&per_page=50`,
-      `${cmsBase}/index.php?rest_route=/wp/v2/posts&_embed=true&per_page=50`,
+      `${cmsBase}/wp-json/wp/v2/posts?_embed=true&per_page=100`,
+      `${cmsBase}/index.php?rest_route=/wp/v2/posts&_embed=true&per_page=100`,
     ];
 
     let data: any[] | null = null;
