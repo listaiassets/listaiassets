@@ -89,58 +89,69 @@ export default async function BlogIndexPage() {
             </div>
           </div>
 
-          {/* Posts Grid */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {posts.map((post) => (
-              <article
-                key={post.id}
-                className="group relative flex flex-col justify-between rounded-xl border border-stone-200 dark:border-stone-800 bg-white dark:bg-[#1c1917] p-5 shadow-xs transition-colors duration-150 hover:border-amber-500/40 dark:hover:border-amber-500/40 hover:shadow-md dark:hover:shadow-black/50"
-              >
-                <div>
-                  {/* Category and Reading Time */}
-                  <div className="flex items-center justify-between text-xs text-stone-500 dark:text-stone-400 mb-3">
-                    <span className="inline-flex items-center gap-1.5 rounded-md border border-stone-200 dark:border-stone-800 bg-stone-100 dark:bg-stone-900 px-2 py-0.5 text-[10px] font-medium text-stone-700 dark:text-stone-300">
-                      {post.category}
-                    </span>
-                    <span className="text-[11px] font-mono text-stone-400 dark:text-stone-500">
-                      {post.readingTime}
-                    </span>
+          {/* Posts Grid or Clean Empty State */}
+          {posts.length > 0 ? (
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {posts.map((post) => (
+                <article
+                  key={post.id}
+                  className="group relative flex flex-col justify-between rounded-xl border border-stone-200 dark:border-stone-800 bg-white dark:bg-[#1c1917] p-5 shadow-xs transition-colors duration-150 hover:border-amber-500/40 dark:hover:border-amber-500/40 hover:shadow-md dark:hover:shadow-black/50"
+                >
+                  <div>
+                    {/* Category and Reading Time */}
+                    <div className="flex items-center justify-between text-xs text-stone-500 dark:text-stone-400 mb-3">
+                      <span className="inline-flex items-center gap-1.5 rounded-md border border-stone-200 dark:border-stone-800 bg-stone-100 dark:bg-stone-900 px-2 py-0.5 text-[10px] font-medium text-stone-700 dark:text-stone-300">
+                        {post.category}
+                      </span>
+                      <span className="text-[11px] font-mono text-stone-400 dark:text-stone-500">
+                        {post.readingTime}
+                      </span>
+                    </div>
+
+                    {/* Post Title */}
+                    <h2 className="font-semibold text-stone-900 dark:text-stone-100 tracking-tight text-sm sm:text-base group-hover:text-amber-600 dark:group-hover:text-amber-400 transition-colors line-clamp-2">
+                      <Link href={`/blog/${post.slug}`}>
+                        {post.title}
+                      </Link>
+                    </h2>
+
+                    {/* Excerpt */}
+                    <p className="mt-2 text-xs text-stone-600 dark:text-stone-400 leading-relaxed line-clamp-3">
+                      {post.excerpt}
+                    </p>
                   </div>
 
-                  {/* Post Title */}
-                  <h2 className="font-semibold text-stone-900 dark:text-stone-100 tracking-tight text-sm sm:text-base group-hover:text-amber-600 dark:group-hover:text-amber-400 transition-colors line-clamp-2">
-                    <Link href={`/blog/${post.slug}`}>
-                      {post.title}
+                  {/* Footer Metadata */}
+                  <div className="mt-5 pt-3.5 border-t border-stone-100 dark:border-stone-800/80 flex items-center justify-between text-xs text-stone-500 dark:text-stone-400">
+                    <time dateTime={post.date} className="font-mono text-[11px] text-stone-400 dark:text-stone-500">
+                      {new Date(post.date).toLocaleDateString("en-US", {
+                        month: "short",
+                        day: "numeric",
+                        year: "numeric",
+                      })}
+                    </time>
+
+                    <Link
+                      href={`/blog/${post.slug}`}
+                      className="inline-flex items-center gap-1 text-xs font-medium text-stone-700 dark:text-stone-300 group-hover:text-amber-600 dark:group-hover:text-amber-400 transition-colors"
+                    >
+                      <span>Read</span>
+                      <ArrowRight className="h-3 w-3" />
                     </Link>
-                  </h2>
-
-                  {/* Excerpt */}
-                  <p className="mt-2 text-xs text-stone-600 dark:text-stone-400 leading-relaxed line-clamp-3">
-                    {post.excerpt}
-                  </p>
-                </div>
-
-                {/* Footer Metadata */}
-                <div className="mt-5 pt-3.5 border-t border-stone-100 dark:border-stone-800/80 flex items-center justify-between text-xs text-stone-500 dark:text-stone-400">
-                  <time dateTime={post.date} className="font-mono text-[11px] text-stone-400 dark:text-stone-500">
-                    {new Date(post.date).toLocaleDateString("en-US", {
-                      month: "short",
-                      day: "numeric",
-                      year: "numeric",
-                    })}
-                  </time>
-
-                  <Link
-                    href={`/blog/${post.slug}`}
-                    className="inline-flex items-center gap-1 text-xs font-medium text-stone-700 dark:text-stone-300 group-hover:text-amber-600 dark:group-hover:text-amber-400 transition-colors"
-                  >
-                    <span>Read</span>
-                    <ArrowRight className="h-3 w-3" />
-                  </Link>
-                </div>
-              </article>
-            ))}
-          </div>
+                  </div>
+                </article>
+              ))}
+            </div>
+          ) : (
+            <div className="rounded-xl border border-stone-200 dark:border-stone-800 bg-white dark:bg-[#1c1917] p-12 text-center">
+              <h3 className="text-base font-semibold text-stone-900 dark:text-stone-100">
+                No articles published yet
+              </h3>
+              <p className="mt-1 text-xs text-stone-500 dark:text-stone-400 max-w-sm mx-auto">
+                Articles published in your WordPress CMS will appear here automatically.
+              </p>
+            </div>
+          )}
         </div>
       </div>
     </>

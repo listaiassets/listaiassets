@@ -59,6 +59,7 @@ export async function generateStaticParams() {
   }));
 }
 
+export const dynamicParams = true; // Allow on-demand rendering of new WordPress articles without a build
 export const revalidate = 60; // Next.js ISR: revalidate every 60 seconds
 
 export default async function BlogPostPage({ params }: PostPageProps) {
