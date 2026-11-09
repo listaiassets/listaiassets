@@ -319,36 +319,12 @@ export function AdminClientPortal({ initialAuthenticated = false }: AdminClientP
           </div>
 
           <div className="rounded-2xl border border-stone-200 dark:border-stone-800 bg-white dark:bg-[#1c1917] p-6 sm:p-8 shadow-xl">
-            {/* Tab switch between Sign In and Sign Up */}
-            <div className="flex rounded-lg bg-stone-100 dark:bg-stone-900 p-1 mb-6">
-              <button
-                type="button"
-                onClick={() => {
-                  setAuthMode("login");
-                  setFormError("");
-                }}
-                className={`flex-1 py-1.5 text-xs font-semibold rounded-md transition-all cursor-pointer ${
-                  authMode === "login"
-                    ? "bg-white dark:bg-stone-800 text-stone-900 dark:text-white shadow-xs"
-                    : "text-stone-500 hover:text-stone-900 dark:hover:text-white"
-                }`}
-              >
-                Admin Sign In
-              </button>
-              <button
-                type="button"
-                onClick={() => {
-                  setAuthMode("signup");
-                  setFormError("");
-                }}
-                className={`flex-1 py-1.5 text-xs font-semibold rounded-md transition-all cursor-pointer ${
-                  authMode === "signup"
-                    ? "bg-white dark:bg-stone-800 text-stone-900 dark:text-white shadow-xs"
-                    : "text-stone-500 hover:text-stone-900 dark:hover:text-white"
-                }`}
-              >
-                Register New Admin
-              </button>
+            <div className="flex items-center gap-2 mb-6 pb-4 border-b border-stone-100 dark:border-stone-800">
+              <KeyRound className="h-4 w-4 text-amber-500" />
+              <div>
+                <h2 className="text-sm font-bold text-stone-900 dark:text-white">Admin Authentication</h2>
+                <p className="text-[11px] text-stone-500">Sign in with your authorized Supabase admin credentials.</p>
+              </div>
             </div>
 
             {formError && (
@@ -358,113 +334,54 @@ export function AdminClientPortal({ initialAuthenticated = false }: AdminClientP
               </div>
             )}
 
-            {authMode === "login" ? (
-              <form onSubmit={handleLogin} className="space-y-4">
-                <div>
-                  <label className="block text-xs font-medium text-stone-700 dark:text-stone-300 mb-1">
-                    Admin Email Address
-                  </label>
-                  <input
-                    type="email"
-                    required
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                    placeholder="admin@listaiassets.com"
-                    className="w-full rounded-lg border border-stone-200 dark:border-stone-800 bg-white dark:bg-stone-900 px-3.5 py-2 text-xs text-stone-900 dark:text-white focus:outline-none focus:border-amber-500 font-mono"
-                  />
-                </div>
+            <form onSubmit={handleLogin} className="space-y-4">
+              <div>
+                <label className="block text-xs font-medium text-stone-700 dark:text-stone-300 mb-1">
+                  Admin Email Address
+                </label>
+                <input
+                  type="email"
+                  required
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  placeholder="admin@listaiassets.com"
+                  className="w-full rounded-lg border border-stone-200 dark:border-stone-800 bg-white dark:bg-stone-900 px-3.5 py-2 text-xs text-stone-900 dark:text-white focus:outline-none focus:border-amber-500 font-mono"
+                />
+              </div>
 
-                <div>
-                  <label className="block text-xs font-medium text-stone-700 dark:text-stone-300 mb-1">
-                    Password
-                  </label>
-                  <input
-                    type="password"
-                    required
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
-                    placeholder="••••••••••••"
-                    className="w-full rounded-lg border border-stone-200 dark:border-stone-800 bg-white dark:bg-stone-900 px-3.5 py-2 text-xs text-stone-900 dark:text-white focus:outline-none focus:border-amber-500 font-mono"
-                  />
-                </div>
+              <div>
+                <label className="block text-xs font-medium text-stone-700 dark:text-stone-300 mb-1">
+                  Password
+                </label>
+                <input
+                  type="password"
+                  required
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  placeholder="••••••••••••"
+                  className="w-full rounded-lg border border-stone-200 dark:border-stone-800 bg-white dark:bg-stone-900 px-3.5 py-2 text-xs text-stone-900 dark:text-white focus:outline-none focus:border-amber-500 font-mono"
+                />
+              </div>
 
-                <button
-                  type="submit"
-                  disabled={formLoading}
-                  className="w-full mt-2 rounded-lg bg-amber-600 py-2.5 px-4 text-xs font-bold text-white hover:bg-amber-500 transition-colors flex items-center justify-center gap-2 cursor-pointer disabled:opacity-50 shadow-xs"
-                >
-                  {formLoading ? (
-                    <RefreshCw className="h-3.5 w-3.5 animate-spin" />
-                  ) : (
-                    <ArrowRight className="h-3.5 w-3.5" />
-                  )}
-                  <span>Sign In to Admin Dashboard</span>
-                </button>
-              </form>
-            ) : (
-              <form onSubmit={handleSignup} className="space-y-4">
-                <div>
-                  <label className="block text-xs font-medium text-stone-700 dark:text-stone-300 mb-1">
-                    Admin Email Address
-                  </label>
-                  <input
-                    type="email"
-                    required
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                    placeholder="admin@listaiassets.com"
-                    className="w-full rounded-lg border border-stone-200 dark:border-stone-800 bg-white dark:bg-stone-900 px-3.5 py-2 text-xs text-stone-900 dark:text-white focus:outline-none focus:border-amber-500 font-mono"
-                  />
-                </div>
+              <button
+                type="submit"
+                disabled={formLoading}
+                className="w-full mt-2 rounded-lg bg-amber-600 py-2.5 px-4 text-xs font-bold text-white hover:bg-amber-500 transition-colors flex items-center justify-center gap-2 cursor-pointer disabled:opacity-50 shadow-xs"
+              >
+                {formLoading ? (
+                  <RefreshCw className="h-3.5 w-3.5 animate-spin" />
+                ) : (
+                  <ArrowRight className="h-3.5 w-3.5" />
+                )}
+                <span>Sign In to Admin Dashboard</span>
+              </button>
+            </form>
 
-                <div>
-                  <label className="block text-xs font-medium text-stone-700 dark:text-stone-300 mb-1">
-                    Password
-                  </label>
-                  <input
-                    type="password"
-                    required
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
-                    placeholder="Create a strong password"
-                    className="w-full rounded-lg border border-stone-200 dark:border-stone-800 bg-white dark:bg-stone-900 px-3.5 py-2 text-xs text-stone-900 dark:text-white focus:outline-none focus:border-amber-500 font-mono"
-                  />
-                </div>
-
-                <div>
-                  <label className="block text-xs font-medium text-stone-700 dark:text-stone-300 mb-1">
-                    Master Admin Registration Passkey
-                  </label>
-                  <div className="relative">
-                    <input
-                      type="password"
-                      required
-                      value={adminKey}
-                      onChange={(e) => setAdminKey(e.target.value)}
-                      placeholder="Enter ADMIN_SECRET_KEY"
-                      className="w-full rounded-lg border border-stone-200 dark:border-stone-800 bg-white dark:bg-stone-900 px-3.5 py-2 text-xs text-stone-900 dark:text-white focus:outline-none focus:border-amber-500 font-mono"
-                    />
-                    <KeyRound className="absolute right-3 top-2.5 h-3.5 w-3.5 text-stone-400" />
-                  </div>
-                  <p className="mt-1 text-[10px] text-stone-500">
-                    Matches your <code className="bg-stone-100 dark:bg-stone-800 px-1 py-0.5 rounded">ADMIN_SECRET_KEY</code> to verify your ownership.
-                  </p>
-                </div>
-
-                <button
-                  type="submit"
-                  disabled={formLoading}
-                  className="w-full mt-2 rounded-lg bg-emerald-600 py-2.5 px-4 text-xs font-bold text-white hover:bg-emerald-500 transition-colors flex items-center justify-center gap-2 cursor-pointer disabled:opacity-50 shadow-xs"
-                >
-                  {formLoading ? (
-                    <RefreshCw className="h-3.5 w-3.5 animate-spin" />
-                  ) : (
-                    <UserCheck className="h-3.5 w-3.5" />
-                  )}
-                  <span>Create Admin Account</span>
-                </button>
-              </form>
-            )}
+            <div className="mt-6 pt-4 border-t border-stone-100 dark:border-stone-800 text-center">
+              <p className="text-[10px] text-stone-500 leading-normal">
+                Admin accounts are provisioned directly in your Supabase dashboard. Non-admin accounts will be denied entry automatically.
+              </p>
+            </div>
           </div>
         </div>
       </div>
@@ -887,3 +804,4 @@ export function AdminClientPortal({ initialAuthenticated = false }: AdminClientP
     </div>
   );
 }
+

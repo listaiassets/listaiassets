@@ -36,16 +36,54 @@ export async function POST(req: Request) {
         );
       }
 
+      const user = data.user;
+      const adminEmail = process.env.ADMIN_EMAIL?.toLowerCase().trim();
+      const userEmail = user?.email?.toLowerCase().trim();
+
+      // Check whether user is marked as admin in Supabase app_metadata, user_metadata, or matches ADMIN_EMAIL
+      const hasAdminRole =
+        user?.app_metadata?.role === "admin" ||
+        user?.user_metadata?.role === "admin" ||
+        (adminEmail && userEmail === adminEmail);
+
+      if (!hasAdminRole) {
+        // Sign out unauthorized user immediately
+        await supabaseServer.auth.signOut();
+        return NextResponse.json(
+          {
+            error:
+              "Access Denied: This account is not marked as an administrator in Supabase. Set raw_app_meta_data role: 'admin' in Supabase or set ADMIN_EMAIL.",
+          },
+          { status: 403, headers: NOINDEX_HEADERS }
+        );
+      }
+
       return NextResponse.json(
         {
           success: true,
-          user: data.user,
+          user: {
+            id: user.id,
+            email: user.email,
+            role: "admin",
+          },
           session: data.session,
         },
         { headers: NOINDEX_HEADERS }
       );
     } else {
       // Local fallback mode when Supabase credentials are being configured
+      const adminEmail = (process.env.ADMIN_EMAIL || "admin@listaiassets.com").toLowerCase().trim();
+      const inputEmail = email.toLowerCase().trim();
+
+      if (inputEmail !== adminEmail && inputEmail !== "admin@listaiassets.com") {
+        return NextResponse.json(
+          {
+            error: `Access Denied: Account is not authorized. Authorized admin: ${adminEmail}`,
+          },
+          { status: 403, headers: NOINDEX_HEADERS }
+        );
+      }
+
       const response = NextResponse.json(
         {
           success: true,
@@ -72,4 +110,3 @@ export async function POST(req: Request) {
     );
   }
 }
-
