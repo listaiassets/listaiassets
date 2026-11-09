@@ -18,6 +18,14 @@ export async function POST(req: Request) {
       );
     }
 
+    const isSignupDisabled = process.env.ALLOW_ADMIN_SIGNUP === "false";
+    if (isSignupDisabled) {
+      return NextResponse.json(
+        { error: "Admin registration is currently disabled by site security policy." },
+        { status: 403, headers: NOINDEX_HEADERS }
+      );
+    }
+
     const expectedSecret = process.env.ADMIN_SECRET_KEY || "listaiassets_admin";
     if (adminKey !== expectedSecret) {
       return NextResponse.json(
@@ -94,3 +102,4 @@ export async function POST(req: Request) {
     );
   }
 }
+
