@@ -61,24 +61,29 @@ export async function POST(req: Request) {
 
       // Update database if connected
       const slug = customData.tool_slug || toolName.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/(^-|-$)+/g, "");
+      const targetTier = planId === "featured" ? "FEATURED" : "FAST_TRACK";
       try {
         await prisma.tool.upsert({
           where: { slug },
           update: {
-            status: "PUBLISHED",
-            verifiedBadge: true,
+            isPaid: true,
+            planTier: targetTier,
+            amountPaid: totalUsd,
           },
           create: {
             name: toolName,
             slug,
             tagline: "Frontier AI Solution",
-            description: "Verified listing on ListAIAssets directory.",
+            description: "Paid listing submitted on ListAIAssets directory.",
             websiteUrl,
-            status: "PUBLISHED",
-            verifiedBadge: true,
+            status: "PENDING",
+            isPaid: true,
+            planTier: targetTier,
+            amountPaid: totalUsd,
+            verifiedBadge: false,
           },
         });
-        console.log(`[Lemon Squeezy] Promoted ${slug} to verified published status.`);
+        console.log(`[Lemon Squeezy] Recorded paid order for ${slug} (${targetTier}) awaiting admin approval.`);
       } catch (dbErr) {
         console.warn("[Lemon Squeezy] Database fallback in webhook fulfillment:", dbErr);
       }

@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 import { stripe, PLAN_TIERS } from "@/lib/stripe";
-import { prisma } from "@/lib/prisma";
 import { notifyOwnerOfSubmission } from "@/lib/notifications";
+import { saveToolSubmission } from "@/lib/db-tools";
 
 export async function POST(req: Request) {
   try {
@@ -15,12 +15,33 @@ export async function POST(req: Request) {
       );
     }
 
-    const origin = req.headers.get("origin") || process.env.NEXT_PUBLIC_SITE_URL || "https://listaiassets.com";
-    const slug = toolData.name.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/(^-|-$)+/g, "");
+    const origin =
+      req.headers.get("origin") ||
+      process.env.NEXT_PUBLIC_SITE_URL ||
+      "https://listaiassets.com";
+    const slug = toolData.name
+      .toLowerCase()
+      .replace(/[^a-z0-9]+/g, "-")
+      .replace(/(^-|-$)+/g, "");
 
     // 1. FREE COMMUNITY PLAN ($0): Instant queue logging and confirmation
     if (planId === "free" || !planId) {
-      // Save notification to persistent storage and alert owner
+      // Save submission to Supabase and persistent queue as PENDING
+      await saveToolSubmission({
+        name: toolData.name,
+        websiteUrl: toolData.websiteUrl,
+        tagline: toolData.tagline || "",
+        description: toolData.description || "",
+        category: toolData.category || "coding",
+        pricingType: toolData.pricingType || "FREEMIUM",
+        startingPrice: parseFloat(toolData.startingPrice || "0"),
+        contactEmail: toolData.contactEmail || "",
+        planTier: "FREE",
+        isPaid: false,
+        amountPaid: 0,
+      });
+
+      // Dispatch alert to site owner
       await notifyOwnerOfSubmission({
         toolName: toolData.name,
         websiteUrl: toolData.websiteUrl,
@@ -33,36 +54,12 @@ export async function POST(req: Request) {
         isPaid: false,
       });
 
-      try {
-        await prisma.tool.upsert({
-          where: { slug },
-          update: {
-            name: toolData.name,
-            tagline: toolData.tagline || "",
-            description: toolData.description || "",
-            websiteUrl: toolData.websiteUrl,
-            pricingType: toolData.pricingType || "FREEMIUM",
-            status: "PENDING",
-          },
-          create: {
-            name: toolData.name,
-            slug,
-            tagline: toolData.tagline || "Frontier AI Application",
-            description: toolData.description || "Submitted via ListAIAssets community queue.",
-            websiteUrl: toolData.websiteUrl,
-            pricingType: toolData.pricingType || "FREEMIUM",
-            status: "PENDING",
-            verifiedBadge: false,
-          },
-        });
-      } catch (dbErr) {
-        console.warn("Prisma upsert fallback in sandbox mode:", dbErr);
-      }
-
       return NextResponse.json({
         success: true,
         isFree: true,
-        redirectUrl: `${origin}/submit/success?type=free&plan=free&slug=${slug}&toolName=${encodeURIComponent(toolData.name)}&websiteUrl=${encodeURIComponent(toolData.websiteUrl)}`,
+        redirectUrl: `${origin}/submit/success?type=free&plan=free&slug=${slug}&toolName=${encodeURIComponent(
+          toolData.name
+        )}&websiteUrl=${encodeURIComponent(toolData.websiteUrl)}`,
       });
     }
 
@@ -70,7 +67,22 @@ export async function POST(req: Request) {
     const selectedPlanKey = planId === "featured" ? "FEATURED" : "FAST_TRACK";
     const planConfig = PLAN_TIERS[selectedPlanKey];
 
-    // Method A: Lemon Squeezy (Ideal for international payouts via Payoneer/Wise)
+    // Persist paid submission as PENDING (will be listed once approved by admin)
+    await saveToolSubmission({
+      name: toolData.name,
+      websiteUrl: toolData.websiteUrl,
+      tagline: toolData.tagline || "",
+      description: toolData.description || "",
+      category: toolData.category || "coding",
+      pricingType: toolData.pricingType || "FREEMIUM",
+      startingPrice: parseFloat(toolData.startingPrice || "0"),
+      contactEmail: toolData.contactEmail || "",
+      planTier: selectedPlanKey,
+      isPaid: true,
+      amountPaid: planConfig.price / 100,
+    });
+
+    // Method A: Lemon Squeezy (Supports Payoneer/Wise payouts)
     const lemonUrl =
       planId === "featured"
         ? process.env.LEMON_SQUEEZY_FEATURED_URL
@@ -129,7 +141,9 @@ export async function POST(req: Request) {
         ],
         mode: "payment",
         customer_email: toolData.contactEmail || undefined,
-        success_url: `${origin}/submit/success?type=paid&session_id={CHECKOUT_SESSION_ID}&plan=${planId}&slug=${slug}&toolName=${encodeURIComponent(toolData.name)}&websiteUrl=${encodeURIComponent(toolData.websiteUrl)}`,
+        success_url: `${origin}/submit/success?type=paid&session_id={CHECKOUT_SESSION_ID}&plan=${planId}&slug=${slug}&toolName=${encodeURIComponent(
+          toolData.name
+        )}&websiteUrl=${encodeURIComponent(toolData.websiteUrl)}`,
         cancel_url: `${origin}/submit?payment=cancelled`,
         metadata: {
           toolName: toolData.name,
@@ -164,7 +178,9 @@ export async function POST(req: Request) {
     return NextResponse.json({
       success: true,
       isSandbox: true,
-      checkoutUrl: `${origin}/submit/success?type=paid&mock_session=cs_mock_${Date.now()}&plan=${planId}&slug=${slug}&toolName=${encodeURIComponent(toolData.name)}&websiteUrl=${encodeURIComponent(toolData.websiteUrl)}`,
+      checkoutUrl: `${origin}/submit/success?type=paid&mock_session=cs_mock_${Date.now()}&plan=${planId}&slug=${slug}&toolName=${encodeURIComponent(
+        toolData.name
+      )}&websiteUrl=${encodeURIComponent(toolData.websiteUrl)}`,
     });
   } catch (error: any) {
     console.error("Checkout session error:", error);

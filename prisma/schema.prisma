@@ -23,6 +23,7 @@ enum PricingType {
 enum ToolStatus {
   PUBLISHED
   PENDING
+  REJECTED
 }
 
 enum PlanTier {
@@ -47,6 +48,14 @@ model Tool {
   domainAuthority Int?
   reviewScore     Float       @default(0.0)
   status          ToolStatus  @default(PENDING)
+  contactEmail    String?
+  planTier        PlanTier    @default(FREE)
+  isPaid          Boolean     @default(false)
+  amountPaid      Float       @default(0.0)
+  adminNotes      String?     @db.Text
+  monthlyVisitors String?
+  features        Json?
+  benchmarks      Json?
   createdAt       DateTime    @default(now())
   updatedAt       DateTime    @updatedAt
 
@@ -63,6 +72,7 @@ model Tool {
 
   @@index([slug])
   @@index([status])
+  @@index([planTier])
   @@index([reviewScore])
   @@index([pricingType])
 }

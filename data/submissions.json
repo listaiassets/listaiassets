@@ -23,6 +23,9 @@
     "contactEmail": "founder@nexusflow.ai",
     "sessionId": "cs_mock_1794123617275",
     "isPaid": true,
-    "timestamp": "2026-11-08T07:40:17.275Z"
+    "timestamp": "2026-11-08T07:40:17.275Z",
+    "status": "PUBLISHED",
+    "planTier": "FAST_TRACK",
+    "verifiedBadge": true
   }
 ]

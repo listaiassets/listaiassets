@@ -22,7 +22,7 @@ export default function robots(): MetadataRoute.Robots {
           "cohere-ai",
         ],
         allow: ["/", "/categories", "/categories/*", "/tools", "/compare/*", "/llms.txt", "/llms-full.txt"],
-        disallow: ["/api/"],
+        disallow: ["/api/", "/admin/"],
       },
     ],
     sitemap: `${baseUrl}/sitemap.xml`,

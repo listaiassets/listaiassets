@@ -49,6 +49,24 @@ function ToolsContent() {
     isNaN(parsedPage) || parsedPage < 1 ? 1 : parsedPage
   );
 
+  // Live tools state (initial static seed, hydrated with approved Supabase tools)
+  const [liveTools, setLiveTools] = useState<DetailedTool[]>(DETAILED_TOOLS);
+
+  useEffect(() => {
+    let isMounted = true;
+    fetch("/api/tools")
+      .then((res) => res.json())
+      .then((data) => {
+        if (isMounted && data.tools && Array.isArray(data.tools) && data.tools.length > 0) {
+          setLiveTools(data.tools);
+        }
+      })
+      .catch(() => {});
+    return () => {
+      isMounted = false;
+    };
+  }, []);
+
   // Filter setters that reset pagination to page 1
   const handleQueryChange = (val: string) => {
     setQuery(val);
@@ -189,7 +207,7 @@ function ToolsContent() {
 
   // Filtered and sorted tools
   const filteredTools = useMemo(() => {
-    return DETAILED_TOOLS.filter((tool) => {
+    return liveTools.filter((tool) => {
       // Search
       const matchesQuery =
         !query ||
@@ -250,6 +268,7 @@ function ToolsContent() {
     webFilter,
     noWatermarkFilter,
     sortBy,
+    liveTools,
   ]);
 
   // Paginated tools calculation

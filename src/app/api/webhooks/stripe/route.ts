@@ -45,25 +45,29 @@ export async function POST(req: Request) {
       });
 
       try {
-        // 2. Promote tool to PUBLISHED with verified badge in database if connected
+        // 2. Mark submission as PAID and queue for admin review (only listed upon admin approval)
         await prisma.tool.upsert({
           where: { slug: toolSlug },
           update: {
-            status: "PUBLISHED",
-            verifiedBadge: true,
+            isPaid: true,
+            planTier: planTier,
+            amountPaid,
           },
           create: {
             name: metadata.toolName || toolSlug,
             slug: toolSlug,
             tagline: "Frontier AI Solution",
-            description: "Verified listing on ListAIAssets directory.",
+            description: "Paid listing submitted on ListAIAssets directory.",
             websiteUrl: metadata.websiteUrl || "https://listaiassets.com",
-            status: "PUBLISHED",
-            verifiedBadge: true,
+            status: "PENDING",
+            isPaid: true,
+            planTier: planTier,
+            amountPaid,
+            verifiedBadge: false,
           },
         });
 
-        console.log(`Successfully upgraded tool ${toolSlug} to ${planTier}`);
+        console.log(`Successfully recorded paid submission for ${toolSlug} (${planTier}) awaiting admin approval`);
       } catch (dbError) {
         console.warn("Database fallback in webhook fulfillment:", dbError);
       }
