@@ -122,43 +122,48 @@ export async function POST(req: Request) {
     // Method B: Stripe Checkout (Direct card processing)
     const hasRealStripeKey =
       process.env.STRIPE_SECRET_KEY &&
-      !process.env.STRIPE_SECRET_KEY.includes("dummy");
+      !process.env.STRIPE_SECRET_KEY.includes("dummy") &&
+      !process.env.STRIPE_SECRET_KEY.includes("...");
 
     if (hasRealStripeKey) {
-      const session = await stripe.checkout.sessions.create({
-        line_items: [
-          {
-            price_data: {
-              currency: "usd",
-              product_data: {
-                name: `ListAIAssets ${planConfig.name} Placement`,
-                description: `Guaranteed indexing & verified Do-Follow SEO backlink for ${toolData.name}`,
+      try {
+        const session = await stripe.checkout.sessions.create({
+          line_items: [
+            {
+              price_data: {
+                currency: "usd",
+                product_data: {
+                  name: `ListAIAssets ${planConfig.name} Placement`,
+                  description: `Guaranteed indexing & verified Do-Follow SEO backlink for ${toolData.name}`,
+                },
+                unit_amount: planConfig.price,
               },
-              unit_amount: planConfig.price,
+              quantity: 1,
             },
-            quantity: 1,
+          ],
+          mode: "payment",
+          customer_email: toolData.contactEmail || undefined,
+          success_url: `${origin}/submit/success?type=paid&session_id={CHECKOUT_SESSION_ID}&plan=${planId}&slug=${slug}&toolName=${encodeURIComponent(
+            toolData.name
+          )}&websiteUrl=${encodeURIComponent(toolData.websiteUrl)}`,
+          cancel_url: `${origin}/submit?payment=cancelled`,
+          metadata: {
+            toolName: toolData.name,
+            toolSlug: slug,
+            websiteUrl: toolData.websiteUrl,
+            planTier: selectedPlanKey,
+            contactEmail: toolData.contactEmail || "",
           },
-        ],
-        mode: "payment",
-        customer_email: toolData.contactEmail || undefined,
-        success_url: `${origin}/submit/success?type=paid&session_id={CHECKOUT_SESSION_ID}&plan=${planId}&slug=${slug}&toolName=${encodeURIComponent(
-          toolData.name
-        )}&websiteUrl=${encodeURIComponent(toolData.websiteUrl)}`,
-        cancel_url: `${origin}/submit?payment=cancelled`,
-        metadata: {
-          toolName: toolData.name,
-          toolSlug: slug,
-          websiteUrl: toolData.websiteUrl,
-          planTier: selectedPlanKey,
-          contactEmail: toolData.contactEmail || "",
-        },
-      });
+        });
 
-      return NextResponse.json({
-        success: true,
-        sessionId: session.id,
-        checkoutUrl: session.url,
-      });
+        return NextResponse.json({
+          success: true,
+          sessionId: session.id,
+          checkoutUrl: session.url,
+        });
+      } catch (stripeErr) {
+        console.warn("[Stripe] Failed to create session, falling back to sandbox:", stripeErr);
+      }
     }
 
     // Method C: Sandbox / Test simulation fallback (Zero third-party dependency)

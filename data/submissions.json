@@ -1,5 +1,37 @@
 [
   {
+    "toolName": "PromptForge AI",
+    "websiteUrl": "https://promptforge.ai",
+    "tagline": "Enterprise Prompt Engineering & Evaluation Platform",
+    "category": "llms",
+    "planId": "featured",
+    "planName": "Featured Spotlight",
+    "amountPaid": 199,
+    "contactEmail": "founder@promptforge.ai",
+    "sessionId": "cs_mock_1794236686796",
+    "isPaid": true,
+    "timestamp": "2026-11-09T15:04:46.796Z"
+  },
+  {
+    "id": "tool_promptforge-ai_1794236650526",
+    "name": "PromptForge AI",
+    "slug": "promptforge-ai",
+    "websiteUrl": "https://promptforge.ai",
+    "tagline": "Enterprise Prompt Engineering & Evaluation Platform",
+    "description": "Systematically optimize, version control, and benchmark LLM prompts with multi-model evaluation.",
+    "category": "llms",
+    "pricingType": "PAID",
+    "startingPrice": 49,
+    "contactEmail": "founder@promptforge.ai",
+    "planTier": "FEATURED",
+    "status": "PENDING",
+    "isPaid": true,
+    "amountPaid": 199,
+    "verifiedBadge": false,
+    "adminNotes": "",
+    "createdAt": "2026-11-09T15:04:46.771Z"
+  },
+  {
     "toolName": "Daniyal Ali Sajid",
     "websiteUrl": "http://localhost:3000/submit",
     "tagline": "sdsdsdsdds",
