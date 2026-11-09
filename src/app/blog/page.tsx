@@ -1,7 +1,7 @@
 import React from "react";
 import Link from "next/link";
 import { Metadata } from "next";
-import { ArrowRight } from "lucide-react";
+import { ArrowRight, BookOpen } from "lucide-react";
 import { getWordPressPosts } from "@/lib/wordpress";
 
 export const metadata: Metadata = {
@@ -152,6 +152,31 @@ export default async function BlogIndexPage() {
               </p>
             </div>
           )}
+
+          {/* Submission & Directory CTA Card */}
+          <div className="mt-16 rounded-2xl border border-stone-200 dark:border-stone-800 bg-gradient-to-r from-amber-50/50 via-stone-50 to-stone-100/50 dark:from-stone-900 dark:via-stone-900/80 dark:to-stone-950 p-8 sm:p-12 text-center">
+            <BookOpen className="h-8 w-8 mx-auto text-amber-600 dark:text-amber-400 mb-3" />
+            <h3 className="text-xl sm:text-2xl font-bold text-stone-900 dark:text-stone-100">
+              Have an AI Tool or Research to Publish?
+            </h3>
+            <p className="mt-2 text-sm text-stone-600 dark:text-stone-400 max-w-lg mx-auto leading-relaxed">
+              Get your AI product, model, or developer tool indexed across our directory, comparison matrix, and community newsletter.
+            </p>
+            <div className="mt-6 flex flex-wrap justify-center gap-3">
+              <Link
+                href="/submit"
+                className="rounded-lg bg-amber-600 hover:bg-amber-500 px-5 py-2.5 text-xs font-semibold text-white shadow-sm transition-all active:scale-[0.98]"
+              >
+                Submit Tool for Review
+              </Link>
+              <Link
+                href="/tools"
+                className="rounded-lg border border-stone-300 dark:border-stone-700 bg-white dark:bg-stone-800 hover:bg-stone-50 dark:hover:bg-stone-700 px-5 py-2.5 text-xs font-semibold text-stone-700 dark:text-stone-300 transition-colors"
+              >
+                Explore All 10,000+ Tools
+              </Link>
+            </div>
+          </div>
         </div>
       </div>
     </>
