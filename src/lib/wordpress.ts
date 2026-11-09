@@ -18,91 +18,88 @@ export interface WordPressPost {
   readingTime: string;
 }
 
-// Frontier Seed Articles for zero-downtime fallback while CMS is in configuration
+// Curated fallback articles for zero-downtime when CMS is initializing
 const FALLBACK_ARTICLES: WordPressPost[] = [
   {
     id: 101,
-    slug: "frontier-ai-coding-agents-benchmark-2026",
-    title: "The 2026 State of Autonomous Coding Agents: Cursor vs Claude 3.7 vs Devstral",
-    excerpt: "An empirical telemetry analysis comparing reasoning throughput, SWE-bench verified accuracy, and multi-file refactoring reliability across the latest developer agents.",
+    slug: "comparing-ai-coding-assistants-cursor-claude-copilot",
+    title: "Comparing AI Coding Assistants: Cursor, Claude, and GitHub Copilot",
+    excerpt: "A practical look at how the leading AI coding tools handle context, multi-file edits, and daily developer workflows.",
     content: `
-      <h2>The Paradigm Shift: From Autocomplete to Autonomous Systems</h2>
-      <p>Over the past twelve months, developer tooling has undergone a structural transformation. What started as inline copilot autocompletions has evolved into multi-step agentic workflows capable of executing end-to-end bug fixes, database schema migrations, and CI/CD triage.</p>
+      <h2>Context and Daily Workflow</h2>
+      <p>Over the last year, AI coding assistants have moved from simple inline suggestions to understanding entire project codebases. While autocomplete is still helpful, the real productivity gains come from tools that can inspect multiple files, understand dependencies, and generate accurate pull requests.</p>
       
-      <h3>Benchmark Telemetry Breakdown</h3>
-      <p>When measuring developer velocity, raw token speed is only half the equation. Our benchmark matrix evaluated three primary axes:</p>
+      <h3>Key Differences in Practice</h3>
+      <p>Each tool takes a slightly different approach to development:</p>
       <ul>
-        <li><strong>Time-to-First-Token (TTFT)</strong>: How quickly the agent grounds context against a 100k-line monorepo.</li>
-        <li><strong>Hallucination Coefficient</strong>: Frequency of inventing deprecated APIs or importing non-existent packages.</li>
-        <li><strong>SWE-bench Verified Accuracy</strong>: Actual success rate across 500 standardized open-source pull requests.</li>
+        <li><strong>Cursor</strong>: Built directly on top of VS Code, offering full repository indexing and inline terminal execution.</li>
+        <li><strong>Claude</strong>: Excels at extended reasoning, explaining complex architectural trade-offs, and large refactoring tasks.</li>
+        <li><strong>GitHub Copilot</strong>: Integrates seamlessly into GitHub environments with solid inline suggestions and workspace awareness.</li>
       </ul>
 
-      <blockquote>
-        "Autonomous agents are no longer judged by how gracefully they write new functions, but by how reliably they reason about existing edge cases in legacy infrastructure."
-      </blockquote>
-
-      <h3>Key Takeaways for Engineering Teams</h3>
-      <p>Teams adopting agentic workflows in 2026 see an average 3.4x acceleration on technical debt remediation. However, rigorous static analysis and type safety remain essential guardrails to verify generated diffs before merging to production branches.</p>
+      <h3>Which One Fits Your Stack?</h3>
+      <p>If you need fast inline completions and broad IDE support, Copilot remains a solid default. If your day-to-day involves deep multi-file refactoring or navigating unfamiliar codebases, Cursor and Claude offer significantly more context awareness.</p>
     `,
     date: "2026-11-06T12:00:00Z",
-    author: "ListAIAssets Research",
+    author: "ListAIAssets Team",
     featuredImage: "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&w=1200&q=80",
-    category: "Coding Agents",
-    tags: ["Cursor", "Claude 3.7", "SWE-bench", "Developer Tools"],
-    readingTime: "4 min read",
+    category: "Coding Tools",
+    tags: ["Cursor", "Claude", "GitHub Copilot", "Developer Tools"],
+    readingTime: "3 min read",
   },
   {
     id: 102,
-    slug: "evaluating-deepseek-r1-open-weights-reasoning",
-    title: "DeepSeek R1 and the Dawn of Commodity Open-Weights Reasoning Models",
-    excerpt: "How chain-of-thought distillation and multi-token prediction architectures are leveling the playing field for private, self-hosted enterprise intelligence.",
+    slug: "guide-to-running-local-open-source-llms",
+    title: "A Practical Guide to Running Open-Source LLMs Locally",
+    excerpt: "Hardware requirements, quantization tradeoffs, and when it makes sense to run models locally vs using hosted APIs.",
     content: `
-      <h2>The Rise of Transparent Chain-of-Thought</h2>
-      <p>The release of competitive open-weights reasoning architectures has fundamentally disrupted cloud API margins. Enterprise organizations with strict HIPAA, SOC2, and data-residency mandates can now run frontier reasoning locally on private silicon clusters.</p>
+      <h2>Why Run Models Locally?</h2>
+      <p>Running models on your own machine gives you complete privacy, zero API costs, and the ability to work offline. With recent improvements in quantization and open-weights releases like DeepSeek and Llama, local models are now capable enough for real programming and writing tasks.</p>
 
-      <h3>Architectural Innovations</h3>
-      <p>Rather than relying purely on massive parameter scaling, the recent breakthroughs stem from reinforcement learning on cold-start reasoning traces and multi-token prediction heads that optimize inference latency.</p>
+      <h3>Hardware Requirements</h3>
+      <p>The main bottleneck for local inference is memory (VRAM):</p>
+      <ul>
+        <li><strong>8B models</strong>: Run smoothly on 16GB of system RAM or a modern Apple Silicon Mac.</li>
+        <li><strong>14B to 32B models</strong>: Require around 24GB to 32GB of unified memory or a dedicated GPU.</li>
+        <li><strong>70B models</strong>: Typically require 48GB+ of memory or multi-GPU configurations.</li>
+      </ul>
 
-      <h3>Strategic Implementation Blueprint</h3>
-      <p>For organizations evaluating self-hosted models, quantization (specifically 4-bit and 8-bit AWQ) enables running 70B parameter reasoning models on dual consumer workstations with negligible degradation on standard STEM benchmarks.</p>
+      <h3>Recommended Setup</h3>
+      <p>Tools like Ollama and LM Studio have made setup straightforward. For most developers, a quantized 14B model provides the best balance between response speed and reasoning accuracy.</p>
     `,
     date: "2026-11-04T09:30:00Z",
-    author: "ListAIAssets Research",
+    author: "ListAIAssets Team",
     featuredImage: "https://images.unsplash.com/photo-1620712943543-bcc4688e7485?auto=format&fit=crop&w=1200&q=80",
-    category: "LLMs & Reasoning",
-    tags: ["DeepSeek R1", "Open Weights", "Inference", "Privacy"],
-    readingTime: "5 min read",
+    category: "Open Source",
+    tags: ["Open Source", "LLMs", "Inference", "Local AI"],
+    readingTime: "4 min read",
   },
   {
     id: 103,
-    slug: "modern-enterprise-ai-search-semantic-rag-blueprint",
-    title: "The Architecture of Modern Enterprise AI Search: Semantic RAG & Vector Embeddings",
-    excerpt: "How hybrid keyword reranking, cross-encoder models, and private on-premise vector embeddings are replacing legacy keyword search engines across engineering organizations.",
+    slug: "how-to-choose-the-right-ai-tool-for-your-team",
+    title: "How to Choose the Right AI Tool for Your Team",
+    excerpt: "A straightforward framework for evaluating AI software by pricing model, licensing, and workflow integration.",
     content: `
-      <h2>The Shift from Lexical to Semantic Discovery</h2>
-      <p>Traditional search architectures rely heavily on BM25 and exact keyword indexing. While effective for identifier lookups, lexical algorithms collapse when queries express complex developer intent or require semantic context synthesis.</p>
+      <h2>Evaluating Tools Beyond the Hype</h2>
+      <p>With thousands of AI tools launching every month, it is easy to accumulate overlapping subscriptions. When evaluating software for your team, focusing on a few core criteria will save both budget and onboarding time.</p>
 
-      <h3>Hybrid RAG Pipeline Design</h3>
-      <p>Modern enterprise retrieval combines dense vector embeddings with sparse keyword inverted indices, scored through reciprocal rank fusion (RRF):</p>
+      <h3>Evaluation Checklist</h3>
       <ul>
-        <li><strong>Dense Embeddings</strong>: Captures high-dimensional conceptual relationships.</li>
-        <li><strong>Sparse BM25 Indexing</strong>: Guarantees exact matches for part numbers, API tokens, and variable names.</li>
-        <li><strong>Cross-Encoder Rerankers</strong>: Evaluates the top 50 retrieved candidates with multi-head attention before passing to the final generation context window.</li>
+        <li><strong>Pricing Structure</strong>: Is pricing per seat, per credit, or flat-rate? Credit-based pricing can lead to unexpected monthly spikes.</li>
+        <li><strong>Data Privacy & Retention</strong>: Does the vendor train on your inputs, or do they guarantee zero-data retention?</li>
+        <li><strong>API Access</strong>: Can you automate repetitive tasks through an API, or are you locked into their web interface?</li>
+        <li><strong>Export Quality</strong>: Ensure generated assets (images, audio, or code) are watermark-free and commercially licensed.</li>
       </ul>
 
-      <blockquote>
-        "The most performant AI discovery engines don't rely purely on vectors—they orchestrate dense semantic embeddings with deterministic keyword precision."
-      </blockquote>
-
-      <h3>Production Latency & Telemetry</h3>
-      <p>By quantizing vector indices and employing approximate nearest neighbor (HNSW) search, sub-15ms retrieval times are routinely achievable even at scale across millions of tokenized chunks.</p>
+      <h3>Next Steps</h3>
+      <p>Start with a small pilot on a single project before rolling out tooling across your entire team. Check our directory for verified pricing breakdowns and feature matrices.</p>
     `,
     date: "2026-11-02T16:15:00Z",
-    author: "ListAIAssets Engineering",
+    author: "ListAIAssets Team",
     featuredImage: "https://images.unsplash.com/photo-1558494949-ef010cbdcc31?auto=format&fit=crop&w=1200&q=80",
-    category: "Search & RAG",
-    tags: ["Semantic Search", "RAG", "Vector Embeddings", "Architecture"],
-    readingTime: "5 min read",
+    category: "Productivity",
+    tags: ["Productivity", "Pricing", "Evaluation", "Teams"],
+    readingTime: "3 min read",
   },
 ];
 

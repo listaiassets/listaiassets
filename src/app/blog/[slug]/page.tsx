@@ -3,17 +3,11 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { Metadata } from "next";
 import {
-  Calendar,
-  Clock,
   ArrowLeft,
-  Share2,
-  Bookmark,
-  User,
-  Sparkles,
+  ArrowRight,
   ChevronRight,
 } from "lucide-react";
 import { getWordPressPostBySlug, getWordPressPosts } from "@/lib/wordpress";
-import { Badge } from "@/components/badge";
 
 interface PostPageProps {
   params: Promise<{
@@ -107,10 +101,10 @@ export default async function BlogPostPage({ params }: PostPageProps) {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(articleSchema) }}
       />
 
-      <article className="min-h-screen bg-[#fafaf8] dark:bg-[#0c0a09] transition-colors duration-150 py-10 px-4 sm:px-6 lg:px-8">
-        <div className="mx-auto max-w-4xl">
+      <article className="min-h-screen bg-[#fafaf8] dark:bg-[#0c0a09] transition-colors duration-150 py-8 sm:py-12 px-4 sm:px-6 lg:px-8">
+        <div className="mx-auto max-w-3xl">
           {/* Breadcrumbs Navigation */}
-          <nav className="flex items-center gap-2 text-xs text-stone-500 dark:text-stone-400 mb-8">
+          <nav className="flex items-center gap-2 text-xs text-stone-500 dark:text-stone-400 mb-6">
             <Link href="/" className="hover:text-stone-900 dark:hover:text-stone-100 transition-colors">
               Home
             </Link>
@@ -119,66 +113,59 @@ export default async function BlogPostPage({ params }: PostPageProps) {
               Blog
             </Link>
             <ChevronRight className="h-3 w-3 text-stone-400" />
-            <span className="truncate max-w-[200px] sm:max-w-xs text-stone-800 dark:text-stone-200">
+            <span className="truncate max-w-[200px] sm:max-w-xs text-stone-700 dark:text-stone-300">
               {post.title}
             </span>
           </nav>
 
           {/* Article Header */}
-          <header className="mb-10 pb-8 border-b border-stone-200 dark:border-stone-800">
-            <div className="flex flex-wrap items-center gap-3 mb-4">
-              <Badge variant="amber" size="sm" className="border-amber-500/40 text-amber-700 dark:text-amber-400 bg-amber-500/10 text-xs">
+          <header className="mb-8 pb-6 border-b border-stone-200 dark:border-stone-800">
+            <div className="flex items-center gap-2.5 mb-3">
+              <span className="inline-flex items-center rounded-md border border-stone-200 dark:border-stone-800 bg-stone-100 dark:bg-stone-900 px-2 py-0.5 text-[10px] font-medium text-stone-700 dark:text-stone-300">
                 {post.category}
-              </Badge>
-              <span className="flex items-center gap-1.5 text-xs text-stone-500 dark:text-stone-400 font-mono">
-                <Clock className="h-3.5 w-3.5" />
+              </span>
+              <span className="text-stone-400 dark:text-stone-600">•</span>
+              <span className="text-[11px] font-mono text-stone-500 dark:text-stone-400">
                 {post.readingTime}
               </span>
             </div>
 
-            <h1 className="text-2xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight text-stone-950 dark:text-stone-50 leading-[1.18] mb-6 break-words">
+            <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold tracking-tight text-stone-900 dark:text-white leading-tight mb-4 break-words">
               {post.title}
             </h1>
 
             {/* Author and Date Bar */}
-            <div className="flex flex-wrap items-center justify-between gap-4 text-xs text-stone-600 dark:text-stone-400">
-              <div className="flex items-center gap-3">
-                <div className="h-8 w-8 rounded-full bg-amber-500/10 border border-amber-500/20 flex items-center justify-center text-amber-600 dark:text-amber-400 font-bold">
-                  <User className="h-4 w-4" />
-                </div>
-                <div>
-                  <p className="font-semibold text-stone-900 dark:text-stone-100">{post.author}</p>
-                  <p className="flex items-center gap-1.5 text-[11px] text-stone-500">
-                    <Calendar className="h-3 w-3" />
-                    {new Date(post.date).toLocaleDateString("en-US", {
-                      month: "long",
-                      day: "numeric",
-                      year: "numeric",
-                    })}
-                  </p>
-                </div>
+            <div className="flex items-center justify-between gap-4 text-xs text-stone-500 dark:text-stone-400">
+              <div className="flex items-center gap-2">
+                <span className="font-medium text-stone-900 dark:text-stone-100">{post.author}</span>
+                <span>•</span>
+                <time dateTime={post.date}>
+                  {new Date(post.date).toLocaleDateString("en-US", {
+                    month: "long",
+                    day: "numeric",
+                    year: "numeric",
+                  })}
+                </time>
               </div>
 
-              <div className="flex items-center gap-2">
-                <Link
-                  href="/blog"
-                  className="inline-flex items-center gap-1.5 rounded-lg border border-stone-200 dark:border-stone-800 bg-white dark:bg-stone-900 px-3 py-1.5 text-xs text-stone-600 dark:text-stone-300 hover:border-amber-500/40 hover:text-stone-950 dark:hover:text-white transition-colors"
-                >
-                  <ArrowLeft className="h-3.5 w-3.5" />
-                  All Articles
-                </Link>
-              </div>
+              <Link
+                href="/blog"
+                className="inline-flex items-center gap-1.5 text-xs text-stone-500 hover:text-stone-900 dark:hover:text-stone-100 transition-colors"
+              >
+                <ArrowLeft className="h-3.5 w-3.5" />
+                <span>All Articles</span>
+              </Link>
             </div>
           </header>
 
           {/* Featured Image if Present */}
           {post.featuredImage && (
-            <div className="mb-10 overflow-hidden rounded-2xl border border-stone-200 dark:border-stone-800 shadow-sm">
+            <div className="mb-8 overflow-hidden rounded-xl border border-stone-200 dark:border-stone-800 shadow-xs">
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
                 src={post.featuredImage}
                 alt={post.title}
-                className="w-full h-auto max-h-[460px] object-cover"
+                className="w-full h-auto max-h-[420px] object-cover"
               />
             </div>
           )}
@@ -189,25 +176,22 @@ export default async function BlogPostPage({ params }: PostPageProps) {
             dangerouslySetInnerHTML={{ __html: post.content }}
           />
 
-          {/* Bottom Callout & Directory Link */}
-          <div className="mt-14 pt-8 border-t border-stone-200 dark:border-stone-800 flex flex-col sm:flex-row items-center justify-between gap-6 rounded-xl bg-stone-100/60 dark:bg-stone-900/40 p-6">
-            <div>
-              <h4 className="text-sm font-semibold text-stone-900 dark:text-stone-100 flex items-center gap-2">
-                <Sparkles className="h-4 w-4 text-amber-500" />
-                Indexed on ListAIAssets
-              </h4>
-              <p className="mt-1 text-xs text-stone-500 dark:text-stone-400 max-w-md">
-                Looking for verified developer tools, coding agents, and foundation models? Explore the empirical benchmark matrix.
-              </p>
-            </div>
-            <div className="flex items-center gap-3 w-full sm:w-auto">
-              <Link
-                href="/tools"
-                className="w-full sm:w-auto text-center rounded-lg bg-amber-600 px-4 py-2 text-xs font-semibold text-white hover:bg-amber-500 transition-colors"
-              >
-                Explore 10,000+ Tools
-              </Link>
-            </div>
+          {/* Bottom Article Navigation */}
+          <div className="mt-12 pt-6 border-t border-stone-200 dark:border-stone-800 flex items-center justify-between text-xs">
+            <Link
+              href="/blog"
+              className="inline-flex items-center gap-1.5 font-medium text-stone-600 hover:text-stone-900 dark:text-stone-400 dark:hover:text-stone-100 transition-colors"
+            >
+              <ArrowLeft className="h-3.5 w-3.5" />
+              <span>Back to all articles</span>
+            </Link>
+            <Link
+              href="/tools"
+              className="inline-flex items-center gap-1.5 font-medium text-amber-600 hover:text-amber-500 dark:text-amber-400 transition-colors"
+            >
+              <span>Explore tools directory</span>
+              <ArrowRight className="h-3.5 w-3.5" />
+            </Link>
           </div>
         </div>
       </article>
