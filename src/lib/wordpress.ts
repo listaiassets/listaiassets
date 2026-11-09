@@ -75,28 +75,34 @@ const FALLBACK_ARTICLES: WordPressPost[] = [
   },
   {
     id: 103,
-    slug: "headless-wordpress-with-nextjs-app-router-blueprint",
-    title: "Architecting a High-Performance Headless CMS with Next.js 16 and WordPress",
-    excerpt: "Why pairing a battle-tested WordPress editorial backend on shared cPanel hosting with a Next.js edge frontend delivers unbeatable SEO, sub-100ms TTFB, and zero licensing fees.",
+    slug: "modern-enterprise-ai-search-semantic-rag-blueprint",
+    title: "The Architecture of Modern Enterprise AI Search: Semantic RAG & Vector Embeddings",
+    excerpt: "How hybrid keyword reranking, cross-encoder models, and private on-premise vector embeddings are replacing legacy keyword search engines across engineering organizations.",
     content: `
-      <h2>Why WordPress Remains the Optimal Headless Editorial Engine</h2>
-      <p>While modern SaaS CMS platforms charge exorbitant monthly seat tiers, open-source WordPress provides a battle-tested rich text editor, multi-author permissions, and extensible taxonomy systems—all for virtually zero marginal cost on existing shared business hosting.</p>
+      <h2>The Shift from Lexical to Semantic Discovery</h2>
+      <p>Traditional search architectures rely heavily on BM25 and exact keyword indexing. While effective for identifier lookups, lexical algorithms collapse when queries express complex developer intent or require semantic context synthesis.</p>
 
-      <h3>Decoupling Architecture: Edge Frontend + Resilient Backend</h3>
-      <p>By delegating the presentation layer to Next.js App Router deployed on Netlify Edge CDN and routing through Cloudflare Full Strict SSL, visitors experience instant page transitions and pristine Core Web Vitals while editors retain the familiarity of the WordPress admin panel.</p>
+      <h3>Hybrid RAG Pipeline Design</h3>
+      <p>Modern enterprise retrieval combines dense vector embeddings with sparse keyword inverted indices, scored through reciprocal rank fusion (RRF):</p>
+      <ul>
+        <li><strong>Dense Embeddings</strong>: Captures high-dimensional conceptual relationships.</li>
+        <li><strong>Sparse BM25 Indexing</strong>: Guarantees exact matches for part numbers, API tokens, and variable names.</li>
+        <li><strong>Cross-Encoder Rerankers</strong>: Evaluates the top 50 retrieved candidates with multi-head attention before passing to the final generation context window.</li>
+      </ul>
 
-      <ol>
-        <li><strong>Cloudflare DNS & Edge Caching</strong>: Serves cached static assets and shields the origin hosting from brute-force bot attacks.</li>
-        <li><strong>WordPress REST API Endpoint</strong>: Provides machine-readable JSON at <code>/wp-json/wp/v2/posts</code>.</li>
-        <li><strong>Next.js Incremental Regeneration</strong>: Automatically updates content on demand without requiring slow full-site rebuilds.</li>
-      </ol>
+      <blockquote>
+        "The most performant AI discovery engines don't rely purely on vectors—they orchestrate dense semantic embeddings with deterministic keyword precision."
+      </blockquote>
+
+      <h3>Production Latency & Telemetry</h3>
+      <p>By quantizing vector indices and employing approximate nearest neighbor (HNSW) search, sub-15ms retrieval times are routinely achievable even at scale across millions of tokenized chunks.</p>
     `,
     date: "2026-11-02T16:15:00Z",
-    author: "Daniyal Ali Sajid",
+    author: "ListAIAssets Engineering",
     featuredImage: "https://images.unsplash.com/photo-1558494949-ef010cbdcc31?auto=format&fit=crop&w=1200&q=80",
-    category: "Architecture",
-    tags: ["WordPress", "Next.js", "Headless CMS", "Netlify", "Cloudflare"],
-    readingTime: "6 min read",
+    category: "Search & RAG",
+    tags: ["Semantic Search", "RAG", "Vector Embeddings", "Architecture"],
+    readingTime: "5 min read",
   },
 ];
 

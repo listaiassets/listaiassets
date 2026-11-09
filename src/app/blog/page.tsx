@@ -66,7 +66,7 @@ export default async function BlogIndexPage() {
           <div className="mb-8 sm:mb-12 border-b border-stone-200 dark:border-stone-800 pb-8 sm:pb-10">
             <div className="inline-flex items-center gap-2 rounded-full border border-amber-500/20 bg-amber-500/10 px-3 py-1 text-xs font-medium text-amber-700 dark:text-amber-400 mb-3 sm:mb-4">
               <Sparkles className="h-3.5 w-3.5" />
-              <span>Headless CMS via WordPress API</span>
+              <span>Frontier AI Research &amp; Analysis</span>
             </div>
             <h1 className="text-2xl sm:text-4xl lg:text-5xl font-bold tracking-tight text-stone-900 dark:text-stone-100 font-sans break-words">
               ListAIAssets <span className="text-amber-600 dark:text-amber-400">Insights</span>
