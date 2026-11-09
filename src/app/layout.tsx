@@ -130,6 +130,52 @@ export default function RootLayout({
         {/* Machine-readable AI Agent discovery link (AEO / GEO standard) */}
         <link rel="author" href="/llms.txt" type="text/plain" title="LLMs.txt" />
         <OrganizationAndWebsiteJsonLd />
+        {/* Zero-latency Netlify badge & drawer suppression script */}
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
+              (function() {
+                var netlifySelectors = [
+                  '#nl-badge-frame',
+                  'iframe#nl-badge-frame',
+                  'iframe[title*="Powered by Netlify" i]',
+                  'iframe[title*="Netlify" i]',
+                  'iframe[src*="netlify" i]',
+                  'netlify-drawer',
+                  '#netlify-drawer',
+                  '.netlify-badge',
+                  '[data-netlify-deploy-preview]',
+                  'div[class*="netlify-badge"]'
+                ];
+                function purgeNetlifyBadges() {
+                  try {
+                    netlifySelectors.forEach(function(sel) {
+                      var nodes = document.querySelectorAll(sel);
+                      for (var i = 0; i < nodes.length; i++) {
+                        var node = nodes[i];
+                        node.style.setProperty('display', 'none', 'important');
+                        node.style.setProperty('visibility', 'hidden', 'important');
+                        node.style.setProperty('opacity', '0', 'important');
+                        if (node.parentNode) {
+                          node.parentNode.removeChild(node);
+                        }
+                      }
+                    });
+                  } catch (e) {}
+                }
+                if (typeof document !== 'undefined') {
+                  purgeNetlifyBadges();
+                  if (typeof MutationObserver !== 'undefined' && document.documentElement) {
+                    var obs = new MutationObserver(purgeNetlifyBadges);
+                    obs.observe(document.documentElement, { childList: true, subtree: true });
+                  }
+                  window.addEventListener('DOMContentLoaded', purgeNetlifyBadges);
+                  window.addEventListener('load', purgeNetlifyBadges);
+                }
+              })();
+            `,
+          }}
+        />
       </head>
       <body className="relative flex min-h-screen flex-col bg-[#fafaf8] text-stone-900 dark:bg-[#0c0a09] dark:text-[#fafaf8] font-sans selection:bg-amber-500/20 selection:text-amber-800 dark:selection:text-amber-300 transition-colors duration-150">
         <ThemeProvider

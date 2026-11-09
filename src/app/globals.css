@@ -155,13 +155,33 @@ body {
 /* Netlify Injected Widget & Badge Suppression                                 */
 /* Eliminates any automatic feedback drawers, badges, or review overlays      */
 /* -------------------------------------------------------------------------- */
+#nl-badge-frame,
+iframe#nl-badge-frame,
+iframe[title*="Powered by Netlify" i],
+iframe[title*="Netlify" i],
+iframe[src*="netlify.com" i],
+iframe[src*="netlify.app" i],
+iframe[id*="netlify" i],
+iframe[class*="netlify" i],
 netlify-drawer,
 #netlify-drawer,
-iframe[src*="netlify.com"],
 .netlify-badge,
-[data-netlify-deploy-preview] {
+[data-netlify-deploy-preview],
+a[href*="netlify.com"][class*="badge"],
+a[href*="netlify.com"] img,
+div[class*="netlify-badge"] {
   display: none !important;
   visibility: hidden !important;
   opacity: 0 !important;
   pointer-events: none !important;
+  width: 0 !important;
+  height: 0 !important;
+  max-width: 0 !important;
+  max-height: 0 !important;
+  position: absolute !important;
+  top: -99999px !important;
+  left: -99999px !important;
+  z-index: -99999 !important;
+  clip: rect(0, 0, 0, 0) !important;
+  transform: scale(0) !important;
 }
