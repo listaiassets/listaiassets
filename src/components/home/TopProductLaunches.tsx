@@ -70,16 +70,16 @@ export function TopProductLaunches() {
   };
 
   return (
-    <section className="mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8">
+    <section className="mx-auto max-w-7xl px-4 py-8 sm:py-12 sm:px-6 lg:px-8">
       {/* Section Header */}
-      <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 border-b border-stone-200 dark:border-stone-800 pb-6 mb-8">
+      <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-4 border-b border-stone-200 dark:border-stone-800 pb-5 sm:pb-6 mb-6 sm:mb-8">
         <div>
           <div className="flex items-center gap-2">
-            <span className="inline-flex items-center gap-1.5 rounded-full border border-amber-500/20 bg-amber-500/10 px-3 py-0.5 text-xs font-semibold text-amber-700 dark:text-amber-400">
+            <span className="inline-flex items-center gap-1.5 rounded-full border border-amber-500/20 bg-amber-500/10 px-2.5 sm:px-3 py-0.5 text-[11px] sm:text-xs font-semibold text-amber-700 dark:text-amber-400">
               <span className="flex h-1.5 w-1.5 rounded-full bg-amber-500 animate-pulse" />
               <span>Live Launchpad</span>
             </span>
-            <span className="text-xs text-stone-500 font-mono">Ranked by Daily Upvotes</span>
+            <span className="text-[11px] sm:text-xs text-stone-500 font-mono">Ranked by Daily Upvotes</span>
           </div>
 
           <h2 className="mt-2 text-2xl sm:text-3xl font-bold tracking-tight text-stone-900 dark:text-white">
@@ -90,32 +90,34 @@ export function TopProductLaunches() {
           </p>
         </div>
 
-        {/* Tab Filters & Launch CTA */}
-        <div className="flex flex-wrap items-center gap-2">
-          <div className="flex items-center rounded-xl border border-stone-200 dark:border-stone-800 bg-white dark:bg-[#1c1917] p-1 shadow-2xs">
-            {[
-              { id: "all", label: "🔥 All Launches" },
-              { id: "video", label: "🎬 Video & Creative" },
-              { id: "coding", label: "💻 Developer IDEs" },
-              { id: "reasoning", label: "🧠 Reasoning" },
-            ].map((tab) => (
-              <button
-                key={tab.id}
-                onClick={() => setActiveTab(tab.id as any)}
-                className={`rounded-lg px-3 py-1.5 text-xs font-medium transition-all cursor-pointer ${
-                  activeTab === tab.id
-                    ? "bg-stone-900 text-white dark:bg-stone-100 dark:text-stone-900 shadow-xs"
-                    : "text-stone-600 dark:text-stone-400 hover:text-stone-900 dark:hover:text-white"
-                }`}
-              >
-                {tab.label}
-              </button>
-            ))}
+        {/* Tab Filters & Launch CTA - Scrollable on mobile */}
+        <div className="flex flex-col sm:flex-row sm:items-center gap-2.5 w-full lg:w-auto">
+          <div className="w-full sm:w-auto overflow-x-auto scrollbar-none pb-1 sm:pb-0 -mx-1 px-1">
+            <div className="flex items-center gap-1 min-w-max rounded-xl border border-stone-200 dark:border-stone-800 bg-white dark:bg-[#1c1917] p-1 shadow-2xs">
+              {[
+                { id: "all", label: "🔥 All Launches" },
+                { id: "video", label: "🎬 Video & Creative" },
+                { id: "coding", label: "💻 Developer IDEs" },
+                { id: "reasoning", label: "🧠 Reasoning" },
+              ].map((tab) => (
+                <button
+                  key={tab.id}
+                  onClick={() => setActiveTab(tab.id as any)}
+                  className={`shrink-0 whitespace-nowrap rounded-lg px-2.5 sm:px-3 py-1.5 text-xs font-medium transition-all cursor-pointer ${
+                    activeTab === tab.id
+                      ? "bg-stone-900 text-white dark:bg-stone-100 dark:text-stone-900 shadow-xs"
+                      : "text-stone-600 dark:text-stone-400 hover:text-stone-900 dark:hover:text-white"
+                  }`}
+                >
+                  {tab.label}
+                </button>
+              ))}
+            </div>
           </div>
 
           <Link
             href="/submit"
-            className="inline-flex items-center gap-1.5 rounded-xl bg-amber-600 hover:bg-amber-500 px-3.5 py-2 text-xs font-semibold text-white shadow-xs transition-colors shrink-0"
+            className="w-full sm:w-auto inline-flex items-center justify-center gap-1.5 rounded-xl bg-amber-600 hover:bg-amber-500 px-3.5 py-2 text-xs font-semibold text-white shadow-xs transition-colors shrink-0 text-center"
           >
             <span>+ Submit Launch</span>
           </Link>
@@ -126,15 +128,15 @@ export function TopProductLaunches() {
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
         {/* SPOTLIGHT PODIUM: #1 Product Launch of the Day (5 Cols) */}
         {spotlightTool && (
-          <div className="lg:col-span-5 rounded-2xl border border-stone-200 dark:border-stone-800 bg-gradient-to-b from-white via-white to-amber-50/20 dark:from-[#1c1917] dark:via-[#1c1917] dark:to-stone-950 p-6 sm:p-7 shadow-sm relative overflow-hidden flex flex-col justify-between h-full">
+          <div className="lg:col-span-5 rounded-2xl border border-stone-200 dark:border-stone-800 bg-gradient-to-b from-white via-white to-amber-50/20 dark:from-[#1c1917] dark:via-[#1c1917] dark:to-stone-950 p-5 sm:p-7 shadow-sm relative overflow-hidden flex flex-col justify-between h-full">
             {/* Top Amber Highlight Strip */}
             <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-amber-500 via-amber-400 to-amber-600" />
 
-            <div className="space-y-5">
+            <div className="space-y-4 sm:space-y-5">
               {/* Card Header & Rank Ribbon */}
-              <div className="flex items-center justify-between">
-                <span className="inline-flex items-center gap-1.5 rounded-md border border-amber-500/25 bg-amber-500/10 px-2.5 py-1 text-[11px] font-mono font-bold text-amber-700 dark:text-amber-400 uppercase tracking-wide">
-                  <Trophy className="h-3.5 w-3.5 text-amber-500" />
+              <div className="flex items-center justify-between gap-2">
+                <span className="inline-flex items-center gap-1.5 rounded-md border border-amber-500/25 bg-amber-500/10 px-2.5 py-1 text-[10px] sm:text-[11px] font-mono font-bold text-amber-700 dark:text-amber-400 uppercase tracking-wide">
+                  <Trophy className="h-3.5 w-3.5 text-amber-500 shrink-0" />
                   <span>#1 Product of the Day</span>
                 </span>
 
@@ -142,7 +144,7 @@ export function TopProductLaunches() {
                 <button
                   onClick={(e) => handleUpvote(spotlightTool.id, e)}
                   aria-label="Upvote spotlight product"
-                  className={`inline-flex items-center gap-1.5 rounded-xl border px-3 py-1.5 text-xs font-mono font-bold transition-all cursor-pointer ${
+                  className={`inline-flex items-center gap-1.5 rounded-xl border px-2.5 sm:px-3 py-1.5 text-xs font-mono font-bold transition-all cursor-pointer shrink-0 ${
                     upvotesState[spotlightTool.id]?.upvoted
                       ? "border-amber-500 bg-amber-500 text-white shadow-xs"
                       : "border-stone-200 dark:border-stone-800 bg-white dark:bg-stone-900 text-stone-800 dark:text-stone-200 hover:border-amber-500/50 hover:text-amber-600"
@@ -154,26 +156,27 @@ export function TopProductLaunches() {
               </div>
 
               {/* Identity & Logo */}
-              <div className="flex items-start gap-4">
-                <div className="h-16 w-16 rounded-2xl overflow-hidden border border-stone-200 dark:border-stone-800 bg-stone-50 dark:bg-stone-900 shrink-0 shadow-xs">
+              <div className="flex items-start gap-3.5 sm:gap-4">
+                <div className="h-14 w-14 sm:h-16 sm:w-16 rounded-2xl overflow-hidden border border-stone-200 dark:border-stone-800 bg-stone-50 dark:bg-stone-900 shrink-0 shadow-xs">
                   <BrandLogo slug={spotlightTool.slug} size={64} className="h-full w-full" />
                 </div>
-                <div>
+
+                <div className="min-w-0 flex-1">
                   <div className="flex items-center gap-1.5">
                     <Link
                       href={`/tools/${spotlightTool.slug}`}
-                      className="text-xl font-bold tracking-tight text-stone-900 dark:text-white hover:text-amber-600 dark:hover:text-amber-400 transition-colors"
+                      className="text-lg sm:text-xl font-bold tracking-tight text-stone-900 dark:text-white hover:text-amber-600 dark:hover:text-amber-400 transition-colors truncate"
                     >
                       {spotlightTool.name}
                     </Link>
                     {spotlightTool.verifiedBadge && (
-                      <ShieldCheck className="h-4 w-4 text-amber-600 dark:text-amber-400" />
+                      <ShieldCheck className="h-4 w-4 text-amber-600 dark:text-amber-400 shrink-0" />
                     )}
                   </div>
-                  <p className="text-xs text-stone-500 font-mono mt-0.5">
+                  <p className="text-xs text-stone-500 font-mono mt-0.5 truncate">
                     {spotlightTool.publisher ? `by ${spotlightTool.publisher}` : "Official Launch"}
                   </p>
-                  <div className="flex items-center gap-2 mt-2">
+                  <div className="flex flex-wrap items-center gap-1.5 sm:gap-2 mt-2">
                     <span className="rounded bg-stone-100 dark:bg-stone-900 px-2 py-0.5 text-[10px] font-mono text-stone-600 dark:text-stone-400 border border-stone-200 dark:border-stone-800">
                       {spotlightTool.categories[0]?.name}
                     </span>
@@ -210,11 +213,11 @@ export function TopProductLaunches() {
               )}
             </div>
 
-            {/* Bottom Action Buttons */}
-            <div className="mt-6 pt-4 border-t border-stone-200 dark:border-stone-800 flex items-center justify-between gap-3">
+            {/* Bottom Action Buttons: Full width on mobile */}
+            <div className="mt-5 sm:mt-6 pt-4 border-t border-stone-200 dark:border-stone-800 flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3">
               <Link
                 href={`/tools/${spotlightTool.slug}`}
-                className="inline-flex items-center gap-1.5 rounded-xl bg-stone-900 hover:bg-stone-800 dark:bg-stone-100 dark:hover:bg-white text-white dark:text-stone-900 px-4 py-2.5 text-xs font-semibold shadow-xs transition-colors"
+                className="w-full sm:w-auto inline-flex items-center justify-center gap-1.5 rounded-xl bg-stone-900 hover:bg-stone-800 dark:bg-stone-100 dark:hover:bg-white text-white dark:text-stone-900 px-4 py-2.5 text-xs font-semibold shadow-xs transition-colors text-center"
               >
                 <span>Read Full Review</span>
                 <ArrowRight className="h-3.5 w-3.5" />
@@ -224,7 +227,7 @@ export function TopProductLaunches() {
                 href={spotlightTool.websiteUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-1 text-xs font-medium text-stone-600 dark:text-stone-400 hover:text-amber-600 dark:hover:text-amber-400 transition-colors"
+                className="inline-flex items-center justify-center gap-1 text-xs font-medium text-stone-600 dark:text-stone-400 hover:text-amber-600 dark:hover:text-amber-400 transition-colors py-1 sm:py-0 text-center"
               >
                 <span>Visit {spotlightTool.name}</span>
                 <ExternalLink className="h-3 w-3" />
@@ -243,10 +246,10 @@ export function TopProductLaunches() {
             return (
               <div
                 key={tool.id}
-                className="group flex flex-col sm:flex-row sm:items-center justify-between gap-4 rounded-xl border border-stone-200 dark:border-stone-800 bg-white dark:bg-[#1c1917] p-4 shadow-2xs hover:border-amber-500/40 hover:shadow-sm transition-all"
+                className="group flex flex-col sm:flex-row sm:items-center justify-between gap-3 sm:gap-4 rounded-xl border border-stone-200 dark:border-stone-800 bg-white dark:bg-[#1c1917] p-3.5 sm:p-4 shadow-2xs hover:border-amber-500/40 hover:shadow-sm transition-all"
               >
                 {/* Left Side: Rank, Logo, Information */}
-                <div className="flex items-center gap-3.5 min-w-0">
+                <div className="flex items-center gap-3 sm:gap-3.5 min-w-0">
                   {/* Rank Number */}
                   <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-lg bg-stone-100 dark:bg-stone-900 text-stone-500 dark:text-stone-400 text-xs font-mono font-bold border border-stone-200 dark:border-stone-800">
                     #{rank}
@@ -261,8 +264,8 @@ export function TopProductLaunches() {
                   </Link>
 
                   {/* Name and Tagline */}
-                  <div className="min-w-0">
-                    <div className="flex items-center gap-2">
+                  <div className="min-w-0 flex-1">
+                    <div className="flex items-center gap-1.5 sm:gap-2">
                       <Link
                         href={`/tools/${tool.slug}`}
                         className="font-semibold text-sm text-stone-900 dark:text-white group-hover:text-amber-600 dark:group-hover:text-amber-400 transition-colors truncate"
@@ -278,7 +281,7 @@ export function TopProductLaunches() {
                     <p className="text-xs text-stone-500 dark:text-stone-400 truncate max-w-sm mt-0.5">
                       {tool.tagline}
                     </p>
-                    <div className="flex items-center gap-2 mt-1">
+                    <div className="flex flex-wrap items-center gap-1.5 sm:gap-2 mt-1">
                       <span className="text-[10px] font-mono text-stone-400">
                         {tool.categories[0]?.name}
                       </span>
@@ -294,26 +297,27 @@ export function TopProductLaunches() {
                   </div>
                 </div>
 
-                {/* Right Side: Action Buttons & Upvote */}
-                <div className="flex items-center justify-end gap-2.5 shrink-0 pt-2 sm:pt-0 border-t sm:border-t-0 border-stone-100 dark:border-stone-800/80">
+                {/* Right Side: Action Buttons & Upvote (Mobile friendly full width) */}
+                <div className="flex items-center justify-between sm:justify-end gap-2 shrink-0 pt-2 sm:pt-0 border-t sm:border-t-0 border-stone-100 dark:border-stone-800/80 w-full sm:w-auto">
                   <Link
                     href={`/tools/${tool.slug}`}
-                    className="inline-flex items-center gap-1 rounded-lg border border-stone-200 dark:border-stone-800 bg-stone-50 dark:bg-stone-900/60 px-2.5 py-1.5 text-xs font-medium text-stone-700 dark:text-stone-300 hover:border-amber-500/40 hover:text-stone-950 dark:hover:text-white transition-colors"
+                    className="flex-1 sm:flex-initial inline-flex items-center justify-center gap-1 rounded-lg border border-stone-200 dark:border-stone-800 bg-stone-50 dark:bg-stone-900/60 px-3 py-2 sm:py-1.5 text-xs font-medium text-stone-700 dark:text-stone-300 hover:border-amber-500/40 hover:text-stone-950 dark:hover:text-white transition-colors"
                   >
                     <span>View Tool</span>
+                    <ArrowRight className="h-3 w-3" />
                   </Link>
 
                   <button
                     onClick={(e) => handleUpvote(tool.id, e)}
                     aria-label={`Upvote ${tool.name}`}
-                    className={`inline-flex flex-col items-center justify-center min-w-[50px] h-11 rounded-xl border px-2 transition-all cursor-pointer ${
+                    className={`inline-flex flex-row sm:flex-col items-center justify-center gap-1.5 sm:gap-0 min-w-[72px] sm:min-w-[50px] h-9 sm:h-11 rounded-xl border px-2.5 sm:px-2 transition-all cursor-pointer ${
                       isUpvoted
                         ? "border-amber-500 bg-amber-500 text-white shadow-xs font-semibold"
                         : "border-stone-200 dark:border-stone-800 bg-white dark:bg-stone-900 text-stone-700 dark:text-stone-300 hover:border-amber-500/50 hover:text-amber-600"
                     }`}
                   >
                     <ArrowUp className="h-3.5 w-3.5" />
-                    <span className="text-[11px] font-mono font-bold leading-none mt-0.5">
+                    <span className="text-xs sm:text-[11px] font-mono font-bold leading-none sm:mt-0.5">
                       {currentUpvotes.toLocaleString()}
                     </span>
                   </button>
@@ -326,3 +330,4 @@ export function TopProductLaunches() {
     </section>
   );
 }
+

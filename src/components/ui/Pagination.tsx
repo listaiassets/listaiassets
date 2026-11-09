@@ -68,7 +68,10 @@ export function Pagination({
         )}
       </div>
 
-      <nav aria-label="Pagination" className="flex items-center gap-1.5">
+      <nav
+        aria-label="Pagination"
+        className="flex items-center justify-center gap-1 sm:gap-1.5 max-w-full overflow-x-auto scrollbar-none py-1 -mx-1 px-1"
+      >
         {/* Previous Button */}
         {getPageUrl ? (
           <Link
@@ -76,7 +79,7 @@ export function Pagination({
             aria-disabled={isPrevDisabled}
             tabIndex={isPrevDisabled ? -1 : undefined}
             onClick={(e) => isPrevDisabled && e.preventDefault()}
-            className={`inline-flex h-9 items-center gap-1 rounded-lg border border-stone-200 dark:border-stone-800 bg-white dark:bg-[#1c1917] px-3 text-xs font-medium text-stone-700 dark:text-stone-300 transition-colors ${
+            className={`inline-flex h-8 sm:h-9 items-center gap-1 rounded-lg border border-stone-200 dark:border-stone-800 bg-white dark:bg-[#1c1917] px-2 sm:px-3 text-xs font-medium text-stone-700 dark:text-stone-300 transition-colors shrink-0 ${
               isPrevDisabled
                 ? "pointer-events-none opacity-40 cursor-not-allowed"
                 : "hover:border-amber-500/40 hover:text-stone-900 dark:hover:text-white cursor-pointer"
@@ -90,7 +93,7 @@ export function Pagination({
             type="button"
             disabled={isPrevDisabled}
             onClick={(e) => handlePageClick(currentPage - 1, e)}
-            className={`inline-flex h-9 items-center gap-1 rounded-lg border border-stone-200 dark:border-stone-800 bg-white dark:bg-[#1c1917] px-3 text-xs font-medium text-stone-700 dark:text-stone-300 transition-colors ${
+            className={`inline-flex h-8 sm:h-9 items-center gap-1 rounded-lg border border-stone-200 dark:border-stone-800 bg-white dark:bg-[#1c1917] px-2 sm:px-3 text-xs font-medium text-stone-700 dark:text-stone-300 transition-colors shrink-0 ${
               isPrevDisabled
                 ? "pointer-events-none opacity-40 cursor-not-allowed"
                 : "hover:border-amber-500/40 hover:text-stone-900 dark:hover:text-white cursor-pointer"
@@ -102,13 +105,13 @@ export function Pagination({
         )}
 
         {/* Page Number Buttons */}
-        <div className="flex items-center gap-1">
+        <div className="flex items-center gap-1 shrink-0">
           {paginationItems.map((item, idx) => {
             if (item === "...") {
               return (
                 <span
                   key={`ellipsis-${idx}`}
-                  className="flex h-9 w-9 items-center justify-center text-xs text-stone-400 dark:text-stone-600 font-mono select-none"
+                  className="flex h-8 w-8 sm:h-9 sm:w-9 items-center justify-center text-xs text-stone-400 dark:text-stone-600 font-mono select-none"
                 >
                   …
                 </span>
@@ -125,7 +128,7 @@ export function Pagination({
                   href={getPageUrl(pageNum)}
                   aria-current={isActive ? "page" : undefined}
                   onClick={(e) => onPageChange && onPageChange(pageNum)}
-                  className={`flex h-9 w-9 items-center justify-center rounded-lg text-xs font-mono font-medium transition-all ${
+                  className={`flex h-8 w-8 sm:h-9 sm:w-9 items-center justify-center rounded-lg text-xs font-mono font-medium transition-all ${
                     isActive
                       ? "bg-amber-600 text-white shadow-xs font-semibold cursor-default"
                       : "border border-stone-200 dark:border-stone-800 bg-white dark:bg-[#1c1917] text-stone-700 dark:text-stone-300 hover:border-amber-500/40 hover:text-stone-900 dark:hover:text-white cursor-pointer"
@@ -142,7 +145,7 @@ export function Pagination({
                 type="button"
                 onClick={(e) => handlePageClick(pageNum, e)}
                 aria-current={isActive ? "page" : undefined}
-                className={`flex h-9 w-9 items-center justify-center rounded-lg text-xs font-mono font-medium transition-all ${
+                className={`flex h-8 w-8 sm:h-9 sm:w-9 items-center justify-center rounded-lg text-xs font-mono font-medium transition-all ${
                   isActive
                     ? "bg-amber-600 text-white shadow-xs font-semibold cursor-default"
                     : "border border-stone-200 dark:border-stone-800 bg-white dark:bg-[#1c1917] text-stone-700 dark:text-stone-300 hover:border-amber-500/40 hover:text-stone-900 dark:hover:text-white cursor-pointer"
@@ -161,7 +164,7 @@ export function Pagination({
             aria-disabled={isNextDisabled}
             tabIndex={isNextDisabled ? -1 : undefined}
             onClick={(e) => isNextDisabled && e.preventDefault()}
-            className={`inline-flex h-9 items-center gap-1 rounded-lg border border-stone-200 dark:border-stone-800 bg-white dark:bg-[#1c1917] px-3 text-xs font-medium text-stone-700 dark:text-stone-300 transition-colors ${
+            className={`inline-flex h-8 sm:h-9 items-center gap-1 rounded-lg border border-stone-200 dark:border-stone-800 bg-white dark:bg-[#1c1917] px-2 sm:px-3 text-xs font-medium text-stone-700 dark:text-stone-300 transition-colors shrink-0 ${
               isNextDisabled
                 ? "pointer-events-none opacity-40 cursor-not-allowed"
                 : "hover:border-amber-500/40 hover:text-stone-900 dark:hover:text-white cursor-pointer"
@@ -175,7 +178,7 @@ export function Pagination({
             type="button"
             disabled={isNextDisabled}
             onClick={(e) => handlePageClick(currentPage + 1, e)}
-            className={`inline-flex h-9 items-center gap-1 rounded-lg border border-stone-200 dark:border-stone-800 bg-white dark:bg-[#1c1917] px-3 text-xs font-medium text-stone-700 dark:text-stone-300 transition-colors ${
+            className={`inline-flex h-8 sm:h-9 items-center gap-1 rounded-lg border border-stone-200 dark:border-stone-800 bg-white dark:bg-[#1c1917] px-2 sm:px-3 text-xs font-medium text-stone-700 dark:text-stone-300 transition-colors shrink-0 ${
               isNextDisabled
                 ? "pointer-events-none opacity-40 cursor-not-allowed"
                 : "hover:border-amber-500/40 hover:text-stone-900 dark:hover:text-white cursor-pointer"

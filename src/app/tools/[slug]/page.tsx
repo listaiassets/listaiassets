@@ -121,49 +121,49 @@ export default async function ToolDetailPage({ params }: ToolDetailPageProps) {
       <div className="relative min-h-screen bg-[#fafaf8] dark:bg-[#0c0a09] transition-colors duration-150">
         <InteractiveVectorGrid />
 
-        <div className="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8 space-y-8">
-          {/* Breadcrumb Navigation */}
-          <nav className="flex items-center gap-2 text-xs text-stone-500 dark:text-stone-400 font-mono">
-            <Link href="/" className="hover:text-stone-900 dark:hover:text-white transition-colors">
+        <div className="mx-auto max-w-7xl px-4 py-6 sm:py-8 sm:px-6 lg:px-8 space-y-6 sm:space-y-8">
+          {/* Breadcrumb Navigation - Horizontally scrollable on mobile */}
+          <nav className="flex items-center gap-1.5 sm:gap-2 text-xs text-stone-500 dark:text-stone-400 font-mono overflow-x-auto scrollbar-none whitespace-nowrap py-1 -mx-1 px-1">
+            <Link href="/" className="hover:text-stone-900 dark:hover:text-white transition-colors shrink-0">
               Home
             </Link>
-            <span>/</span>
-            <Link href="/tools" className="hover:text-stone-900 dark:hover:text-white transition-colors">
+            <span className="shrink-0">/</span>
+            <Link href="/tools" className="hover:text-stone-900 dark:hover:text-white transition-colors shrink-0">
               Tools
             </Link>
-            <span>/</span>
+            <span className="shrink-0">/</span>
             <Link
               href={`/categories/${primaryCategory.slug}`}
-              className="hover:text-stone-900 dark:hover:text-white transition-colors"
+              className="hover:text-stone-900 dark:hover:text-white transition-colors shrink-0"
             >
               {primaryCategory.name}
             </Link>
-            <span>/</span>
-            <span className="font-semibold text-stone-900 dark:text-stone-200">{tool.name}</span>
+            <span className="shrink-0">/</span>
+            <span className="font-semibold text-stone-900 dark:text-stone-200 shrink-0">{tool.name}</span>
           </nav>
 
-          {/* HERO HEADER SECTION (Matches User Screenshot) */}
-          <header className="rounded-2xl border border-stone-200 dark:border-stone-800 bg-white dark:bg-[#1c1917] p-6 sm:p-8 shadow-xs">
-            <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-6">
+          {/* HERO HEADER SECTION (Matches User Screenshot & Mobile Optimized) */}
+          <header className="rounded-2xl border border-stone-200 dark:border-stone-800 bg-white dark:bg-[#1c1917] p-5 sm:p-7 lg:p-8 shadow-xs">
+            <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-5 sm:gap-6">
               {/* Tool Identity Info */}
-              <div className="flex items-start gap-4 sm:gap-5">
+              <div className="flex items-start gap-3.5 sm:gap-5">
                 {/* Brand Logo */}
-                <div className="relative flex h-16 w-16 sm:h-20 sm:w-20 shrink-0 items-center justify-center rounded-2xl overflow-hidden border border-stone-200 dark:border-stone-800 bg-stone-50 dark:bg-stone-900 shadow-xs">
+                <div className="relative flex h-14 w-14 sm:h-20 sm:w-20 shrink-0 items-center justify-center rounded-2xl overflow-hidden border border-stone-200 dark:border-stone-800 bg-stone-50 dark:bg-stone-900 shadow-xs">
                   <BrandLogo slug={tool.slug} size={72} className="h-full w-full" />
                 </div>
 
-                <div className="space-y-1.5">
+                <div className="space-y-1.5 min-w-0 flex-1">
                   <div className="flex flex-wrap items-center gap-2">
-                    <h1 className="text-2xl sm:text-3xl font-bold tracking-tight text-stone-900 dark:text-white">
+                    <h1 className="text-xl sm:text-3xl font-bold tracking-tight text-stone-900 dark:text-white">
                       {tool.name}
                     </h1>
                     {tool.verifiedBadge && (
                       <span title="Verified & Telemetry Audited by ListAIAssets">
-                        <ShieldCheck className="h-5 w-5 text-amber-600 dark:text-amber-400" />
+                        <ShieldCheck className="h-4 w-4 sm:h-5 sm:w-5 text-amber-600 dark:text-amber-400 shrink-0" />
                       </span>
                     )}
                     {tool.dealPercent && (
-                      <span className="rounded bg-amber-500/10 px-2 py-0.5 text-xs font-mono font-bold text-amber-700 dark:text-amber-400 border border-amber-500/25">
+                      <span className="rounded bg-amber-500/10 px-2 py-0.5 text-xs font-mono font-bold text-amber-700 dark:text-amber-400 border border-amber-500/25 shrink-0">
                         {tool.dealPercent}% OFF
                       </span>
                     )}
@@ -174,13 +174,13 @@ export default async function ToolDetailPage({ params }: ToolDetailPageProps) {
                   </p>
 
                   {/* Pills Strip */}
-                  <div className="flex flex-wrap items-center gap-2 pt-2 text-xs">
+                  <div className="flex flex-wrap items-center gap-1.5 sm:gap-2 pt-1.5 text-xs">
                     {/* Primary Category Pill */}
                     <Link
                       href={`/categories/${primaryCategory.slug}`}
                       className="inline-flex items-center gap-1.5 rounded-lg border border-stone-200 dark:border-stone-800 bg-stone-100 dark:bg-stone-900 px-2.5 py-1 text-xs font-medium text-stone-700 dark:text-stone-300 hover:border-amber-500/40 hover:text-amber-600 dark:hover:text-amber-400 transition-colors"
                     >
-                      <Layers className="h-3.5 w-3.5 text-stone-500" />
+                      <Layers className="h-3.5 w-3.5 text-stone-500 shrink-0" />
                       <span>{primaryCategory.name}</span>
                     </Link>
 
@@ -199,7 +199,7 @@ export default async function ToolDetailPage({ params }: ToolDetailPageProps) {
 
                     {/* Review Score */}
                     <span className="inline-flex items-center gap-1 rounded-lg border border-stone-200 dark:border-stone-800 bg-stone-50 dark:bg-stone-900 px-2.5 py-1 text-xs font-mono text-amber-600 dark:text-amber-400 font-medium">
-                      <Star className="h-3.5 w-3.5 fill-amber-500 text-amber-500" />
+                      <Star className="h-3.5 w-3.5 fill-amber-500 text-amber-500 shrink-0" />
                       <span>{tool.reviewScore.toFixed(1)}</span>
                     </span>
 
@@ -212,8 +212,8 @@ export default async function ToolDetailPage({ params }: ToolDetailPageProps) {
                 </div>
               </div>
 
-              {/* Action Cluster (Matches Screenshot top-right buttons) */}
-              <div className="shrink-0 pt-2 lg:pt-0">
+              {/* Action Cluster (Matches Screenshot top-right buttons - Mobile fluid full-width) */}
+              <div className="w-full lg:w-auto shrink-0 pt-3 lg:pt-0 border-t border-stone-100 dark:border-stone-800/80 lg:border-t-0">
                 <ToolInteractiveActions
                   toolId={tool.id}
                   toolName={tool.name}
@@ -226,14 +226,14 @@ export default async function ToolDetailPage({ params }: ToolDetailPageProps) {
           </header>
 
           {/* MAIN 2-COLUMN LAYOUT (Matches Screenshot) */}
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-8 items-start">
             {/* LEFT MAIN CONTENT COLUMN (~68% width) */}
-            <main className="lg:col-span-8 space-y-8">
+            <main className="lg:col-span-8 space-y-6 sm:space-y-8">
               {/* Product Preview / Browser Window Mockup */}
               <ToolBrowserPreview tool={tool} />
 
               {/* About & Overview Section */}
-              <section className="rounded-2xl border border-stone-200 dark:border-stone-800 bg-white dark:bg-[#1c1917] p-6 sm:p-8 shadow-xs space-y-4">
+              <section className="rounded-2xl border border-stone-200 dark:border-stone-800 bg-white dark:bg-[#1c1917] p-5 sm:p-8 shadow-xs space-y-4">
                 <div className="flex items-center justify-between border-b border-stone-200 dark:border-stone-800 pb-4">
                   <h2 className="text-lg font-bold tracking-tight text-stone-900 dark:text-white">
                     About {tool.name}
@@ -251,7 +251,7 @@ export default async function ToolDetailPage({ params }: ToolDetailPageProps) {
 
               {/* Key Use Cases & Capabilities */}
               {tool.keyUseCases && tool.keyUseCases.length > 0 && (
-                <section className="rounded-2xl border border-stone-200 dark:border-stone-800 bg-white dark:bg-[#1c1917] p-6 sm:p-8 shadow-xs space-y-4">
+                <section className="rounded-2xl border border-stone-200 dark:border-stone-800 bg-white dark:bg-[#1c1917] p-5 sm:p-8 shadow-xs space-y-4">
                   <div className="border-b border-stone-200 dark:border-stone-800 pb-4">
                     <h2 className="text-lg font-bold tracking-tight text-stone-900 dark:text-white">
                       Popular Workflows &amp; Use Cases
@@ -261,11 +261,11 @@ export default async function ToolDetailPage({ params }: ToolDetailPageProps) {
                     </p>
                   </div>
 
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-3.5">
                     {tool.keyUseCases.map((useCase, idx) => (
                       <div
                         key={idx}
-                        className="flex items-start gap-3 rounded-xl border border-stone-200 dark:border-stone-800 bg-stone-50/70 dark:bg-stone-900/40 p-4 shadow-2xs"
+                        className="flex items-start gap-3 rounded-xl border border-stone-200 dark:border-stone-800 bg-stone-50/70 dark:bg-stone-900/40 p-3.5 sm:p-4 shadow-2xs"
                       >
                         <CheckCircle2 className="h-4 w-4 text-amber-600 dark:text-amber-400 shrink-0 mt-0.5" />
                         <span className="text-xs text-stone-700 dark:text-stone-300 font-medium leading-relaxed">
@@ -278,7 +278,7 @@ export default async function ToolDetailPage({ params }: ToolDetailPageProps) {
               )}
 
               {/* Verified Feature Capabilities Matrix */}
-              <section className="rounded-2xl border border-stone-200 dark:border-stone-800 bg-white dark:bg-[#1c1917] p-6 sm:p-8 shadow-xs space-y-5">
+              <section className="rounded-2xl border border-stone-200 dark:border-stone-800 bg-white dark:bg-[#1c1917] p-5 sm:p-8 shadow-xs space-y-4 sm:space-y-5">
                 <div className="border-b border-stone-200 dark:border-stone-800 pb-4">
                   <h2 className="text-lg font-bold tracking-tight text-stone-900 dark:text-white">
                     Feature &amp; Capability Audit
@@ -288,7 +288,7 @@ export default async function ToolDetailPage({ params }: ToolDetailPageProps) {
                   </p>
                 </div>
 
-                <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2.5 sm:gap-3">
                   {[
                     { label: "Developer API", enabled: tool.features.api },
                     { label: "Zero Watermark", enabled: tool.features.noWatermark },
@@ -299,7 +299,7 @@ export default async function ToolDetailPage({ params }: ToolDetailPageProps) {
                   ].map((feat, i) => (
                     <div
                       key={i}
-                      className="flex items-center justify-between rounded-xl border border-stone-200 dark:border-stone-800 bg-stone-50/60 dark:bg-stone-900/40 p-3.5"
+                      className="flex items-center justify-between rounded-xl border border-stone-200 dark:border-stone-800 bg-stone-50/60 dark:bg-stone-900/40 p-3 sm:p-3.5"
                     >
                       <span className="text-xs font-medium text-stone-700 dark:text-stone-300">
                         {feat.label}
@@ -320,7 +320,7 @@ export default async function ToolDetailPage({ params }: ToolDetailPageProps) {
               </section>
 
               {/* Live Telemetry & Benchmarks */}
-              <section className="rounded-2xl border border-stone-200 dark:border-stone-800 bg-white dark:bg-[#1c1917] p-6 sm:p-8 shadow-xs space-y-5">
+              <section className="rounded-2xl border border-stone-200 dark:border-stone-800 bg-white dark:bg-[#1c1917] p-5 sm:p-8 shadow-xs space-y-4 sm:space-y-5">
                 <div className="flex items-center justify-between border-b border-stone-200 dark:border-stone-800 pb-4">
                   <div>
                     <h2 className="text-lg font-bold tracking-tight text-stone-900 dark:text-white">
@@ -330,37 +330,37 @@ export default async function ToolDetailPage({ params }: ToolDetailPageProps) {
                       Standardized latency and performance benchmarks
                     </p>
                   </div>
-                  <span className="text-xs text-stone-500 font-mono">Updated 6h ago</span>
+                  <span className="text-[11px] sm:text-xs text-stone-500 font-mono">Updated 6h ago</span>
                 </div>
 
-                <div className="grid grid-cols-2 sm:grid-cols-4 gap-3.5">
-                  <div className="rounded-xl border border-stone-200 dark:border-stone-800 bg-stone-50/70 dark:bg-stone-900/40 p-4">
+                <div className="grid grid-cols-2 sm:grid-cols-4 gap-2.5 sm:gap-3.5">
+                  <div className="rounded-xl border border-stone-200 dark:border-stone-800 bg-stone-50/70 dark:bg-stone-900/40 p-3 sm:p-4">
                     <span className="text-[10px] uppercase font-mono text-stone-500 block">Latency</span>
-                    <span className="text-xl font-bold font-mono text-stone-900 dark:text-white mt-1 block">
+                    <span className="text-lg sm:text-xl font-bold font-mono text-stone-900 dark:text-white mt-1 block">
                       {tool.benchmarks.latencyMs}ms
                     </span>
                     <span className="text-[10px] text-stone-400">Time to first token</span>
                   </div>
 
-                  <div className="rounded-xl border border-stone-200 dark:border-stone-800 bg-stone-50/70 dark:bg-stone-900/40 p-4">
+                  <div className="rounded-xl border border-stone-200 dark:border-stone-800 bg-stone-50/70 dark:bg-stone-900/40 p-3 sm:p-4">
                     <span className="text-[10px] uppercase font-mono text-stone-500 block">Throughput</span>
-                    <span className="text-xl font-bold font-mono text-stone-900 dark:text-white mt-1 block">
+                    <span className="text-lg sm:text-xl font-bold font-mono text-stone-900 dark:text-white mt-1 block">
                       {tool.benchmarks.throughputTokensSec || 80} tok/s
                     </span>
                     <span className="text-[10px] text-stone-400">Generation speed</span>
                   </div>
 
-                  <div className="rounded-xl border border-stone-200 dark:border-stone-800 bg-stone-50/70 dark:bg-stone-900/40 p-4">
+                  <div className="rounded-xl border border-stone-200 dark:border-stone-800 bg-stone-50/70 dark:bg-stone-900/40 p-3 sm:p-4">
                     <span className="text-[10px] uppercase font-mono text-stone-500 block">Accuracy</span>
-                    <span className="text-xl font-bold font-mono text-emerald-600 dark:text-emerald-400 mt-1 block">
+                    <span className="text-lg sm:text-xl font-bold font-mono text-emerald-600 dark:text-emerald-400 mt-1 block">
                       {tool.benchmarks.codeAccuracyPercent}%
                     </span>
                     <span className="text-[10px] text-stone-400">SWE-bench score</span>
                   </div>
 
-                  <div className="rounded-xl border border-stone-200 dark:border-stone-800 bg-stone-50/70 dark:bg-stone-900/40 p-4">
+                  <div className="rounded-xl border border-stone-200 dark:border-stone-800 bg-stone-50/70 dark:bg-stone-900/40 p-3 sm:p-4">
                     <span className="text-[10px] uppercase font-mono text-stone-500 block">Reasoning</span>
-                    <span className="text-xl font-bold font-mono text-amber-600 dark:text-amber-400 mt-1 block">
+                    <span className="text-lg sm:text-xl font-bold font-mono text-amber-600 dark:text-amber-400 mt-1 block">
                       {tool.benchmarks.reasoningScore}
                     </span>
                     <span className="text-[10px] text-stone-400">Out of 100 benchmark</span>
@@ -370,7 +370,7 @@ export default async function ToolDetailPage({ params }: ToolDetailPageProps) {
 
               {/* Companion & Alternative Tools in this Category */}
               {relatedTools.length > 0 && (
-                <section className="space-y-4 pt-4">
+                <section className="space-y-4 pt-2 sm:pt-4">
                   <div className="flex items-center justify-between">
                     <div>
                       <h2 className="text-lg font-bold tracking-tight text-stone-900 dark:text-white">
@@ -389,20 +389,20 @@ export default async function ToolDetailPage({ params }: ToolDetailPageProps) {
                     </Link>
                   </div>
 
-                  <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                  <div className="grid grid-cols-1 sm:grid-cols-3 gap-3.5 sm:gap-4">
                     {relatedTools.map((relTool) => (
                       <Link
                         key={relTool.id}
                         href={`/tools/${relTool.slug}`}
-                        className="group flex flex-col justify-between rounded-xl border border-stone-200 dark:border-stone-800 bg-white dark:bg-[#1c1917] p-4 shadow-xs hover:border-amber-500/40 transition-all hover:shadow-md"
+                        className="group flex flex-col justify-between rounded-xl border border-stone-200 dark:border-stone-800 bg-white dark:bg-[#1c1917] p-3.5 sm:p-4 shadow-xs hover:border-amber-500/40 transition-all hover:shadow-md"
                       >
                         <div className="space-y-3">
                           <div className="flex items-center gap-3">
                             <div className="h-9 w-9 rounded-lg overflow-hidden border border-stone-200 dark:border-stone-800 bg-stone-50 dark:bg-stone-900 shrink-0">
                               <BrandLogo slug={relTool.slug} size={36} className="h-full w-full" />
                             </div>
-                            <div>
-                              <h3 className="text-xs font-semibold text-stone-900 dark:text-white group-hover:text-amber-600 dark:group-hover:text-amber-400 transition-colors">
+                            <div className="min-w-0">
+                              <h3 className="text-xs font-semibold text-stone-900 dark:text-white group-hover:text-amber-600 dark:group-hover:text-amber-400 transition-colors truncate">
                                 {relTool.name}
                               </h3>
                               <span className="text-[10px] font-mono text-amber-600 dark:text-amber-400">
@@ -431,7 +431,7 @@ export default async function ToolDetailPage({ params }: ToolDetailPageProps) {
             {/* RIGHT STICKY SIDEBAR (~32% width - Matches User Screenshot) */}
             <aside className="lg:col-span-4 space-y-6 lg:sticky lg:top-20">
               {/* "Try [Tool Name]" Card (Matches Screenshot) */}
-              <div className="rounded-2xl border border-stone-200 dark:border-stone-800 bg-white dark:bg-[#1c1917] p-6 shadow-xs space-y-5">
+              <div className="rounded-2xl border border-stone-200 dark:border-stone-800 bg-white dark:bg-[#1c1917] p-5 sm:p-6 shadow-xs space-y-4 sm:space-y-5">
                 <div>
                   <h2 className="text-base font-bold text-stone-900 dark:text-white">
                     Try {tool.name}
@@ -470,7 +470,7 @@ export default async function ToolDetailPage({ params }: ToolDetailPageProps) {
               </div>
 
               {/* "AT A GLANCE" Specification Table (Matches Screenshot) */}
-              <div className="rounded-2xl border border-stone-200 dark:border-stone-800 bg-white dark:bg-[#1c1917] p-6 shadow-xs space-y-4">
+              <div className="rounded-2xl border border-stone-200 dark:border-stone-800 bg-white dark:bg-[#1c1917] p-5 sm:p-6 shadow-xs space-y-4">
                 <h3 className="text-xs font-mono font-semibold uppercase tracking-wider text-stone-400 dark:text-stone-500 border-b border-stone-200 dark:border-stone-800 pb-3">
                   At A Glance
                 </h3>
@@ -571,3 +571,4 @@ export default async function ToolDetailPage({ params }: ToolDetailPageProps) {
     </>
   );
 }
+

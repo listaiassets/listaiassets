@@ -320,13 +320,16 @@ export default async function BlogIndexPage({ searchParams }: BlogIndexPageProps
                 Page {currentPage} of {totalPages} ({totalFilteredPosts} total articles)
               </div>
 
-              <nav aria-label="Blog pagination" className="flex items-center gap-1.5">
+              <nav
+                aria-label="Blog pagination"
+                className="flex items-center justify-center gap-1 sm:gap-1.5 max-w-full overflow-x-auto scrollbar-none py-1 -mx-1 px-1"
+              >
                 {/* Previous Page Button */}
                 <Link
                   href={currentPage > 1 ? buildPageUrl(currentPage - 1) : "#"}
                   aria-disabled={currentPage <= 1}
                   tabIndex={currentPage <= 1 ? -1 : undefined}
-                  className={`inline-flex h-9 items-center gap-1 rounded-lg border border-stone-200 dark:border-stone-800 bg-white dark:bg-[#1c1917] px-3 text-xs font-medium text-stone-700 dark:text-stone-300 transition-colors ${
+                  className={`inline-flex h-8 sm:h-9 items-center gap-1 rounded-lg border border-stone-200 dark:border-stone-800 bg-white dark:bg-[#1c1917] px-2 sm:px-3 text-xs font-medium text-stone-700 dark:text-stone-300 transition-colors shrink-0 ${
                     currentPage <= 1
                       ? "pointer-events-none opacity-40 cursor-not-allowed"
                       : "hover:border-amber-500/40 hover:text-stone-900 dark:hover:text-white"
@@ -337,13 +340,13 @@ export default async function BlogIndexPage({ searchParams }: BlogIndexPageProps
                 </Link>
 
                 {/* Page Number Buttons */}
-                <div className="flex items-center gap-1">
+                <div className="flex items-center gap-1 shrink-0">
                   {paginationItems.map((item, idx) => {
                     if (item === "...") {
                       return (
                         <span
                           key={`ellipsis-${idx}`}
-                          className="flex h-9 w-9 items-center justify-center text-xs text-stone-400 dark:text-stone-600 font-mono select-none"
+                          className="flex h-8 w-8 sm:h-9 sm:w-9 items-center justify-center text-xs text-stone-400 dark:text-stone-600 font-mono select-none"
                         >
                           …
                         </span>
@@ -359,7 +362,7 @@ export default async function BlogIndexPage({ searchParams }: BlogIndexPageProps
                         key={`page-${pageNum}`}
                         href={pageUrl}
                         aria-current={isActive ? "page" : undefined}
-                        className={`flex h-9 w-9 items-center justify-center rounded-lg text-xs font-mono font-medium transition-all ${
+                        className={`flex h-8 w-8 sm:h-9 sm:w-9 items-center justify-center rounded-lg text-xs font-mono font-medium transition-all ${
                           isActive
                             ? "bg-amber-600 text-white shadow-xs font-semibold"
                             : "border border-stone-200 dark:border-stone-800 bg-white dark:bg-[#1c1917] text-stone-700 dark:text-stone-300 hover:border-amber-500/40 hover:text-stone-900 dark:hover:text-white"
@@ -376,7 +379,7 @@ export default async function BlogIndexPage({ searchParams }: BlogIndexPageProps
                   href={currentPage < totalPages ? buildPageUrl(currentPage + 1) : "#"}
                   aria-disabled={currentPage >= totalPages}
                   tabIndex={currentPage >= totalPages ? -1 : undefined}
-                  className={`inline-flex h-9 items-center gap-1 rounded-lg border border-stone-200 dark:border-stone-800 bg-white dark:bg-[#1c1917] px-3 text-xs font-medium text-stone-700 dark:text-stone-300 transition-colors ${
+                  className={`inline-flex h-8 sm:h-9 items-center gap-1 rounded-lg border border-stone-200 dark:border-stone-800 bg-white dark:bg-[#1c1917] px-2 sm:px-3 text-xs font-medium text-stone-700 dark:text-stone-300 transition-colors shrink-0 ${
                     currentPage >= totalPages
                       ? "pointer-events-none opacity-40 cursor-not-allowed"
                       : "hover:border-amber-500/40 hover:text-stone-900 dark:hover:text-white"
