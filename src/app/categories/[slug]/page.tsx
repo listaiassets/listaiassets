@@ -26,6 +26,9 @@ import { CategoryDeepDiveJsonLd } from "@/components/seo/JsonLd";
 import { InteractiveVectorGrid } from "@/components/ui/InteractiveVectorGrid";
 import { Badge } from "@/components/badge";
 import { SearchableSelect, SearchableOption } from "@/components/ui/SearchableSelect";
+import { Pagination } from "@/components/ui/Pagination";
+
+const TOOLS_PER_PAGE = 9;
 
 export default function CategoryDetailPage() {
   const params = useParams();
@@ -91,6 +94,34 @@ export default function CategoryDetailPage() {
   const [pricingFilter, setPricingFilter] = useState<string>("ALL");
   const [activeFeature, setActiveFeature] = useState<string | null>(null);
   const [sortBy, setSortBy] = useState<"rating" | "latency" | "traffic">("rating");
+  const [currentPage, setCurrentPage] = useState<number>(1);
+
+  const handleSearchChange = (q: string) => {
+    setSearchQuery(q);
+    setCurrentPage(1);
+  };
+  const handlePricingChange = (p: string) => {
+    setPricingFilter(p);
+    setCurrentPage(1);
+  };
+  const handleFeatureChange = (f: string | null) => {
+    setActiveFeature(f);
+    setCurrentPage(1);
+  };
+  const handleSortChange = (s: "rating" | "latency" | "traffic") => {
+    setSortBy(s);
+    setCurrentPage(1);
+  };
+  const handleResetFilters = () => {
+    setSearchQuery("");
+    setPricingFilter("ALL");
+    setActiveFeature(null);
+    setCurrentPage(1);
+  };
+  const handlePageChange = (page: number) => {
+    setCurrentPage(page);
+    window.scrollTo({ top: 300, behavior: "smooth" });
+  };
 
   // Filtered and sorted tools
   const visibleTools = useMemo(() => {
@@ -129,6 +160,13 @@ export default function CategoryDetailPage() {
         return 0;
       });
   }, [matchingTools, searchQuery, pricingFilter, activeFeature, sortBy]);
+
+  // Paginated tools calculation
+  const totalFilteredTools = visibleTools.length;
+  const totalPages = Math.max(1, Math.ceil(totalFilteredTools / TOOLS_PER_PAGE));
+  const safeCurrentPage = Math.min(currentPage, totalPages);
+  const startIndex = (safeCurrentPage - 1) * TOOLS_PER_PAGE;
+  const paginatedTools = visibleTools.slice(startIndex, startIndex + TOOLS_PER_PAGE);
 
   // Related categories
   const relatedCategories = useMemo(() => {
@@ -246,7 +284,7 @@ export default function CategoryDetailPage() {
               <input
                 type="text"
                 value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
+                onChange={(e) => handleSearchChange(e.target.value)}
                 placeholder={`Search within ${category.name}...`}
                 className="w-full rounded-lg border border-stone-200 dark:border-stone-800 bg-white dark:bg-stone-900 pl-10 pr-4 py-2 text-xs sm:text-sm text-stone-900 dark:text-stone-100 placeholder:text-stone-400 focus:outline-none focus:ring-2 focus:ring-amber-500/30"
               />
@@ -257,7 +295,7 @@ export default function CategoryDetailPage() {
               {["ALL", "FREE", "FREEMIUM", "PAID"].map((type) => (
                 <button
                   key={type}
-                  onClick={() => setPricingFilter(type)}
+                  onClick={() => handlePricingChange(type)}
                   className={`rounded-lg px-3 py-1.5 text-xs font-medium transition-colors cursor-pointer ${
                     pricingFilter === type
                       ? "bg-stone-900 text-white dark:bg-stone-100 dark:text-stone-900 shadow-xs"
@@ -274,7 +312,7 @@ export default function CategoryDetailPage() {
               <span className="text-xs text-stone-500 dark:text-stone-400 font-medium font-mono text-[10px] uppercase">Sort:</span>
               <SearchableSelect
                 value={sortBy}
-                onChange={(val) => setSortBy(val as any)}
+                onChange={(val) => handleSortChange(val as any)}
                 options={[
                   { value: "rating", label: "Highest Rated" },
                   { value: "latency", label: "Lowest Latency" },
@@ -302,7 +340,7 @@ export default function CategoryDetailPage() {
               return (
                 <button
                   key={f.id}
-                  onClick={() => setActiveFeature(active ? null : f.id)}
+                  onClick={() => handleFeatureChange(active ? null : f.id)}
                   className={`rounded-md border px-2.5 py-1 transition-colors cursor-pointer ${
                     active
                       ? "border-amber-500 bg-amber-500/10 text-amber-700 dark:text-amber-400 font-medium"
@@ -315,7 +353,7 @@ export default function CategoryDetailPage() {
             })}
             {activeFeature && (
               <button
-                onClick={() => setActiveFeature(null)}
+                onClick={() => handleFeatureChange(null)}
                 className="text-[11px] text-stone-400 hover:text-stone-600 dark:hover:text-stone-200 underline cursor-pointer"
               >
                 Reset
@@ -328,7 +366,19 @@ export default function CategoryDetailPage() {
         <section className="space-y-6">
           <div className="flex items-center justify-between text-xs text-stone-500 dark:text-stone-400">
             <span>
-              Showing <strong className="text-stone-900 dark:text-white">{visibleTools.length}</strong>{" "}
+              Showing{" "}
+              <strong className="text-stone-900 dark:text-white">
+                {totalFilteredTools === 0
+                  ? 0
+                  : totalFilteredTools <= TOOLS_PER_PAGE
+                  ? totalFilteredTools
+                  : `${startIndex + 1}–${Math.min(startIndex + TOOLS_PER_PAGE, totalFilteredTools)}`}
+              </strong>{" "}
+              {totalFilteredTools > TOOLS_PER_PAGE && (
+                <>
+                  of <strong className="text-stone-900 dark:text-white">{totalFilteredTools}</strong>{" "}
+                </>
+              )}
               vetted {category.name.toLowerCase()}
             </span>
             <span className="font-mono text-[11px]">Updated 6h ago</span>
@@ -340,11 +390,7 @@ export default function CategoryDetailPage() {
                 No tools in this category match your current filter criteria.
               </p>
               <button
-                onClick={() => {
-                  setSearchQuery("");
-                  setPricingFilter("ALL");
-                  setActiveFeature(null);
-                }}
+                onClick={handleResetFilters}
                 className="rounded-lg bg-amber-600 px-4 py-2 text-xs font-semibold text-white shadow-sm hover:bg-amber-500 cursor-pointer"
               >
                 Clear all filters
@@ -352,7 +398,7 @@ export default function CategoryDetailPage() {
             </div>
           ) : (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
-              {visibleTools.map((tool) => {
+              {paginatedTools.map((tool) => {
                 const cardData: ToolCardData = {
                   id: tool.id,
                   name: tool.name,
@@ -372,6 +418,17 @@ export default function CategoryDetailPage() {
                 return <ToolCard key={tool.id} tool={cardData} />;
               })}
             </div>
+          )}
+
+          {/* Pagination Controls */}
+          {totalPages > 1 && (
+            <Pagination
+              currentPage={safeCurrentPage}
+              totalPages={totalPages}
+              totalItems={totalFilteredTools}
+              itemName="tools"
+              onPageChange={handlePageChange}
+            />
           )}
         </section>
 

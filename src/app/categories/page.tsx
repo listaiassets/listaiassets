@@ -1,12 +1,12 @@
 "use client";
 
-import React, { useState, useMemo } from "react";
+import React, { useState, useMemo, useEffect, Suspense } from "react";
 import Link from "next/link";
+import { useRouter, usePathname, useSearchParams } from "next/navigation";
 import { motion } from "framer-motion";
 import {
   Search,
   ArrowRight,
-  Sparkles,
   ChevronDown,
   Layers,
   CheckCircle2,
@@ -22,11 +22,52 @@ import { Badge } from "@/components/badge";
 import { BrandLogo } from "@/components/ui/BrandLogos";
 import { InteractiveVectorGrid } from "@/components/ui/InteractiveVectorGrid";
 import { CategoriesHubJsonLd } from "@/components/seo/JsonLd";
+import { Pagination } from "@/components/ui/Pagination";
 
-export default function CategoriesPage() {
-  const [searchQuery, setSearchQuery] = useState("");
-  const [selectedTag, setSelectedTag] = useState<string>("ALL");
+const CATEGORIES_PER_PAGE = 9;
+
+function CategoriesContent() {
+  const router = useRouter();
+  const pathname = usePathname();
+  const searchParams = useSearchParams();
+
+  const [searchQuery, setSearchQuery] = useState(searchParams.get("q") || "");
+  const [selectedTag, setSelectedTag] = useState<string>(searchParams.get("tag") || "ALL");
   const [openFaqIndex, setOpenFaqIndex] = useState<number | null>(0);
+
+  const rawPage = searchParams.get("page");
+  const parsedPage = rawPage ? parseInt(rawPage, 10) : 1;
+  const [currentPage, setCurrentPage] = useState<number>(
+    isNaN(parsedPage) || parsedPage < 1 ? 1 : parsedPage
+  );
+
+  const handleSearchChange = (q: string) => {
+    setSearchQuery(q);
+    setCurrentPage(1);
+  };
+
+  const handleTagChange = (tag: string) => {
+    setSelectedTag(tag);
+    setCurrentPage(1);
+  };
+
+  const handleResetFilters = () => {
+    setSearchQuery("");
+    setSelectedTag("ALL");
+    setCurrentPage(1);
+  };
+
+  // Synchronize filter and pagination states with URL query parameters
+  useEffect(() => {
+    const params = new URLSearchParams();
+    if (searchQuery) params.set("q", searchQuery);
+    if (selectedTag !== "ALL") params.set("tag", selectedTag);
+    if (currentPage > 1) params.set("page", currentPage.toString());
+
+    const queryString = params.toString();
+    const targetUrl = queryString ? `${pathname}?${queryString}` : pathname;
+    router.replace(targetUrl, { scroll: false });
+  }, [searchQuery, selectedTag, currentPage, pathname, router]);
 
   // Extract all unique tags across categories for quick filtering
   const allTags = useMemo(() => {
@@ -52,6 +93,18 @@ export default function CategoriesPage() {
       return matchesSearch && matchesTag;
     });
   }, [searchQuery, selectedTag]);
+
+  // Paginated categories calculation
+  const totalFilteredCategories = filteredCategories.length;
+  const totalPages = Math.max(1, Math.ceil(totalFilteredCategories / CATEGORIES_PER_PAGE));
+  const safeCurrentPage = Math.min(currentPage, totalPages);
+  const startIndex = (safeCurrentPage - 1) * CATEGORIES_PER_PAGE;
+  const paginatedCategories = filteredCategories.slice(startIndex, startIndex + CATEGORIES_PER_PAGE);
+
+  const handlePageChange = (page: number) => {
+    setCurrentPage(page);
+    document.getElementById("categories-grid")?.scrollIntoView({ behavior: "smooth" });
+  };
 
   const toggleFaq = (index: number) => {
     setOpenFaqIndex(openFaqIndex === index ? null : index);
@@ -113,13 +166,13 @@ export default function CategoriesPage() {
               <input
                 type="text"
                 value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
+                onChange={(e) => handleSearchChange(e.target.value)}
                 placeholder="Search verticals (e.g. coding agents, reasoning, video, search)..."
                 className="w-full rounded-xl border border-stone-200 dark:border-stone-800 bg-white dark:bg-[#1c1917] pl-10 pr-4 py-2.5 text-xs sm:text-sm text-stone-900 dark:text-stone-100 placeholder:text-stone-400 focus:border-amber-500/60 focus:outline-none focus:ring-2 focus:ring-amber-500/20 shadow-xs"
               />
               {searchQuery && (
                 <button
-                  onClick={() => setSearchQuery("")}
+                  onClick={handleResetFilters}
                   className="absolute right-3 text-xs text-stone-400 hover:text-stone-600 dark:hover:text-stone-200"
                 >
                   Clear
@@ -130,7 +183,7 @@ export default function CategoriesPage() {
             {/* Quick Tag Pills */}
             <div className="flex items-center justify-center gap-1.5 overflow-x-auto pt-3 pb-1">
               <button
-                onClick={() => setSelectedTag("ALL")}
+                onClick={() => handleTagChange("ALL")}
                 className={`rounded-md px-2.5 py-1 text-[11px] font-medium transition-colors cursor-pointer ${
                   selectedTag === "ALL"
                     ? "bg-stone-900 text-white dark:bg-stone-100 dark:text-stone-900 shadow-xs"
@@ -142,7 +195,7 @@ export default function CategoriesPage() {
               {allTags.map((tag) => (
                 <button
                   key={tag}
-                  onClick={() => setSelectedTag(selectedTag === tag ? "ALL" : tag)}
+                  onClick={() => handleTagChange(selectedTag === tag ? "ALL" : tag)}
                   className={`rounded-md px-2.5 py-1 text-[11px] font-medium transition-colors whitespace-nowrap cursor-pointer ${
                     selectedTag.toLowerCase() === tag.toLowerCase()
                       ? "bg-stone-900 text-white dark:bg-stone-100 dark:text-stone-900 shadow-xs"
@@ -174,7 +227,15 @@ export default function CategoriesPage() {
               </h2>
             </div>
             <div className="text-xs text-stone-500 dark:text-stone-400 font-mono">
-              Showing {filteredCategories.length} of {CATEGORIES_DATA.length} categories
+              Showing{" "}
+              <span className="font-bold text-stone-900 dark:text-white">
+                {totalFilteredCategories === 0
+                  ? 0
+                  : totalFilteredCategories <= CATEGORIES_PER_PAGE
+                  ? totalFilteredCategories
+                  : `${startIndex + 1}–${Math.min(startIndex + CATEGORIES_PER_PAGE, totalFilteredCategories)}`}
+              </span>{" "}
+              of <span className="font-bold text-stone-900 dark:text-white">{totalFilteredCategories}</span> categories
             </div>
           </div>
 
@@ -184,10 +245,7 @@ export default function CategoriesPage() {
                 No categories match your search &quot;{searchQuery}&quot;.
               </p>
               <button
-                onClick={() => {
-                  setSearchQuery("");
-                  setSelectedTag("ALL");
-                }}
+                onClick={handleResetFilters}
                 className="rounded-lg bg-amber-600 px-3.5 py-1.5 text-xs font-semibold text-white hover:bg-amber-500 cursor-pointer shadow-sm"
               >
                 Reset filters
@@ -195,7 +253,7 @@ export default function CategoriesPage() {
             </div>
           ) : (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-              {filteredCategories.map((cat) => {
+              {paginatedCategories.map((cat) => {
                 const IconComponent = CATEGORY_ICON_MAP[cat.iconName] || Layers;
                 // Find top matching tools in this category for micro logos preview
                 const topTools = DETAILED_TOOLS.filter((t) =>
@@ -273,6 +331,17 @@ export default function CategoriesPage() {
                 );
               })}
             </div>
+          )}
+
+          {/* Pagination Controls */}
+          {totalPages > 1 && (
+            <Pagination
+              currentPage={safeCurrentPage}
+              totalPages={totalPages}
+              totalItems={totalFilteredCategories}
+              itemName="categories"
+              onPageChange={handlePageChange}
+            />
           )}
         </section>
 
@@ -426,5 +495,20 @@ export default function CategoriesPage() {
         </section>
       </div>
     </div>
+  );
+}
+
+export default function CategoriesPage() {
+  return (
+    <Suspense
+      fallback={
+        <div className="mx-auto max-w-7xl px-4 py-24 text-center text-stone-500">
+          <div className="inline-block h-6 w-6 animate-spin rounded-full border-2 border-stone-400 border-t-transparent" />
+          <p className="mt-3 text-xs font-mono text-stone-500">Loading Categories...</p>
+        </div>
+      }
+    >
+      <CategoriesContent />
+    </Suspense>
   );
 }

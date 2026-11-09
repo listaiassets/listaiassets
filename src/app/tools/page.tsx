@@ -6,12 +6,15 @@ import {
   Search,
   SlidersHorizontal,
   RotateCcw,
-  Sparkles,
+  Layers,
 } from "lucide-react";
 import { Badge } from "@/components/badge";
 import { DETAILED_TOOLS, DetailedTool } from "@/lib/data/tools";
 import { ToolCard } from "@/components/tool-card";
 import { SearchableSelect, SearchableOption } from "@/components/ui/SearchableSelect";
+import { Pagination } from "@/components/ui/Pagination";
+
+const TOOLS_PER_PAGE = 12;
 
 function ToolsContent() {
   const router = useRouter();
@@ -38,6 +41,60 @@ function ToolsContent() {
   );
   const [sortBy, setSortBy] = useState(searchParams.get("sort") || "rating");
   const [mobileFiltersOpen, setMobileFiltersOpen] = useState(false);
+
+  // Pagination state from URL parameter
+  const rawPage = searchParams.get("page");
+  const parsedPage = rawPage ? parseInt(rawPage, 10) : 1;
+  const [currentPage, setCurrentPage] = useState<number>(
+    isNaN(parsedPage) || parsedPage < 1 ? 1 : parsedPage
+  );
+
+  // Filter setters that reset pagination to page 1
+  const handleQueryChange = (val: string) => {
+    setQuery(val);
+    setCurrentPage(1);
+  };
+  const handleCategoryChange = (val: string) => {
+    setCategory(val);
+    setCurrentPage(1);
+  };
+  const handlePricingChange = (val: string) => {
+    setPricing(val);
+    setCurrentPage(1);
+  };
+  const handleMinRatingChange = (val: number) => {
+    setMinRating(val);
+    setCurrentPage(1);
+  };
+  const handleMinVisitorsChange = (val: number) => {
+    setMinVisitors(val);
+    setCurrentPage(1);
+  };
+  const handleApiFilterChange = (val: boolean) => {
+    setApiFilter(val);
+    setCurrentPage(1);
+  };
+  const handleMobileFilterChange = (val: boolean) => {
+    setMobileFilter(val);
+    setCurrentPage(1);
+  };
+  const handleWebFilterChange = (val: boolean) => {
+    setWebFilter(val);
+    setCurrentPage(1);
+  };
+  const handleNoWatermarkFilterChange = (val: boolean) => {
+    setNoWatermarkFilter(val);
+    setCurrentPage(1);
+  };
+  const handleSortByChange = (val: string) => {
+    setSortBy(val);
+    setCurrentPage(1);
+  };
+
+  const handlePageChange = (page: number) => {
+    setCurrentPage(page);
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  };
 
   // Active filter count for mobile badge
   const activeFilterCount = useMemo(() => {
@@ -77,6 +134,7 @@ function ToolsContent() {
     if (webFilter) params.set("web", "true");
     if (noWatermarkFilter) params.set("noWatermark", "true");
     if (sortBy !== "rating") params.set("sort", sortBy);
+    if (currentPage > 1) params.set("page", currentPage.toString());
 
     const queryString = params.toString();
     const targetUrl = queryString ? `${pathname}?${queryString}` : pathname;
@@ -92,6 +150,7 @@ function ToolsContent() {
     webFilter,
     noWatermarkFilter,
     sortBy,
+    currentPage,
     pathname,
     router,
   ]);
@@ -107,6 +166,7 @@ function ToolsContent() {
     setWebFilter(false);
     setNoWatermarkFilter(false);
     setSortBy("rating");
+    setCurrentPage(1);
   };
 
   const categoryOptions: SearchableOption[] = [
@@ -192,6 +252,13 @@ function ToolsContent() {
     sortBy,
   ]);
 
+  // Paginated tools calculation
+  const totalFilteredTools = filteredTools.length;
+  const totalPages = Math.max(1, Math.ceil(totalFilteredTools / TOOLS_PER_PAGE));
+  const safeCurrentPage = Math.min(currentPage, totalPages);
+  const startIndex = (safeCurrentPage - 1) * TOOLS_PER_PAGE;
+  const paginatedTools = filteredTools.slice(startIndex, startIndex + TOOLS_PER_PAGE);
+
   return (
     <div className="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
       {/* Header Bar */}
@@ -217,9 +284,19 @@ function ToolsContent() {
         <div className="flex items-center gap-2 rounded-lg border border-stone-200 dark:border-stone-800 bg-white dark:bg-[#1c1917] px-3.5 py-1.5 text-xs text-stone-600 dark:text-stone-400 shadow-xs">
           <span>Showing</span>
           <span className="font-mono font-bold text-stone-900 dark:text-white">
-            {filteredTools.length}
+            {totalFilteredTools === 0
+              ? 0
+              : totalFilteredTools <= TOOLS_PER_PAGE
+              ? totalFilteredTools
+              : `${startIndex + 1}–${Math.min(startIndex + TOOLS_PER_PAGE, totalFilteredTools)}`}
           </span>
-          <span>verified tools</span>
+          <span>
+            {totalFilteredTools <= TOOLS_PER_PAGE
+              ? totalFilteredTools === 1
+                ? "verified tool"
+                : "verified tools"
+              : `of ${totalFilteredTools} verified tools`}
+          </span>
         </div>
       </div>
 
@@ -274,7 +351,7 @@ function ToolsContent() {
               <input
                 type="text"
                 value={query}
-                onChange={(e) => setQuery(e.target.value)}
+                onChange={(e) => handleQueryChange(e.target.value)}
                 placeholder="Search tools, models..."
                 className="w-full rounded-lg border border-stone-200 dark:border-stone-800 bg-stone-50 dark:bg-stone-900 pl-8 pr-3 py-2 text-xs text-stone-900 dark:text-stone-100 placeholder:text-stone-400 dark:placeholder:text-stone-600 focus:border-amber-500/50 focus:outline-none"
               />
@@ -288,7 +365,7 @@ function ToolsContent() {
             </label>
             <SearchableSelect
               value={category}
-              onChange={setCategory}
+              onChange={handleCategoryChange}
               options={categoryOptions}
               searchPlaceholder="Filter categories..."
               buttonClassName="w-full justify-between py-2"
@@ -305,7 +382,7 @@ function ToolsContent() {
               {["ALL", "FREE", "FREEMIUM", "PAID"].map((p) => (
                 <button
                   key={p}
-                  onClick={() => setPricing(p)}
+                  onClick={() => handlePricingChange(p)}
                   className={`rounded-md py-1.5 px-2 text-center transition-all cursor-pointer ${
                     pricing === p
                       ? "bg-stone-900 text-white font-medium border border-stone-900 dark:bg-stone-100 dark:text-stone-900 dark:border-stone-200 shadow-xs"
@@ -332,7 +409,7 @@ function ToolsContent() {
               {[0, 4.5, 4.8, 4.9].map((ratingVal) => (
                 <button
                   key={ratingVal}
-                  onClick={() => setMinRating(ratingVal)}
+                  onClick={() => handleMinRatingChange(ratingVal)}
                   className={`flex-1 rounded-md py-1 text-xs font-mono transition-colors cursor-pointer ${
                     minRating === ratingVal
                       ? "bg-amber-500/10 text-amber-700 dark:text-amber-400 border border-amber-500/30 font-medium"
@@ -367,7 +444,7 @@ function ToolsContent() {
               ].map((opt) => (
                 <button
                   key={opt.val}
-                  onClick={() => setMinVisitors(opt.val)}
+                  onClick={() => handleMinVisitorsChange(opt.val)}
                   className={`rounded-md py-1 text-center transition-colors cursor-pointer ${
                     minVisitors === opt.val
                       ? "bg-stone-900 text-white font-medium border border-stone-900 dark:bg-stone-100 dark:text-stone-900 dark:border-stone-200 shadow-xs"
@@ -390,7 +467,7 @@ function ToolsContent() {
                 <input
                   type="checkbox"
                   checked={apiFilter}
-                  onChange={(e) => setApiFilter(e.target.checked)}
+                  onChange={(e) => handleApiFilterChange(e.target.checked)}
                   className="rounded border-stone-300 dark:border-stone-700 bg-white dark:bg-stone-900 text-amber-600 focus:ring-0 accent-amber-600"
                 />
                 <span>Developer API Available</span>
@@ -399,7 +476,7 @@ function ToolsContent() {
                 <input
                   type="checkbox"
                   checked={noWatermarkFilter}
-                  onChange={(e) => setNoWatermarkFilter(e.target.checked)}
+                  onChange={(e) => handleNoWatermarkFilterChange(e.target.checked)}
                   className="rounded border-stone-300 dark:border-stone-700 bg-white dark:bg-stone-900 text-amber-600 focus:ring-0 accent-amber-600"
                 />
                 <span>Zero Watermark Export</span>
@@ -408,7 +485,7 @@ function ToolsContent() {
                 <input
                   type="checkbox"
                   checked={mobileFilter}
-                  onChange={(e) => setMobileFilter(e.target.checked)}
+                  onChange={(e) => handleMobileFilterChange(e.target.checked)}
                   className="rounded border-stone-300 dark:border-stone-700 bg-white dark:bg-stone-900 text-amber-600 focus:ring-0 accent-amber-600"
                 />
                 <span>Mobile App (iOS/Android)</span>
@@ -417,7 +494,7 @@ function ToolsContent() {
                 <input
                   type="checkbox"
                   checked={webFilter}
-                  onChange={(e) => setWebFilter(e.target.checked)}
+                  onChange={(e) => handleWebFilterChange(e.target.checked)}
                   className="rounded border-stone-300 dark:border-stone-700 bg-white dark:bg-stone-900 text-amber-600 focus:ring-0 accent-amber-600"
                 />
                 <span>Web Application</span>
@@ -431,14 +508,27 @@ function ToolsContent() {
           {/* Sorting & Counter Bar */}
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 rounded-xl border border-stone-200 dark:border-stone-800 bg-white dark:bg-[#1c1917] px-4 py-2.5 shadow-xs">
             <span className="text-xs text-stone-600 dark:text-stone-400">
-              Showing <strong className="text-stone-900 dark:text-white">{filteredTools.length}</strong> AI technologies
+              Showing{" "}
+              <strong className="text-stone-900 dark:text-white">
+                {totalFilteredTools === 0
+                  ? 0
+                  : totalFilteredTools <= TOOLS_PER_PAGE
+                  ? totalFilteredTools
+                  : `${startIndex + 1}–${Math.min(startIndex + TOOLS_PER_PAGE, totalFilteredTools)}`}
+              </strong>{" "}
+              {totalFilteredTools > TOOLS_PER_PAGE && (
+                <>
+                  of <strong className="text-stone-900 dark:text-white">{totalFilteredTools}</strong>{" "}
+                </>
+              )}
+              AI technologies
             </span>
 
             <div className="flex items-center gap-2 text-xs">
               <span className="text-stone-500 font-mono uppercase text-[10px]">Sort:</span>
               <SearchableSelect
                 value={sortBy}
-                onChange={setSortBy}
+                onChange={handleSortByChange}
                 options={sortOptions}
                 searchPlaceholder="Search sort..."
                 buttonClassName="py-1 px-2.5"
@@ -449,14 +539,15 @@ function ToolsContent() {
 
           {/* Cards Grid using ToolCard */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            {filteredTools.map((tool) => (
+            {paginatedTools.map((tool) => (
               <ToolCard key={tool.id} tool={tool} />
             ))}
           </div>
 
+          {/* Empty State */}
           {filteredTools.length === 0 && (
             <div className="rounded-xl border border-stone-200 dark:border-stone-800 bg-white dark:bg-[#1c1917] py-16 text-center shadow-xs">
-              <Sparkles className="mx-auto h-8 w-8 text-stone-400 animate-pulse" />
+              <Layers className="mx-auto h-8 w-8 text-stone-400" />
               <p className="mt-2 text-xs text-stone-700 dark:text-stone-300 font-medium">No tools match your active filter criteria</p>
               <button
                 onClick={resetFilters}
@@ -465,6 +556,17 @@ function ToolsContent() {
                 Reset All Filters
               </button>
             </div>
+          )}
+
+          {/* Pagination Controls */}
+          {totalPages > 1 && (
+            <Pagination
+              currentPage={safeCurrentPage}
+              totalPages={totalPages}
+              totalItems={totalFilteredTools}
+              itemName="tools"
+              onPageChange={handlePageChange}
+            />
           )}
         </main>
       </div>
