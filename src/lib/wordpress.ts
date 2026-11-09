@@ -155,7 +155,19 @@ export async function getWordPressPosts(): Promise<WordPressPost[]> {
     }
 
     if (data && Array.isArray(data) && data.length > 0) {
-      const posts: WordPressPost[] = data.map((item: any) => {
+      // Exclude WordPress default boilerplate post ("Hello world!")
+      const sanitizedData = data.filter((item: any) => {
+        const slug = (item.slug || "").toLowerCase();
+        const title = (item.title?.rendered || "").toLowerCase();
+        return slug !== "hello-world" && !title.includes("hello world");
+      });
+
+      if (sanitizedData.length === 0) {
+        // If CMS only has default unconfigured starter post, present authoritative research seed articles
+        return FALLBACK_ARTICLES;
+      }
+
+      const posts: WordPressPost[] = sanitizedData.map((item: any) => {
         // Extract embedded featured image
         let featuredImage: string | undefined = undefined;
         try {
@@ -237,6 +249,15 @@ export async function getWordPressPostBySlug(slug: string): Promise<WordPressPos
     }
 
     if (postData) {
+      // Exclude default placeholder post
+      if (
+        postData.slug === "hello-world" ||
+        (postData.title?.rendered || "").toLowerCase().includes("hello world")
+      ) {
+        const fallback = FALLBACK_ARTICLES.find((p) => p.slug === slug);
+        return fallback || null;
+      }
+
       let featuredImage: string | undefined = undefined;
       try {
         const media = postData._embedded?.["wp:featuredmedia"]?.[0];
