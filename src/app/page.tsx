@@ -201,6 +201,34 @@ export default function Home() {
   const [onlyVerified, setOnlyVerified] = useState(false);
   const [isCommandOpen, setIsCommandOpen] = useState(false);
 
+  // Live tools state initialized with seed tools and hydrated with approved Supabase tools
+  const [homeTools, setHomeTools] = useState<ToolCardData[]>(INITIAL_TOOLS);
+
+  React.useEffect(() => {
+    let isMounted = true;
+    fetch("/api/tools")
+      .then((res) => res.json())
+      .then((data) => {
+        if (isMounted && data.tools && Array.isArray(data.tools) && data.tools.length > 0) {
+          // Merge dynamic tools with INITIAL_TOOLS
+          const map = new Map<string, ToolCardData>();
+          for (const t of data.tools) {
+            map.set(t.slug.toLowerCase(), t);
+          }
+          for (const t of INITIAL_TOOLS) {
+            if (!map.has(t.slug.toLowerCase())) {
+              map.set(t.slug.toLowerCase(), t);
+            }
+          }
+          setHomeTools(Array.from(map.values()));
+        }
+      })
+      .catch(() => {});
+    return () => {
+      isMounted = false;
+    };
+  }, []);
+
   // Comparison selection
   const [compareList, setCompareList] = useState<ToolCardData[]>([
     INITIAL_TOOLS[0], // Cursor
@@ -220,7 +248,7 @@ export default function Home() {
   };
 
   const filteredTools = useMemo(() => {
-    return INITIAL_TOOLS.filter((tool) => {
+    return homeTools.filter((tool) => {
       const matchesSearch =
         tool.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
         tool.tagline.toLowerCase().includes(searchQuery.toLowerCase()) ||
@@ -237,7 +265,7 @@ export default function Home() {
 
       return matchesSearch && matchesCategory && matchesPricing && matchesVerified;
     });
-  }, [searchQuery, selectedCategory, selectedPricing, onlyVerified]);
+  }, [homeTools, searchQuery, selectedCategory, selectedPricing, onlyVerified]);
 
   return (
     <div className="relative min-h-screen">

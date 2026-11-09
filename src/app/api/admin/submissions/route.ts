@@ -1,19 +1,45 @@
 import { NextResponse } from "next/server";
 import { revalidatePath } from "next/cache";
+import { cookies } from "next/headers";
+import { createClient } from "@/lib/supabase/server";
 import {
   getAllSubmissions,
   updateSubmissionStatus,
   saveToolSubmission,
 } from "@/lib/db-tools";
 
-// Security helper: Check admin key from header or query param
-function isAuthorized(req: Request): boolean {
+// Security helper: Check admin key, Supabase Auth session, or admin cookie
+async function isAuthorized(req: Request): Promise<boolean> {
   const { searchParams } = new URL(req.url);
   const queryKey = searchParams.get("key");
   const headerKey = req.headers.get("x-admin-key");
   const adminSecret = process.env.ADMIN_SECRET_KEY || "listaiassets_admin";
 
-  return queryKey === adminSecret || headerKey === adminSecret;
+  if (queryKey === adminSecret || headerKey === adminSecret) {
+    return true;
+  }
+
+  // Check Supabase Auth
+  try {
+    const supabase = await createClient();
+    const {
+      data: { user },
+    } = await supabase.auth.getUser();
+    if (user) return true;
+  } catch {
+    // Fallback
+  }
+
+  // Check admin session cookie
+  try {
+    const cookieStore = await cookies();
+    const session = cookieStore.get("listaiassets_admin_session");
+    if (session?.value) return true;
+  } catch {
+    // Fallback
+  }
+
+  return false;
 }
 
 // Strict No-Index & Security Headers
@@ -27,7 +53,7 @@ const NOINDEX_HEADERS = {
  * Retrieves all submissions for the admin review queue.
  */
 export async function GET(req: Request) {
-  if (!isAuthorized(req)) {
+  if (!(await isAuthorized(req))) {
     return NextResponse.json(
       { error: "Unauthorized. Pass ?key=your_admin_key or x-admin-key header" },
       { status: 401, headers: NOINDEX_HEADERS }
@@ -78,7 +104,7 @@ export async function GET(req: Request) {
  * Approves, rejects, or modifies a tool submission.
  */
 export async function PATCH(req: Request) {
-  if (!isAuthorized(req)) {
+  if (!(await isAuthorized(req))) {
     return NextResponse.json(
       { error: "Unauthorized. Pass ?key=your_admin_key or x-admin-key header" },
       { status: 401, headers: NOINDEX_HEADERS }
@@ -152,7 +178,7 @@ export async function PATCH(req: Request) {
  * Allows admin to manually create a new submission or import a tool directly into the queue.
  */
 export async function POST(req: Request) {
-  if (!isAuthorized(req)) {
+  if (!(await isAuthorized(req))) {
     return NextResponse.json(
       { error: "Unauthorized." },
       { status: 401, headers: NOINDEX_HEADERS }
