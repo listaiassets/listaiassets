@@ -35,15 +35,73 @@ export interface DetailedTool {
     upvotes: number;
     downvotes: number;
   };
+  publisher?: string;
+  releaseDate?: string;
+  isNewLaunch?: boolean;
+  launchRank?: number;
+  keyUseCases?: string[];
+  longDescription?: string;
 }
 
 export const DETAILED_TOOLS: DetailedTool[] = [
+  {
+    id: "tool_vmake",
+    name: "Vmake Labs",
+    slug: "vmake-labs",
+    tagline: "AI Social Video Studio for e-commerce products and viral content.",
+    description: "Turn products into viral social videos. AI-powered e-commerce video generator, fashion model generator, video quality enhancer, and background changer.",
+    longDescription: "Vmake Labs is an end-to-end AI creative suite engineered for e-commerce brands, marketing teams, and content creators. It automates product video generation, creates realistic AI fashion models from flat clothing photography, enhances video quality to 4K 60FPS, and removes watermarks seamlessly.",
+    websiteUrl: "https://vmake.ai",
+    pricingType: "FREEMIUM",
+    startingPrice: 0,
+    pricePerCredit: 0.05,
+    categories: [
+      { id: "cat_video", name: "Video & Animation", slug: "video" },
+      { id: "cat_art", name: "Generative Art", slug: "art" },
+    ],
+    tags: ["social-video", "ecommerce", "video-enhancer", "fashion-models", "ugc", "reels"],
+    verifiedBadge: true,
+    domainAuthority: 78,
+    reviewScore: 4.88,
+    dealPercent: 25,
+    monthlyVisitors: "3.2M",
+    monthlyVisitorsNumber: 3200000,
+    publisher: "Meitu Marketing",
+    releaseDate: "Oct 29, 2026",
+    isNewLaunch: true,
+    launchRank: 1,
+    keyUseCases: [
+      "Generate AI human fashion models from ghost mannequins and flat lay clothing shots",
+      "One-click 4K 60FPS video upscaling and resolution enhancement",
+      "Automatic short-form product video creation for TikTok, Instagram Reels, and YouTube Shorts",
+      "Instant video background removal and replacement with studio settings",
+    ],
+    features: {
+      api: true,
+      mobileApp: true,
+      web: true,
+      noWatermark: true,
+      commercialRights: true,
+      openSource: false,
+    },
+    benchmarks: {
+      latencyMs: 340,
+      throughputTokensSec: 42,
+      codeAccuracyPercent: 91.5,
+      reasoningScore: 88.4,
+    },
+    communityVotes: {
+      upvotes: 1842,
+      downvotes: 38,
+    },
+  },
   {
     id: "tool_cursor",
     name: "Cursor AI",
     slug: "cursor",
     tagline: "The AI-first Code Editor built for pairing with frontier reasoning models.",
     description: "Cursor integrates deep codebase indexing with models like Claude 3.7 and GPT-4o to provide multi-file edits, inline terminal debugging, and predictive multi-line tab completions.",
+    longDescription: "Cursor is an intelligent AI-native code editor forked from VS Code. It indexes your entire repository locally using vector embeddings, allowing developers to ask codebase-wide questions, refactor across dozens of files simultaneously, and generate context-aware unit tests and documentation directly in their terminal.",
     websiteUrl: "https://cursor.com",
     pricingType: "FREEMIUM",
     startingPrice: 20,
@@ -59,6 +117,16 @@ export const DETAILED_TOOLS: DetailedTool[] = [
     dealPercent: 20,
     monthlyVisitors: "6.8M",
     monthlyVisitorsNumber: 6800000,
+    publisher: "Anysphere",
+    releaseDate: "Nov 3, 2026",
+    isNewLaunch: true,
+    launchRank: 2,
+    keyUseCases: [
+      "Agentic multi-file refactoring and automated codebase migrations",
+      "Smart Tab autocomplete predicting multiple lines ahead in real-time",
+      "Inline terminal error diagnosis and instant patch generation",
+      "Natural language codebase search using vector symbol indexing",
+    ],
     features: {
       api: true,
       mobileApp: false,
@@ -98,6 +166,17 @@ export const DETAILED_TOOLS: DetailedTool[] = [
     reviewScore: 4.98,
     monthlyVisitors: "48.5M",
     monthlyVisitorsNumber: 48500000,
+    publisher: "Anthropic",
+    releaseDate: "Nov 5, 2026",
+    isNewLaunch: true,
+    launchRank: 3,
+    longDescription: "Claude 3.7 Sonnet introduces hybrid frontier reasoning, empowering engineers and researchers to toggle dynamically between instantaneous response generation and extended, visible internal thinking tokens for difficult mathematical and architectural software problems.",
+    keyUseCases: [
+      "Full-stack software engineering and architecture design",
+      "Competitive algorithmic problem solving and logic validation",
+      "Document processing across 200,000+ token context windows",
+      "Agentic web search and code execution via Anthropic API",
+    ],
     features: {
       api: true,
       mobileApp: true,
@@ -214,6 +293,17 @@ export const DETAILED_TOOLS: DetailedTool[] = [
     reviewScore: 4.92,
     monthlyVisitors: "32.0M",
     monthlyVisitorsNumber: 32000000,
+    publisher: "DeepSeek AI",
+    releaseDate: "Nov 1, 2026",
+    isNewLaunch: true,
+    launchRank: 4,
+    longDescription: "DeepSeek-R1 demonstrates open-weights frontier performance trained through large-scale reinforcement learning without supervised fine-tuning. It rivals premier commercial closed-source models in mathematics, competitive coding, and multi-step complex reasoning.",
+    keyUseCases: [
+      "Local offline deployment on private enterprise GPU infrastructure",
+      "Automated code review and unit test generation",
+      "Mathematical theorem proving and symbolic computation",
+      "Low-cost high-throughput API integration with sub-penny pricing",
+    ],
     features: {
       api: true,
       mobileApp: true,
@@ -330,6 +420,17 @@ export const DETAILED_TOOLS: DetailedTool[] = [
     reviewScore: 4.72,
     monthlyVisitors: "5.1M",
     monthlyVisitorsNumber: 5100000,
+    publisher: "Vercel",
+    releaseDate: "Nov 4, 2026",
+    isNewLaunch: true,
+    launchRank: 5,
+    longDescription: "v0 by Vercel leverages generative models to translate natural language prompts into responsive, accessible UI blocks built with Tailwind CSS, Shadcn UI, and React. Export code with one click directly into modern Next.js frontends.",
+    keyUseCases: [
+      "Rapid web app interface prototyping and wireframing",
+      "Interactive component generation with Shadcn UI and Radix primitives",
+      "Instant copy-paste React code integration for Next.js",
+      "Design-to-code workflow acceleration for front-end developers",
+    ],
     features: {
       api: false,
       mobileApp: false,
@@ -367,6 +468,17 @@ export const DETAILED_TOOLS: DetailedTool[] = [
     reviewScore: 4.90,
     monthlyVisitors: "3.4M",
     monthlyVisitorsNumber: 3400000,
+    publisher: "Black Forest Labs",
+    releaseDate: "Oct 28, 2026",
+    isNewLaunch: true,
+    launchRank: 6,
+    longDescription: "FLUX.1 [schnell] is a high-speed 12-billion parameter rectified flow model developed by the original creators of Stable Diffusion at Black Forest Labs. It creates photorealistic textures and typography with minimal step counts and is licensed under Apache 2.0 for commercial and local deployment.",
+    keyUseCases: [
+      "Ultra-low latency text-to-image synthesis in 1 to 4 diffusion steps",
+      "Commercial product packaging, concept art, and high-fidelity mockups",
+      "Permissive Apache 2.0 on-premise local inference with ComfyUI",
+      "High typographic precision for posters and marketing graphics",
+    ],
     features: {
       api: true,
       mobileApp: false,
@@ -710,6 +822,17 @@ export const DETAILED_TOOLS: DetailedTool[] = [
     reviewScore: 4.87,
     monthlyVisitors: "18.2M",
     monthlyVisitorsNumber: 18200000,
+    publisher: "Kuaishou Technology",
+    releaseDate: "Nov 2, 2026",
+    isNewLaunch: true,
+    launchRank: 7,
+    longDescription: "Kling AI is a next-generation video synthesis model built on a 3D spatio-temporal joint attention mechanism. It generates up to 2-minute 1080p clips at 30fps with accurate real-world physics, fluid mechanics, and natural facial expressions.",
+    keyUseCases: [
+      "Cinematic 1080p video generation with 3D camera path controls",
+      "Character animation and complex facial emotion synthesis",
+      "Motion brush tool to direct movement of specific scene elements",
+      "Text-to-video and image-to-video generation for marketing and filmmaking",
+    ],
     features: {
       api: true,
       mobileApp: true,
@@ -843,3 +966,44 @@ export const DETAILED_TOOLS: DetailedTool[] = [
     },
   },
 ];
+
+/**
+ * Find a detailed tool by slug or identifier with fallback normalization
+ */
+export function getToolBySlug(slug: string): DetailedTool | undefined {
+  if (!slug) return undefined;
+  const normalized = decodeURIComponent(slug).toLowerCase().trim();
+  return (
+    DETAILED_TOOLS.find((t) => t.slug.toLowerCase() === normalized) ||
+    DETAILED_TOOLS.find((t) => t.id.toLowerCase() === normalized) ||
+    DETAILED_TOOLS.find((t) => t.name.toLowerCase().replace(/[^a-z0-9]+/g, "-") === normalized) ||
+    DETAILED_TOOLS.find((t) => t.slug.toLowerCase().includes(normalized) || normalized.includes(t.slug.toLowerCase()))
+  );
+}
+
+/**
+ * Retrieve curated top new product launches ranked by launch performance
+ */
+export function getNewProductLaunches(): DetailedTool[] {
+  const launches = DETAILED_TOOLS.filter((t) => t.isNewLaunch);
+  if (launches.length > 0) {
+    return launches.sort((a, b) => (a.launchRank || 99) - (b.launchRank || 99));
+  }
+  return DETAILED_TOOLS.slice(0, 6);
+}
+
+/**
+ * Retrieve companion and alternative tools in similar categories
+ */
+export function getRelatedTools(currentTool: DetailedTool, limit: number = 3): DetailedTool[] {
+  const currentCatSlugs = new Set(currentTool.categories.map((c) => c.slug.toLowerCase()));
+  return DETAILED_TOOLS.filter((t) => t.id !== currentTool.id)
+    .sort((a, b) => {
+      const aMatches = a.categories.filter((c) => currentCatSlugs.has(c.slug.toLowerCase())).length;
+      const bMatches = b.categories.filter((c) => currentCatSlugs.has(c.slug.toLowerCase())).length;
+      if (bMatches !== aMatches) return bMatches - aMatches;
+      return b.reviewScore - a.reviewScore;
+    })
+    .slice(0, limit);
+}
+

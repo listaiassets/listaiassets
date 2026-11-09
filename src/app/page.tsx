@@ -5,7 +5,6 @@ import { motion } from "framer-motion";
 import Link from "next/link";
 import {
   Search,
-  Sparkles,
   Layers,
   Code2,
   Brain,
@@ -22,19 +21,38 @@ import { CommandPalette } from "@/components/command-palette";
 import { InteractiveVectorGrid } from "@/components/ui/InteractiveVectorGrid";
 import { BrandLogo } from "@/components/ui/BrandLogos";
 import { TelemetryCard } from "@/components/compare/TelemetryCard";
+import { TopProductLaunches } from "@/components/home/TopProductLaunches";
 
 const INITIAL_TOOLS: ToolCardData[] = [
   {
+    id: "tool_vmake",
+    name: "Vmake Labs",
+    slug: "vmake-labs",
+    tagline: "AI Social Video Studio for e-commerce products and viral content.",
+    description: "Turn static product photos and clips into high-converting social videos with AI fashion models, video upscaling to 4K, and watermark removal.",
+    websiteUrl: "https://vmake.ai",
+    pricingType: "FREEMIUM",
+    startingPrice: 0,
+    categories: [
+      { id: "cat_4", name: "Video & Animation", slug: "video" },
+    ],
+    tags: ["social-video", "ecommerce", "video-enhancer", "fashion-models"],
+    verifiedBadge: true,
+    domainAuthority: 78,
+    reviewScore: 4.88,
+    dealPercent: 25,
+  },
+  {
     id: "tool_1",
     name: "Cursor AI",
-    slug: "cursor-ai",
+    slug: "cursor",
     tagline: "The AI-first Code Editor built for pairing with frontier reasoning models.",
     description: "An intelligent, fork-of-VSCode development environment engineered specifically for deep multi-file AI code generation and instant codebase indexing.",
     websiteUrl: "https://cursor.com",
     pricingType: "FREEMIUM",
     startingPrice: 20,
     categories: [
-      { id: "cat_1", name: "Coding Agents", slug: "coding-agents" },
+      { id: "cat_1", name: "Coding Agents", slug: "coding" },
       { id: "cat_2", name: "Developer Tools", slug: "developer-tools" },
     ],
     tags: ["editor", "agentic-coding", "autocomplete", "multi-file"],
@@ -49,12 +67,12 @@ const INITIAL_TOOLS: ToolCardData[] = [
     slug: "claude-3-7-sonnet",
     tagline: "Hybrid frontier reasoning and coding model with extended thought tokens.",
     description: "Anthropic's flagship hybrid model that can instantaneously switch between fast responses and extended, visible reasoning step sequences.",
-    websiteUrl: "https://anthropic.com/claude",
+    websiteUrl: "https://claude.ai",
     pricingType: "FREEMIUM",
     startingPrice: 20,
     categories: [
-      { id: "cat_3", name: "LLMs & Reasoning", slug: "llms-reasoning" },
-      { id: "cat_1", name: "Coding Agents", slug: "coding-agents" },
+      { id: "cat_3", name: "LLMs & Reasoning", slug: "llms" },
+      { id: "cat_1", name: "Coding Agents", slug: "coding" },
     ],
     tags: ["reasoning", "multimodal", "hybrid-thinking", "api"],
     verifiedBadge: true,
@@ -64,14 +82,14 @@ const INITIAL_TOOLS: ToolCardData[] = [
   {
     id: "tool_3",
     name: "Midjourney v7",
-    slug: "midjourney-v7",
+    slug: "midjourney",
     tagline: "Hyper-realistic generative image synthesis and creative art platform.",
     description: "State of the art generative visual diffusion platform producing photorealistic textures, dynamic lighting, and coherent multi-subject compositions.",
     websiteUrl: "https://midjourney.com",
     pricingType: "PAID",
     startingPrice: 10,
     categories: [
-      { id: "cat_4", name: "Generative Art", slug: "generative-art" },
+      { id: "cat_4", name: "Generative Art", slug: "art" },
     ],
     tags: ["text-to-image", "photorealism", "creative-art"],
     verifiedBadge: true,
@@ -81,14 +99,14 @@ const INITIAL_TOOLS: ToolCardData[] = [
   {
     id: "tool_4",
     name: "Perplexity Pro",
-    slug: "perplexity-pro",
+    slug: "perplexity",
     tagline: "Live-search AI engine with transparent citation trees and academic search.",
     description: "Combines real-time web crawling with multi-LLM synthesis to provide conversational answers with verifiable inline sources.",
     websiteUrl: "https://perplexity.ai",
     pricingType: "FREEMIUM",
     startingPrice: 20,
     categories: [
-      { id: "cat_5", name: "Research & Search", slug: "research-search" },
+      { id: "cat_5", name: "Research & Search", slug: "search" },
     ],
     tags: ["search", "citations", "academic", "live-web"],
     verifiedBadge: true,
@@ -98,14 +116,14 @@ const INITIAL_TOOLS: ToolCardData[] = [
   {
     id: "tool_5",
     name: "ElevenLabs Prime",
-    slug: "elevenlabs-prime",
+    slug: "elevenlabs",
     tagline: "Ultra-natural multilingual voice synthesis, voice cloning, and audio AI.",
     description: "Generates emotive, human-grade voiceovers with zero latency speech-to-speech translation across 32+ international languages.",
     websiteUrl: "https://elevenlabs.io",
     pricingType: "FREEMIUM",
     startingPrice: 5,
     categories: [
-      { id: "cat_6", name: "Voice & Audio", slug: "voice-audio" },
+      { id: "cat_6", name: "Voice & Audio", slug: "audio" },
     ],
     tags: ["voice-cloning", "speech-synthesis", "podcast", "dubbing"],
     verifiedBadge: true,
@@ -116,14 +134,14 @@ const INITIAL_TOOLS: ToolCardData[] = [
   {
     id: "tool_6",
     name: "v0 by Vercel",
-    slug: "v0-vercel",
+    slug: "v0",
     tagline: "Generative UI system to rapidly scaffold, preview, and export React/Tailwind.",
     description: "Converts text prompts into modern Shadcn/UI and Tailwind CSS components ready to drop directly into Next.js App Router projects.",
     websiteUrl: "https://v0.dev",
     pricingType: "FREE",
     startingPrice: 0,
     categories: [
-      { id: "cat_1", name: "Coding Agents", slug: "coding-agents" },
+      { id: "cat_1", name: "Coding Agents", slug: "coding" },
       { id: "cat_2", name: "Developer Tools", slug: "developer-tools" },
     ],
     tags: ["ui-generation", "react", "shadcn", "tailwind"],
@@ -141,7 +159,7 @@ const INITIAL_TOOLS: ToolCardData[] = [
     pricingType: "FREE",
     startingPrice: 0,
     categories: [
-      { id: "cat_3", name: "LLMs & Reasoning", slug: "llms-reasoning" },
+      { id: "cat_3", name: "LLMs & Reasoning", slug: "llms" },
     ],
     tags: ["open-weights", "reinforcement-learning", "math", "reasoning"],
     verifiedBadge: true,
@@ -158,7 +176,7 @@ const INITIAL_TOOLS: ToolCardData[] = [
     pricingType: "FREE",
     startingPrice: 0,
     categories: [
-      { id: "cat_4", name: "Generative Art", slug: "generative-art" },
+      { id: "cat_4", name: "Generative Art", slug: "art" },
     ],
     tags: ["open-weights", "free", "no-watermark", "commercial-rights"],
     verifiedBadge: true,
@@ -299,6 +317,9 @@ export default function Home() {
         </div>
       </section>
 
+      {/* TOP NEW PRODUCT LAUNCHES LEADERBOARD */}
+      <TopProductLaunches />
+
       {/* HEAD-TO-HEAD COMPARISON MATRIX PREVIEW */}
       <section id="compare" className="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
         <div className="rounded-2xl border border-stone-200 dark:border-stone-800 bg-white dark:bg-[#1c1917] p-6 sm:p-7 shadow-xs dark:shadow-sm">
@@ -432,7 +453,7 @@ export default function Home() {
 
         {filteredTools.length === 0 && (
           <div className="mt-8 rounded-xl border border-stone-200 dark:border-stone-800 bg-white dark:bg-[#1c1917] py-14 text-center">
-            <Sparkles className="mx-auto h-8 w-8 text-stone-400 animate-pulse" />
+            <Layers className="mx-auto h-8 w-8 text-stone-400" />
             <h3 className="mt-3 text-sm font-semibold text-stone-900 dark:text-white">No tools found</h3>
             <p className="mt-1 text-xs text-stone-500 dark:text-stone-400">
               Try adjusting your search query, pricing filter, or verified badge toggle.

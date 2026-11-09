@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
+import Link from "next/link";
 import { motion } from "framer-motion";
 import {
   ExternalLink,
@@ -94,15 +95,21 @@ export function ToolCard({ tool, onCompare }: ToolCardProps) {
         <div className="flex items-start justify-between gap-3">
           <div className="flex items-center gap-3">
             {/* Authentic Brand Logo */}
-            <div className="relative flex h-11 w-11 shrink-0 items-center justify-center rounded-xl overflow-hidden border border-stone-200/80 dark:border-stone-800 shadow-xs transition-transform duration-200 group-hover:scale-105">
+            <Link
+              href={`/tools/${tool.slug}`}
+              className="relative flex h-11 w-11 shrink-0 items-center justify-center rounded-xl overflow-hidden border border-stone-200/80 dark:border-stone-800 shadow-xs transition-transform duration-200 group-hover:scale-105"
+            >
               <BrandLogo slug={tool.slug || tool.name} size={44} className="h-full w-full" />
-            </div>
+            </Link>
 
             <div>
               <div className="flex items-center gap-1.5">
-                <h3 className="font-semibold text-stone-900 dark:text-stone-100 tracking-tight text-sm">
+                <Link
+                  href={`/tools/${tool.slug}`}
+                  className="font-semibold text-stone-900 dark:text-stone-100 tracking-tight text-sm hover:text-amber-600 dark:hover:text-amber-400 transition-colors"
+                >
                   {tool.name}
-                </h3>
+                </Link>
                 {tool.verifiedBadge && (
                   <span title="Verified Directory Tool">
                     <ShieldCheck className="h-3.5 w-3.5 text-amber-600 dark:text-amber-400 shrink-0" />
@@ -173,6 +180,13 @@ export function ToolCard({ tool, onCompare }: ToolCardProps) {
         </div>
 
         <div className="flex items-center gap-1.5">
+          <Link
+            href={`/tools/${tool.slug}`}
+            className="flex items-center gap-1 rounded-md border border-stone-200 dark:border-stone-800 bg-stone-100/70 dark:bg-stone-900/60 px-2.5 py-1.5 text-[11px] text-stone-700 dark:text-stone-300 hover:border-amber-500/40 hover:text-stone-900 dark:hover:text-white transition-colors cursor-pointer"
+          >
+            <span>Overview</span>
+          </Link>
+
           {onCompare && (
             <button
               onClick={() => onCompare(tool)}

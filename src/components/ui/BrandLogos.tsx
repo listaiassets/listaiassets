@@ -74,6 +74,40 @@ export function BrandLogo({ slug, className = "h-6 w-6", size = 24 }: BrandLogoP
     );
   }
 
+  // Vmake Labs - AI Social Video Studio (Vibrant Gradient 'V' on Dark Squircle)
+  if (normalized.includes("vmake")) {
+    return (
+      <svg
+        viewBox="0 0 40 40"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
+        className={className}
+        width={size}
+        height={size}
+      >
+        <defs>
+          <linearGradient id="vmake-g-cyan" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stopColor="#06b6d4" />
+            <stop offset="100%" stopColor="#3b82f6" />
+          </linearGradient>
+          <linearGradient id="vmake-g-pink" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stopColor="#ec4899" />
+            <stop offset="100%" stopColor="#8b5cf6" />
+          </linearGradient>
+        </defs>
+        <rect width="40" height="40" rx="9" fill="#09090b" stroke="#27272a" strokeWidth="1" />
+        <path
+          d="M10 11L17.5 28.5C17.7 29 18.3 29 18.5 28.5L21.5 21L15.5 11H10Z"
+          fill="url(#vmake-g-cyan)"
+        />
+        <path
+          d="M17.5 28.5L29.5 11H24L19 22L17.5 28.5Z"
+          fill="url(#vmake-g-pink)"
+        />
+      </svg>
+    );
+  }
+
   // 2. Claude / Anthropic - Terracotta Starburst / Radial Sun
   if (normalized.includes("claude") || normalized.includes("anthropic")) {
     return (
