@@ -145,6 +145,11 @@ export function Footer() {
                 </Link>
               </li>
               <li>
+                <Link href="/contact" className="hover:text-stone-950 dark:hover:text-white transition-colors">
+                  Contact Editorial
+                </Link>
+              </li>
+              <li>
                 <Link href="/privacy" className="hover:text-stone-950 dark:hover:text-white transition-colors">
                   Privacy Policy
                 </Link>
@@ -168,6 +173,10 @@ export function Footer() {
             <span>•</span>
             <Link href="/terms" className="hover:text-stone-700 dark:hover:text-stone-300">
               Terms
+            </Link>
+            <span>•</span>
+            <Link href="/contact" className="hover:text-stone-700 dark:hover:text-stone-300">
+              Contact
             </Link>
             <span>•</span>
             <Link href="/sitemap.xml" className="hover:text-stone-700 dark:hover:text-stone-300">

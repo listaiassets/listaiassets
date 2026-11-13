@@ -1,5 +1,6 @@
 import type { Metadata, Viewport } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
+import Script from "next/script";
 import "./globals.css";
 import { Navbar } from "@/components/navbar";
 import { Footer } from "@/components/footer";
@@ -107,7 +108,7 @@ export const metadata: Metadata = {
     creator: "@ListAIAssets",
   },
   verification: {
-    google: "google-site-verification-listaiassets",
+    google: process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION || "google-site-verification-listaiassets",
     yandex: "yandex-verification-token",
     other: {
       "msvalidate.01": "bing-site-verification-token",
@@ -176,6 +177,29 @@ export default function RootLayout({
             `,
           }}
         />
+        {/* Google Analytics 4 (GA4) */}
+        {process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID && (
+          <>
+            <Script
+              strategy="afterInteractive"
+              src={`https://www.googletagmanager.com/gtag/js?id=${process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID}`}
+            />
+            <Script
+              id="google-analytics"
+              strategy="afterInteractive"
+              dangerouslySetInnerHTML={{
+                __html: `
+                  window.dataLayer = window.dataLayer || [];
+                  function gtag(){dataLayer.push(arguments);}
+                  gtag('js', new Date());
+                  gtag('config', '${process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID}', {
+                    page_path: window.location.pathname,
+                  });
+                `,
+              }}
+            />
+          </>
+        )}
       </head>
       <body className="relative flex min-h-screen flex-col bg-[#fafaf8] text-stone-900 dark:bg-[#0c0a09] dark:text-[#fafaf8] font-sans selection:bg-amber-500/20 selection:text-amber-800 dark:selection:text-amber-300 transition-colors duration-150">
         <ThemeProvider
