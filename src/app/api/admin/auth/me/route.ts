@@ -47,13 +47,24 @@ export async function GET() {
         return NextResponse.json({ authenticated: false }, { headers: NOINDEX_HEADERS });
       }
 
+      const adminEmail = process.env.ADMIN_EMAIL?.toLowerCase().trim();
+      const userEmail = user.email?.toLowerCase().trim();
+      const hasAdminRole =
+        user.app_metadata?.role === "admin" ||
+        user.user_metadata?.role === "admin" ||
+        (adminEmail && userEmail === adminEmail);
+
+      if (!hasAdminRole) {
+        return NextResponse.json({ authenticated: false }, { headers: NOINDEX_HEADERS });
+      }
+
       return NextResponse.json(
         {
           authenticated: true,
           user: {
             id: user.id,
             email: user.email,
-            role: user.user_metadata?.role || "admin",
+            role: "admin",
           },
         },
         { headers: NOINDEX_HEADERS }

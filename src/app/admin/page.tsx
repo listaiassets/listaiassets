@@ -43,11 +43,11 @@ export default async function AdminPage({ searchParams }: AdminPageProps) {
     }
   }
 
-  // STRICT PRIVACY GATE:
-  // If the visitor is NOT already authenticated AND did NOT provide the secret passkey:
-  // Immediately return 404 Not Found!
-  // Normal visitors will see a standard 404 page and have zero knowledge that /admin exists.
-  if (!isAuthenticated && secretParam !== expectedSecret) {
+  // OPTIONAL STEALTH GATE:
+  // If REQUIRE_ADMIN_SECRET is set to "true" in .env, unauthenticated users without the secret param will see 404.
+  // By default, visitors to /admin see the secure Admin Sign-In gate where only accounts marked with admin role in Supabase can authenticate.
+  const requireSecret = process.env.REQUIRE_ADMIN_SECRET === "true";
+  if (requireSecret && !isAuthenticated && secretParam !== expectedSecret) {
     notFound();
   }
 
